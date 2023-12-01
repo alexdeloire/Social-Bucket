@@ -7,21 +7,7 @@ import java.sql.DriverManager;
 public class PgUserDAO extends UserDAO {
     
 
-    // A déplacer plus tard surement
-    public static Connection getConnection() throws SQLException {
-        try {
-            // Charge le pilote JDBC PostgreSQL
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        
-        String url = "jdbc:postgresql://localhost:5432/SocialBucketDB";
-        String user = "postgres";
-        String password = "123";
-
-        return DriverManager.getConnection(url, user, password);
-    }
+    
     
 
     @Override
@@ -29,7 +15,7 @@ public class PgUserDAO extends UserDAO {
         User user = null;
         String sql = "SELECT * FROM public.\"user\" WHERE pseudo = ?";
 
-        try (Connection connection = getConnection();
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, username);
