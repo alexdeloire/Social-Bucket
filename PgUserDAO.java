@@ -7,7 +7,11 @@ public class PgUserDAO extends UserDAO {
 
     @Override
     public User login(String username, String password) {
-        //A implementer avec BD
-        return null;
+        
+        if (username.equals("admin") && password.equals("admin")) {
+            return new User("admin", "admin");
+        } else {
+            return null;
+        }
     }
 }

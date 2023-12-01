@@ -11,6 +11,11 @@ public class User {
         this.mdp = mdp;
     }
 
+    public User(String username, String mdp) {
+        this.username = username;
+        this.mdp = mdp;
+    }
+
     // Getter et setter pour username
     public String getUsername() {
         return username;

@@ -12,6 +12,7 @@ public class Controller extends Application {
     private TextField usernameField;
     private PasswordField passwordField;
     private Label statusLabel;
+    private UserFacade userFacade = UserFacade.getInstance();
 
     public static void main(String[] args) {
         launch(args);
@@ -52,7 +53,7 @@ public class Controller extends Application {
         String password = passwordField.getText();
 
         // Replace this with your actual login logic
-        if ("User1".equals(username) && "password".equals(password)) {
+        if (userFacade.login(username, password)) {
             statusLabel.setText("Login successful");
         } else {
             statusLabel.setText("Login failed. Please try again.");

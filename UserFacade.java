@@ -4,7 +4,7 @@ public class UserFacade {
     private User currentUser;
 
     // Méthode pour obtenir l'instance unique de la classe UserFacade
-    public static UserFacade getUserFacade() {
+    public static UserFacade getInstance() {
         if (userFacade == null) {
             userFacade = new UserFacade();
         }
