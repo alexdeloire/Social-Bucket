@@ -10,7 +10,7 @@ An innovative social network that also manages your files
 
 3. Run ./compile_and_run.sh
 
-4. # How to install PostgreSQL driver
+# How to install PostgreSQL driver
 
 5. Install postgresql-42.7.0.jar on this link : https://jdbc.postgresql.org/
 6. 
@@ -18,7 +18,7 @@ An innovative social network that also manages your files
 8. 
 9. Create a classpath.txt file at the root of your project and copy the path of your jar in it
 
-10. # Create your own  postgresql database 
+# Create your own  postgresql database 
           name: SocialBucketDB
           username : postgres
           password : 123
