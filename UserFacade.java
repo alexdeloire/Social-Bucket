@@ -1,0 +1,30 @@
+public class UserFacade {
+
+    private static UserFacade userFacade;
+    private User currentUser;
+
+    // Méthode pour obtenir l'instance unique de la classe UserFacade
+    public static UserFacade getUserFacade() {
+        if (userFacade == null) {
+            userFacade = new UserFacade();
+        }
+        return userFacade;
+    }
+
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
+
+    public boolean login(String username, String password) {
+        AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+        UserDAO userDAO=factory.getUserDAO();
+        User user=userDAO.login(username,password);
+        if(user!=null){
+            this.currentUser=user;
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+}
