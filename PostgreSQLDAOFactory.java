@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 public class PostgreSQLDAOFactory extends AbstractDAOFactory {
 
-// A déplacer plus tard surement
     public static Connection getConnection() throws SQLException {
         try {
             // Charge le pilote JDBC PostgreSQL
