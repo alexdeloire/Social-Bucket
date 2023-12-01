@@ -4,6 +4,8 @@ public class User {
     private String mail;
     private String mdp;
 
+
+
     // Constructeur
     public User(String username, String mail, String mdp) {
         this.username = username;
@@ -14,6 +16,7 @@ public class User {
     public User(String username, String mdp) {
         this.username = username;
         this.mdp = mdp;
+        
     }
 
     // Getter et setter pour username
@@ -36,5 +39,9 @@ public class User {
 
     public void setMdp(String mdp) {
         this.mdp = mdp;
+    }
+    
+    public String getMdp() {
+        return mdp;
     }
 }
