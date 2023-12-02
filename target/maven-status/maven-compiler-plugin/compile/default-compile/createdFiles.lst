@@ -1,0 +1,8 @@
+com/polytech/SocialBucket/App.class
+com/polytech/SocialBucket/Controller.class
+com/polytech/SocialBucket/PostgreSQLDAOFactory.class
+com/polytech/SocialBucket/UserDAO.class
+com/polytech/SocialBucket/PgUserDAO.class
+com/polytech/SocialBucket/UserFacade.class
+com/polytech/SocialBucket/User.class
+com/polytech/SocialBucket/AbstractDAOFactory.class
