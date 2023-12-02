@@ -21,12 +21,12 @@ public class PostgreSQLUserDAO extends UserDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     // Get the data from the row
-                    String pseudo = resultSet.getString("username");
+                    String usernameDB = resultSet.getString("username");
                     String mail = resultSet.getString("mail");
                     String password = resultSet.getString("password");
 
                     // Create a new User object
-                    user = new User(pseudo, mail, password);
+                    user = new User(usernameDB, mail, password);
                 }
             }
 

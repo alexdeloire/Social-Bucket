@@ -19,6 +19,13 @@ Make sure you have your postgresql database running on port 5432.
 
 To run the application, run the following command in the root directory of the project:
 ```bash
-mvn clean javafx:run
+mvn clean test javafx:run
+```
+
+## How to test
+
+To run the tests, run the following command in the root directory of the project:
+```bash
+mvn clean test
 ```
 
