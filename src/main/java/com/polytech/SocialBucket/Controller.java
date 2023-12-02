@@ -41,7 +41,7 @@ public class Controller extends Application {
         layout.setSpacing(10);
 
         // Scene
-        Scene scene = new Scene(layout, 600, 500);
+        Scene scene = new Scene(layout, 300, 200);
         primaryStage.setScene(scene);
 
         // Show the stage
@@ -49,15 +49,14 @@ public class Controller extends Application {
     }
 
     private void handleLogin() {
-        // Implement your login logic here
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // Replace this with your actual login logic
-        if (userFacade.login(username, password)) {
-            statusLabel.setText("Login successful");
+        User user = userFacade.login(username, password);
+        if(user != null) {
+            statusLabel.setText("Hello " + user.getUsername() + "!");
         } else {
-            statusLabel.setText("Login failed. Please try again.");
+            statusLabel.setText("Login failed, try again!");
         }
     }
 }

@@ -17,16 +17,11 @@ public class UserFacade {
         return this.currentUser;
     }
 
-    public boolean login(String username, String password) {
+    public User login(String username, String password) {
         AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
         UserDAO userDAO = factory.getUserDAO();
         User user = userDAO.login(username, password);
-        if (user != null) {
-            this.currentUser = user;
-            return true;
-        } else {
-            return false;
-        }
+        return user;
     }
 
 }
