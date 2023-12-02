@@ -1,10 +1,10 @@
 package com.polytech.SocialBucket;
+
 public class UserFacade {
 
     private static UserFacade userFacade;
     private User currentUser;
 
-    // Méthode pour obtenir l'instance unique de la classe UserFacade
     public static UserFacade getInstance() {
         if (userFacade == null) {
             userFacade = new UserFacade();
@@ -18,12 +18,12 @@ public class UserFacade {
 
     public boolean login(String username, String password) {
         AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
-        UserDAO userDAO=factory.getUserDAO();
-        User user=userDAO.login(username,password);
-        if(user!=null){
-            this.currentUser=user;
+        UserDAO userDAO = factory.getUserDAO();
+        User user = userDAO.login(username, password);
+        if (user != null) {
+            this.currentUser = user;
             return true;
-        }else {
+        } else {
             return false;
         }
     }

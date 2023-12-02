@@ -14,6 +14,7 @@ sudo apt install maven
 ## How to run
 
 Make sure you have your postgresql database running on port 5432.
+
 **MAKE SURE THE CONFIGS ARE CORRECT IN THE CODE FOR DATABASE CONNECTION.**
 
 To run the application, run the following command in the root directory of the project:

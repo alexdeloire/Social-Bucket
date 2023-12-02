@@ -1,12 +1,12 @@
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS "user";
 
 
 CREATE TABLE "user" (
-    pseudo VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL,
     mail VARCHAR(100) NOT NULL,
-    mdp VARCHAR(50) NOT NULL
+    "password" VARCHAR(50) NOT NULL
 );
 
-INSERT INTO "user" (pseudo, mail, mdp) 
+INSERT INTO "user" (username, mail, "password") 
 VALUES 
 ('u1', 'utilisateur1@example.com', 'mdp1')

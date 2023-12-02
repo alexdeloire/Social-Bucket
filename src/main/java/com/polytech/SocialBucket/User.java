@@ -1,26 +1,23 @@
 package com.polytech.SocialBucket;
+
 public class User {
 
     private String username;
     private String mail;
-    private String mdp;
+    private String password;
 
-
-
-    // Constructeur
-    public User(String username, String mail, String mdp) {
+    public User(String username, String mail, String password) {
         this.username = username;
         this.mail = mail;
-        this.mdp = mdp;
+        this.password = password;
     }
 
-    public User(String username, String mdp) {
+    public User(String username, String password) {
         this.username = username;
-        this.mdp = mdp;
-        
+        this.password = password;
+
     }
 
-    // Getter et setter pour username
     public String getUsername() {
         return username;
     }
@@ -29,7 +26,6 @@ public class User {
         this.username = username;
     }
 
-    // Getter et setter pour mail
     public String getMail() {
         return mail;
     }
@@ -38,11 +34,11 @@ public class User {
         this.mail = mail;
     }
 
-    public void setMdp(String mdp) {
-        this.mdp = mdp;
+    public void setPassword(String password) {
+        this.password = password;
     }
-    
-    public String getMdp() {
-        return mdp;
+
+    public String getPassword() {
+        return password;
     }
 }

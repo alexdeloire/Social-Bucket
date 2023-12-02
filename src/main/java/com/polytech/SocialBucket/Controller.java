@@ -41,7 +41,7 @@ public class Controller extends Application {
         layout.setSpacing(10);
 
         // Scene
-        Scene scene = new Scene(layout, 300, 200);
+        Scene scene = new Scene(layout, 600, 500);
         primaryStage.setScene(scene);
 
         // Show the stage
