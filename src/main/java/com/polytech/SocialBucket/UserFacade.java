@@ -1,5 +1,6 @@
 package com.polytech.SocialBucket;
 
+// Singleton Design Pattern
 public class UserFacade {
 
     private static UserFacade userFacade;

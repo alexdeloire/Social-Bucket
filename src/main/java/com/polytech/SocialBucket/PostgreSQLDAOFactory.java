@@ -8,7 +8,7 @@ public class PostgreSQLDAOFactory extends AbstractDAOFactory {
 
     public static Connection getConnection() throws SQLException {
         try {
-            // Charge le pilote JDBC PostgreSQL
+            // Load the driver
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

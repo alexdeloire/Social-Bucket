@@ -1,8 +1,9 @@
 package com.polytech.SocialBucket;
 
+// Abstract Factory Design Pattern
+// Singleton Design Pattern
 public abstract class AbstractDAOFactory {
 
-  // Instance unique de la classe AbstractDAOFactory
   protected static AbstractDAOFactory factory;
 
   public static AbstractDAOFactory getFactory() {

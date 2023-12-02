@@ -1,5 +1,6 @@
 package com.polytech.SocialBucket;
 
+// Singleton Design Pattern
 public abstract class UserDAO {
 
     protected static UserDAO userDAO;
