@@ -1,26 +1,23 @@
-# Social_Bucket
-An innovative social network that also manages your files
+# Social Bucket, the future of social media
 
+## Versions
 
-# How to install JavaFX
+I used:
 
-1. Install javafx21.0.1 on this link : https://gluonhq.com/products/javafx/
+Java 11 (any version above 11 should work)
+Apache Maven 3.6.3
 
-2. Place the file named javafx-sdk-21.0.1 in a lib file
+to install maven on ubuntu:
+```bash
+sudo apt install maven
+```
+## How to run
 
-3. Run ./compile_and_run.sh
+Make sure you have your postgresql database running on port 5432.
+**MAKE SURE THE CONFIGS ARE CORRECT IN THE CODE FOR DATABASE CONNECTION.**
 
+To run the application, run the following command in the root directory of the project:
+```bash
+mvn clean javafx:run
+```
 
-# How to install PostgreSQL driver
-
-5. Install postgresql-42.7.0.jar on this link : https://jdbc.postgresql.org/
-6. 
-7. Place the jar in the lib directory ( create one if you don't have one) at the roots of your project
-8. 
-
-
-# Create your own  postgresql database 
-          name: SocialBucketDB
-          username : postgres
-          password : 123
-the file to build/fill the database is in the project :)
