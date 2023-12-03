@@ -1,16 +1,23 @@
 package com.polytech.SocialBucket;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Controller extends Application {
 
-    private TextField usernameField;
+    private TextField nameField;
     private PasswordField passwordField;
     private Label statusLabel;
     private UserFacade userFacade = UserFacade.getInstance();
@@ -24,24 +31,44 @@ public class Controller extends Application {
         primaryStage.setTitle("Login Page");
 
         // UI components
-        Label usernameLabel = new Label("Username:");
-        usernameField = new TextField();
+        Label nameLabel = new Label("Name");
+        nameField = new TextField();
 
-        Label passwordLabel = new Label("Password:");
+        Label passwordLabel = new Label("Password");
         passwordField = new PasswordField();
 
+        /*Image appImage = new Image("path/to/your/app/image.png"); // Remplacez "path/to/your/app/image.png" par le chemin de votre image
+        ImageView imageView = new ImageView(appImage);
+        imageView.setFitHeight(100); // Ajustez la hauteur selon vos besoins
+        imageView.setPreserveRatio(true);*/
+
+        Label socialBucketLabel = new Label("Social Bucket");
+        socialBucketLabel.setStyle("-fx-font-size: 18px;");
+
         Button loginButton = new Button("Login");
+        loginButton.setStyle("-fx-background-color: #0073e6; -fx-text-fill: white;");
         loginButton.setOnAction(e -> handleLogin());
 
         statusLabel = new Label();
 
         // Layout
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(usernameLabel, usernameField, passwordLabel, passwordField, loginButton, statusLabel);
-        layout.setSpacing(10);
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(10));
+        gridPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        //gridPane.add(imageView, 0, 0, 2, 1);
+        gridPane.add(socialBucketLabel, 3, 1);
+        gridPane.add(nameLabel, 2, 2);
+        gridPane.add(nameField, 3, 2);
+        gridPane.add(passwordLabel, 2, 3);
+        gridPane.add(passwordField, 3, 3);
+        gridPane.add(loginButton, 3, 4);
+        gridPane.add(statusLabel, 3, 5);
 
         // Scene
-        Scene scene = new Scene(layout, 300, 200);
+        Scene scene = new Scene(gridPane, 400, 300); // Ajustez la taille selon vos besoins
         primaryStage.setScene(scene);
 
         // Show the stage
@@ -49,7 +76,7 @@ public class Controller extends Application {
     }
 
     private void handleLogin() {
-        String username = usernameField.getText();
+        String username = nameField.getText();
         String password = passwordField.getText();
 
         User user = userFacade.login(username, password);
