@@ -21,6 +21,7 @@ public class UserFacade {
         AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
         UserDAO userDAO = factory.getUserDAO();
         User user = userDAO.login(username, password);
+        this.currentUser = user;
         return user;
     }
 
