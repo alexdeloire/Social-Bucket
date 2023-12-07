@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+
+<GridPane fx:id="gridPane" alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.polytech.SocialBucket.LoginController">
+
+    <padding>
+        <Insets bottom="10" left="10" right="10" top="10"/>
+    </padding>
+
+    <ImageView>
+        <!-- Add image path here -->
+        <!-- <image>
+            <Image url="path/to/your/app/image.png"/>
+        </image> -->
+    </ImageView>
+
+    <Label text="Social Bucket" style="-fx-font-size: 18px;" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="2"/>
+
+    <Label text="Name" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <TextField fx:id="nameField" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+
+    <Label text="Password" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <PasswordField fx:id="passwordField" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+    <Button text="Login" style="-fx-background-color: #0073e6; -fx-text-fill: white;" GridPane.columnIndex="2" GridPane.rowIndex="4" onAction="#handleLogin"/>
+
+    <Label fx:id="statusLabel" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+
+</GridPane>
