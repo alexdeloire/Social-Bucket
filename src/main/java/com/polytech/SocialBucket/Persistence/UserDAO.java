@@ -1,4 +1,6 @@
-package com.polytech.SocialBucket;
+package com.polytech.SocialBucket.Persistence;
+
+import com.polytech.SocialBucket.Logic.User;
 
 // Singleton Design Pattern
 public abstract class UserDAO {
@@ -16,4 +18,5 @@ public abstract class UserDAO {
 
     public abstract User login(String username, String password);
 
+    public abstract void addUser(User user);
 }

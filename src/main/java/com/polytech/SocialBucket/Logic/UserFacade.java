@@ -1,4 +1,7 @@
-package com.polytech.SocialBucket;
+package com.polytech.SocialBucket.Logic;
+
+import com.polytech.SocialBucket.Persistence.AbstractDAOFactory;
+import com.polytech.SocialBucket.Persistence.UserDAO;
 
 // Singleton Design Pattern
 public class UserFacade {
@@ -25,4 +28,16 @@ public class UserFacade {
         return user;
     }
 
+    public boolean register(String username, String mail, String password) {
+        AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+        UserDAO userDAO = factory.getUserDAO();
+        User user = userDAO.getUserByUsername(username);
+        if (user == null) {
+            user = new User(username, mail, password);
+            userDAO.addUser(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

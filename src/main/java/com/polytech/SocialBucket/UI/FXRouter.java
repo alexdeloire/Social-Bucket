@@ -1,4 +1,4 @@
-package com.polytech.SocialBucket;
+package com.polytech.SocialBucket.UI;
 
 /*
  This program is free software: you can redistribute it and/or modify

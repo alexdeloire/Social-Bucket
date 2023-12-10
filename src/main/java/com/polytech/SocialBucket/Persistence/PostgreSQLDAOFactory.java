@@ -1,4 +1,4 @@
-package com.polytech.SocialBucket;
+package com.polytech.SocialBucket.Persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

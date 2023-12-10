@@ -1,4 +1,7 @@
-package com.polytech.SocialBucket;
+package com.polytech.SocialBucket.UI;
+
+import com.polytech.SocialBucket.Logic.User;
+import com.polytech.SocialBucket.Logic.UserFacade;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -31,6 +34,26 @@ public class LoginController {
     }
 
     @FXML
+    private void goToRegister() {
+        // Use FXRouter to navigate to the register page
+        try{
+            FXRouter.goTo("register");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToProfile() {
+        try{
+            FXRouter.goTo("profile");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
     private void handleLogin() {
         // This method is called when the login button is clicked
 
@@ -44,10 +67,12 @@ public class LoginController {
         // Check if the login was successful
         if (user != null) {
             // If successful, update the status label
-            statusLabel.setText("Hello " + user.getUsername() + "!");
+            statusLabel.setText("Successfully logged in!");
+            goToProfile();
         } else {
             // If failed, update the status label
             statusLabel.setText("Login failed, try again!");
         }
+
     }
 }

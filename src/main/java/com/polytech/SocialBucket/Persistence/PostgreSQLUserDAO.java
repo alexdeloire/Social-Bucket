@@ -1,9 +1,12 @@
-package com.polytech.SocialBucket;
+package com.polytech.SocialBucket.Persistence;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.polytech.SocialBucket.Logic.User;
+
 import java.sql.DriverManager;
 
 public class PostgreSQLUserDAO extends UserDAO {
@@ -46,6 +49,25 @@ public class PostgreSQLUserDAO extends UserDAO {
             return user_to_verify;
         } else {
             return null;
+        }
+    }
+
+
+    @Override
+    public void addUser(User user) {
+        String sql = "INSERT INTO public.\"user\" (username, mail, password) VALUES (?, ?, ?)";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getMail());
+            preparedStatement.setString(3, user.getPassword());
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

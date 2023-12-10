@@ -1,4 +1,4 @@
-package com.polytech.SocialBucket;
+package com.polytech.SocialBucket.Persistence;
 
 // Abstract Factory Design Pattern
 // Singleton Design Pattern

@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import com.polytech.SocialBucket.UI.FXRouter;
+
 public class Controller extends Application {
 
     public static void main(String[] args) {
@@ -22,8 +24,10 @@ public class Controller extends Application {
         // Set routes for the application
         FXRouter.when("login", "/com/polytech/SocialBucket/login.fxml");
         FXRouter.when("register", "/com/polytech/SocialBucket/register.fxml");
-
+        FXRouter.when("profile", "/com/polytech/SocialBucket/profile.fxml");
+        FXRouter.when("modify-information", "/com/polytech/SocialBucket/modify-information.fxml");
+        
         // Start with the login page
-        FXRouter.goTo("register");
+        FXRouter.goTo("login");
     }
 }

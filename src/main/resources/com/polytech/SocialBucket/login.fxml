@@ -10,7 +10,7 @@
 <?import javafx.geometry.Insets?>
 
 <GridPane fx:id="gridPane" alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="com.polytech.SocialBucket.LoginController">
+        fx:controller="com.polytech.SocialBucket.UI.LoginController">
 
     <padding>
         <Insets bottom="10" left="10" right="10" top="10"/>
@@ -22,7 +22,7 @@
             <Image url="path/to/your/app/image.png"/>
         </image> -->
     </ImageView>
-
+    <Label text="LOGIN" style="-fx-font-size: 12px;" GridPane.columnIndex="5" GridPane.rowIndex="1" GridPane.columnSpan="1"/>
     <Label text="Social Bucket" style="-fx-font-size: 18px;" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="2"/>
 
     <Label text="Name" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
@@ -32,7 +32,8 @@
     <PasswordField fx:id="passwordField" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
     <Button text="Login" style="-fx-background-color: #0073e6; -fx-text-fill: white;" GridPane.columnIndex="2" GridPane.rowIndex="4" onAction="#handleLogin"/>
+    <Button text="Register" style="-fx-background-color: #00cc66; -fx-text-fill: white;" GridPane.columnIndex="2" GridPane.rowIndex="5" onAction="#goToRegister"/>
 
-    <Label fx:id="statusLabel" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+    <Label fx:id="statusLabel" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
 
 </GridPane>

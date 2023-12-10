@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.polytech.SocialBucket.*;
+import com.polytech.SocialBucket.Logic.User;
+import com.polytech.SocialBucket.Logic.UserFacade;
 
 /**
  * Unit test for simple App.

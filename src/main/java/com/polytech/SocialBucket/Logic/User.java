@@ -1,4 +1,4 @@
-package com.polytech.SocialBucket;
+package com.polytech.SocialBucket.Logic;
 
 public class User {
 

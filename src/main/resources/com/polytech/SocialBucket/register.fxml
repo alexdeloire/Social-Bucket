@@ -8,23 +8,28 @@
 <?import javafx.geometry.Insets?>
 
 <GridPane fx:id="gridPane" alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="com.polytech.SocialBucket.RegisterController">
+        fx:controller="com.polytech.SocialBucket.UI.RegisterController">
 
     <padding>
         <Insets bottom="10" left="10" right="10" top="10"/>
     </padding>
+    <Label text="REGISTER" style="-fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="1"/>
 
-    <Label text="Username" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <TextField fx:id="usernameField" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+    <Label text="Username" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <TextField fx:id="usernameField" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
 
-    <Label text="Password" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-    <PasswordField fx:id="passwordField" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+    <Label text="Mail" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <TextField fx:id="mailField" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
 
-    <Label text="Confirm Password" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-    <PasswordField fx:id="confirmPasswordField" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+    <Label text="Password" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <PasswordField fx:id="passwordField" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
 
-    <Button text="Register" style="-fx-background-color: #00cc00; -fx-text-fill: white;" GridPane.columnIndex="2" GridPane.rowIndex="4" onAction="#handleRegister"/>
+    <Label text="Confirm Password" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <PasswordField fx:id="confirmPasswordField" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
 
-    <Label fx:id="statusLabel" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+    <Button text="Register" style="-fx-background-color: #00cc00; -fx-text-fill: white;" GridPane.columnIndex="2" GridPane.rowIndex="6" onAction="#handleRegister"/>
+    <Button text="Login" style="-fx-background-color: #0073e6; -fx-text-fill: white;" GridPane.columnIndex="2" GridPane.rowIndex="7" onAction="#goToLogin"/>
+
+    <Label fx:id="statusLabel" GridPane.columnIndex="2" GridPane.rowIndex="7"/>
 
 </GridPane>
