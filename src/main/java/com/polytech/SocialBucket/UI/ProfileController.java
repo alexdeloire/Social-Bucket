@@ -11,24 +11,44 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class ProfileController {
-    
-        @FXML
-        private GridPane gridPane;
-    
-        @FXML
-        private Label usernameLabel;
-    
-        @FXML
-        private void initialize() {
-            // init name
-            User user = UserFacade.getInstance().getCurrentUser();
-            if (user == null) {
-                usernameLabel.setText("Anonymous");
-                return;
-            }
-            String name = user.getUsername();
-            System.out.println(name);
-            usernameLabel.setText(name);
-            }
-            
+
+    @FXML
+    private GridPane gridPane;
+
+    @FXML
+    private Label usernameLabel;
+
+    @FXML
+    private void initialize() {
+        // init name
+        User user = UserFacade.getInstance().getCurrentUser();
+        if (user == null) {
+            usernameLabel.setText("Anonymous");
+            return;
         }
+        String name = user.getUsername();
+        System.out.println(name);
+        usernameLabel.setText(name);
+    }
+
+    @FXML
+    private void goToAddPost() {
+        try {
+            FXRouter.goTo("addPost");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    private void goToUserPosts() {
+        try {
+            FXRouter.goTo("userPosts");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+}

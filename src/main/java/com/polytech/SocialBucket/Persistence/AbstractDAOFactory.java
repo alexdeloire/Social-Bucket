@@ -17,4 +17,8 @@ public abstract class AbstractDAOFactory {
     return UserDAO.getUserDAO();
   };
 
+  public PostDAO getPostDAO() {
+    return PostDAO.getPostDAO();
+  };
+
 }

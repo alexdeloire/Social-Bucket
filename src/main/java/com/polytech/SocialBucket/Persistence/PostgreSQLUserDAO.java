@@ -27,9 +27,10 @@ public class PostgreSQLUserDAO extends UserDAO {
                     String usernameDB = resultSet.getString("username");
                     String mail = resultSet.getString("mail");
                     String password = resultSet.getString("password");
+                    int id = resultSet.getInt("iduser");
 
                     // Create a new User object
-                    user = new User(usernameDB, mail, password);
+                    user = new User(usernameDB, mail, password, id);
                 }
             }
 
@@ -51,7 +52,6 @@ public class PostgreSQLUserDAO extends UserDAO {
             return null;
         }
     }
-
 
     @Override
     public void addUser(User user) {

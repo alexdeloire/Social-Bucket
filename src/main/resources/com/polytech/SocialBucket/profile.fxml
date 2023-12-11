@@ -19,4 +19,6 @@
     <Label text="Profile" style="-fx-font-size: 12px;" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="1"/>
 
     <Label fx:id="usernameLabel" text="Name" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <Button text="add a post" style="-fx-background-color: #00cc00; -fx-text-fill: white;" GridPane.columnIndex="2" GridPane.rowIndex="6" onAction="#goToAddPost"/>
+    <Button text="my posts" style="-fx-background-color: #00cc00; -fx-text-fill: white;" GridPane.columnIndex="2" GridPane.rowIndex="7" onAction="#goToUserPosts"/>
 </GridPane>
