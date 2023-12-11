@@ -31,13 +31,6 @@ public class UserFacade {
     public boolean register(String username, String mail, String password) {
         AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
         UserDAO userDAO = factory.getUserDAO();
-        User user = userDAO.getUserByUsername(username);
-        if (user == null) {
-            user = new User(username, mail, password);
-            userDAO.addUser(user);
-            return true;
-        } else {
-            return false;
-        }
+        return userDAO.register(username, mail, password);
     }
 }
