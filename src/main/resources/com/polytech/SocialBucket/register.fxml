@@ -30,6 +30,6 @@
     <Button text="Register" style="-fx-background-color: #00cc00; -fx-text-fill: white;" GridPane.columnIndex="2" GridPane.rowIndex="6" onAction="#handleRegister"/>
     <Button text="Login" style="-fx-background-color: #0073e6; -fx-text-fill: white;" GridPane.columnIndex="2" GridPane.rowIndex="7" onAction="#goToLogin"/>
 
-    <Label fx:id="statusLabel" GridPane.columnIndex="2" GridPane.rowIndex="7"/>
+    <Label fx:id="statusLabel" GridPane.columnIndex="2" GridPane.rowIndex="8"/>
 
 </GridPane>

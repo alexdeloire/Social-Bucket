@@ -64,6 +64,11 @@ public class RegisterController {
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
 
+        if (username.isEmpty() || mail.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            statusLabel.setText("Please fill in all fields!");
+            return;
+        }
+
         // Check if passwords match
         if (!password.equals(confirmPassword)) {
             statusLabel.setText("Passwords do not match!");
@@ -87,6 +92,7 @@ public class RegisterController {
             } else {
                 // If failed, update the status label
                 statusLabel.setText("Login failed, try again!");
+                goToLogin();
             }
         } else {
             statusLabel.setText("Registration failed, try again!");
