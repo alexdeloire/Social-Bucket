@@ -18,5 +18,7 @@ public abstract class UserDAO {
 
     public abstract User login(String username, String password);
 
-    public abstract void addUser(User user);
+    public abstract boolean register(String username, String mail, String password);
+
+    public abstract boolean addUser(User user);
 }

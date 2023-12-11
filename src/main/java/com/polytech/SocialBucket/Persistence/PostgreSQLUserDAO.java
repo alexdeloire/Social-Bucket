@@ -52,9 +52,19 @@ public class PostgreSQLUserDAO extends UserDAO {
         }
     }
 
-
     @Override
-    public void addUser(User user) {
+    public boolean register(String username, String mail, String password) {
+        User user = getUserByUsername(username);
+        if (user == null) {
+            User new_user = new User(username, mail, password);
+            return addUser(new_user);
+        } else {
+            return false;
+        }
+    }
+ 
+    @Override
+    public boolean addUser(User user) {
         String sql = "INSERT INTO public.\"user\" (username, mail, password) VALUES (?, ?, ?)";
 
         try (Connection connection = PostgreSQLDAOFactory.getConnection();
@@ -65,9 +75,10 @@ public class PostgreSQLUserDAO extends UserDAO {
             preparedStatement.setString(3, user.getPassword());
 
             preparedStatement.executeUpdate();
-
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 }
