@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 
 import com.polytech.SocialBucket.Logic.Post;
 import com.polytech.SocialBucket.Logic.User;
+import com.polytech.SocialBucket.Logic.Reaction;
 
 // Singleton Design Pattern
 public abstract class PostDAO {
@@ -26,4 +27,8 @@ public abstract class PostDAO {
  public abstract List<Post> getPostsByUser(User user);
 
  public abstract Boolean deletePost(int postId);
+
+ public abstract Boolean addReaction(String typeReaction, Post post, User user);
+
+ public abstract Boolean deleteReaction(String typeReaction, Post post, User user);
 }

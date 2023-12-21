@@ -16,7 +16,7 @@ public class PostgreSQLDAOFactory extends AbstractDAOFactory {
 
         String url = "jdbc:postgresql://localhost:5432/SocialBucketDB";
         String user = "postgres";
-        String password = "postgres";
+        String password = "123";
 
         return DriverManager.getConnection(url, user, password);
     }

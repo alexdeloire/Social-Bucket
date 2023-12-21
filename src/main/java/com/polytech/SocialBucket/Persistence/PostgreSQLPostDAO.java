@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.polytech.SocialBucket.Logic.Post;
+import com.polytech.SocialBucket.Logic.Reaction;
 import com.polytech.SocialBucket.Logic.User;
 
 import javafx.scene.image.Image;
@@ -26,15 +27,19 @@ public class PostgreSQLPostDAO extends PostDAO {
 
     try (Connection connection = PostgreSQLDAOFactory.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-      byte[] fileBytes = Files.readAllBytes(file.toPath());
-      String fileName = file.getName();
-      System.out.println(text);
-      System.out.println(type);
-      System.out.println(fileBytes);
       preparedStatement.setString(1, text);
       preparedStatement.setString(2, type);
-      preparedStatement.setBytes(3, fileBytes);
-      preparedStatement.setString(4, fileName);
+      String fileName = null;
+      if (file != null) {
+        byte[] fileBytes = Files.readAllBytes(file.toPath());
+        fileName = file.getName();
+        preparedStatement.setBytes(3, fileBytes);
+        preparedStatement.setString(4, fileName);
+      } else {
+        preparedStatement.setBytes(3, null);
+        preparedStatement.setString(4, null);
+      }
+
       preparedStatement.setInt(5, user.getId());
 
       int affectedRows = preparedStatement.executeUpdate();
@@ -59,7 +64,7 @@ public class PostgreSQLPostDAO extends PostDAO {
   @Override
   public List<Post> getPostsByUser(User user) {
     List<Post> posts = new ArrayList<>();
-    // TODO Auto-generated method stub
+
     String sql = "SELECT * FROM public.\"post\" WHERE iduser = ?";
 
     try (Connection connection = PostgreSQLDAOFactory.getConnection();
@@ -76,19 +81,34 @@ public class PostgreSQLPostDAO extends PostDAO {
           byte[] fileBytes = resultSet.getBytes("file");
           int id = resultSet.getInt("idpost");
           File file = null;
-          System.out.println(fileName);
           try {
-            file = new File(fileName);
-            try (FileOutputStream fos = new FileOutputStream(file)) {
-              fos.write(fileBytes);
+            if (fileName != null) {
+              file = new File(fileName);
+              try (FileOutputStream fos = new FileOutputStream(file)) {
+                fos.write(fileBytes);
+              }
             }
-
           } catch (IOException e) {
             e.printStackTrace();
           }
-
+          System.out.println("post " + id);
           // Create a new Post object and add it to the list
           Post post = new Post(text, type, file, fileName, user, id);
+          String sql2 = "SELECT * FROM public.\"reaction\" WHERE idpost = " + id + " AND idcomment IS NULL ";
+          try (Connection connection2 = PostgreSQLDAOFactory.getConnection();
+              PreparedStatement preparedStatement2 = connection2.prepareStatement(sql2)) {
+            try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
+              while (resultSet2.next()) {
+                System.out.println("il y a une reaction pour post " + id);
+                String typeReaction = resultSet2.getString("type");
+                int iduser = resultSet2.getInt("iduser");
+                Reaction reaction = new Reaction(typeReaction, iduser);
+                post.addReaction(reaction);
+              }
+            }
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
           posts.add(post);
         }
       }
@@ -113,6 +133,58 @@ public class PostgreSQLPostDAO extends PostDAO {
 
       if (affectedRows > 0) {
         System.out.println("post " + postId + " deleted");
+        return true;
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return false;
+  }
+
+  @Override
+  public Boolean addReaction(String typeReaction, Post post, User user) {
+    String sql = "INSERT INTO public.\"reaction\" (type, idpost, iduser) VALUES (?, ?, ?)";
+
+    try (Connection connection = PostgreSQLDAOFactory.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+      preparedStatement.setString(1, typeReaction);
+      preparedStatement.setInt(2, post.getId());
+      preparedStatement.setInt(3, user.getId());
+
+      int affectedRows = preparedStatement.executeUpdate();
+
+      if (affectedRows > 0) {
+        System.out.println("reaction " + typeReaction + " added to post " + post.getId());
+        Reaction reaction = new Reaction(typeReaction, user.getId());
+        post.addReaction(reaction);
+        return true;
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  @Override
+  public Boolean deleteReaction(String typeReaction, Post post, User user) {
+    String sql = "DELETE FROM public.\"reaction\" WHERE type = ? AND idpost = ? AND iduser = ?";
+
+    try (Connection connection = PostgreSQLDAOFactory.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+      preparedStatement.setString(1, typeReaction);
+      preparedStatement.setInt(2, post.getId());
+      preparedStatement.setInt(3, user.getId());
+
+      int affectedRows = preparedStatement.executeUpdate();
+
+      if (affectedRows > 0) {
+        System.out.println("reaction " + typeReaction + " deleted from post " + post.getId());
+        Reaction reaction = new Reaction(typeReaction, user.getId());
+        post.deleteReaction(reaction);
         return true;
       }
 

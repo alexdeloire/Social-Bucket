@@ -18,5 +18,29 @@ CREATE TABLE "post" (
     FOREIGN KEY (iduser) REFERENCES "user"(iduser)
 );
 
+
+CREATE TABLE "comment"(
+    idcomment SERIAL PRIMARY KEY,
+    text VARCHAR(255) NOT NULL,
+    iduser INT,
+    idpost INT,
+
+    FOREIGN KEY (iduser) REFERENCES "user"(iduser),
+    FOREIGN KEY (idpost) REFERENCES "post"(idpost)
+);
+
+
+CREATE TABLE "reaction"(
+    idreaction SERIAL PRIMARY KEY,
+    type VARCHAR(255) NOT NULL,
+    iduser INT,
+    idpost INT,
+    idcomment INT,
+
+    FOREIGN KEY (iduser) REFERENCES "user"(iduser),
+    FOREIGN KEY (idpost) REFERENCES "post"(idpost),
+    FOREIGN KEY (idcomment) REFERENCES "comment"(idcomment)
+);
+
 INSERT INTO "user" (username, mail, "password") 
 VALUES ('u1', 'utilisateur1@example.com', 'mdp1');

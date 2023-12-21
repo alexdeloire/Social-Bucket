@@ -46,4 +46,22 @@ public class PostFacade {
   return postDAO.deletePost(postId);
  }
 
+ public Boolean addReaction(String typeReaction, Post post, User user) {
+  AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+  PostDAO postDAO = factory.getPostDAO();
+  return postDAO.addReaction(typeReaction, post, user);
+ }
+
+ public Boolean deleteReaction(String typeReaction, Post post, User user) {
+  AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+  PostDAO postDAO = factory.getPostDAO();
+  return postDAO.deleteReaction(typeReaction, post, user);
+ }
+
+ public List<Reaction> getReactions(Post post) {
+  AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+  PostDAO postDAO = factory.getPostDAO();
+  return null;
+ }
+
 }
