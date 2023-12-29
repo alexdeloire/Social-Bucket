@@ -58,7 +58,10 @@ public class PostgreSQLUserDAO extends UserDAO {
         User user = getUserByUsername(username);
         if (user == null) {
             User new_user = new User(username, mail, password);
-            return addUser(new_user);
+            addUser(new_user);
+            User user_after = getUserByUsername(username);
+            addWallet(user_after, 0);
+            return true;
         } else {
             return false;
         }
@@ -82,7 +85,31 @@ public class PostgreSQLUserDAO extends UserDAO {
             return false;
         }
     }
-
+    
+    
+    public boolean addWallet(User user, float balance) {
+        if (user == null) {
+            // Handle the case where the user's ID is null (perhaps log an error or throw an exception)
+            System.err.println("User ID is null. Cannot add wallet.");
+            return false;
+        }
+    
+        String insertWalletSQL = "INSERT INTO public.wallet (balance, iduser, secret_code) VALUES (?, ?, ?)";
+    
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement insertWalletStatement = connection.prepareStatement(insertWalletSQL)) {
+    
+            // Add a wallet with the specified balance and the user's ID
+            insertWalletStatement.setFloat(1, balance);
+            insertWalletStatement.setInt(2, user.getId());
+            insertWalletStatement.setInt(3, 123);  // Adjust the secret_code value as needed
+            insertWalletStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public User getUserById(int id){
         User user = null;
         String sql = "SELECT * FROM public.\"user\" WHERE iduser = ?";

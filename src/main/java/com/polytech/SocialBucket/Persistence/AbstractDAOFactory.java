@@ -25,4 +25,8 @@ public abstract class AbstractDAOFactory {
     return CommentDAO.getCommentDAO();
   }
 
+public WalletDAO getWalletDAO() {
+    return WalletDAO.getWalletDAO();
+}
+
 }
