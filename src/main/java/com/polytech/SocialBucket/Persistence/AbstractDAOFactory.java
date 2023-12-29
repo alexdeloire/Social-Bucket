@@ -21,4 +21,8 @@ public abstract class AbstractDAOFactory {
     return PostDAO.getPostDAO();
   };
 
+  public CommentDAO getCommentDAO(){
+    return CommentDAO.getCommentDAO();
+  }
+
 }

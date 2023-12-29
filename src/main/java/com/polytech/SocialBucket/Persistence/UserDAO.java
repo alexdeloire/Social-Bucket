@@ -21,4 +21,7 @@ public abstract class UserDAO {
     public abstract boolean register(String username, String mail, String password);
 
     public abstract boolean addUser(User user);
+
+    public abstract User getUserById(int id);
+
 }

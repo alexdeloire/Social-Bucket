@@ -94,7 +94,7 @@ public class PostgreSQLPostDAO extends PostDAO {
           System.out.println("post " + id);
           // Create a new Post object and add it to the list
           Post post = new Post(text, type, file, fileName, user, id);
-          String sql2 = "SELECT * FROM public.\"reaction\" WHERE idpost = " + id + " AND idcomment IS NULL ";
+          String sql2 = "SELECT * FROM public.\"reaction\" WHERE idpost = " + id ;
           try (Connection connection2 = PostgreSQLDAOFactory.getConnection();
               PreparedStatement preparedStatement2 = connection2.prepareStatement(sql2)) {
             try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {

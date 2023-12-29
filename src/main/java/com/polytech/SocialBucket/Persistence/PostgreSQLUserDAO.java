@@ -82,4 +82,32 @@ public class PostgreSQLUserDAO extends UserDAO {
             return false;
         }
     }
+
+    public User getUserById(int id){
+        User user = null;
+        String sql = "SELECT * FROM public.\"user\" WHERE iduser = ?";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Get the data from the row
+                    String usernameDB = resultSet.getString("username");
+                    String mail = resultSet.getString("mail");
+                    String password = resultSet.getString("password");
+                    
+                    // Create a new User object
+                    user = new User(usernameDB, mail, password, id);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
 }

@@ -1,6 +1,7 @@
 package com.polytech.SocialBucket.UI;
 
 import java.io.Console;
+import java.io.IOException;
 import java.util.List;
 
 import com.polytech.SocialBucket.Logic.Post;
@@ -9,17 +10,26 @@ import com.polytech.SocialBucket.Logic.UserFacade;
 import com.polytech.SocialBucket.Logic.Reaction;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class UserPostsController {
+
  @FXML
  private VBox postContainer;
+
+ 
 
  private UserFacade userFacade = UserFacade.getInstance();
  private PostFacade postFacade = PostFacade.getInstance();
@@ -110,6 +120,10 @@ public class UserPostsController {
    }
   }
 
+  Button commentButton = new Button("Comments");
+  commentButton.setOnAction(event -> handleCommentPopUp(post));
+
+
   // Ajouter les éléments à la grille
   gridPane.add(textLabel, 0, 0);
   gridPane.add(typeLabel, 0, 1);
@@ -118,6 +132,7 @@ public class UserPostsController {
   gridPane.add(deleteButton, 1, 0);
   gridPane.add(heartButton, 1, 1);
   gridPane.add(likeButton, 1, 2);
+  gridPane.add(commentButton, 4, 3);
   gridPane.add(new Label("Hearts: " + numberOfHearts), 2, 1);
   gridPane.add(new Label("Likes: " + numberOfLikes), 2, 2);
 
@@ -179,5 +194,37 @@ public class UserPostsController {
    System.out.println("Reaction deletion failed");
   }
  }
+
+
+
+ // COMMENTS 
+
+    @FXML
+    private void handleCommentPopUp(Post post) {
+        openCommentsPopup(post);
+    }
+
+    private void openCommentsPopup(Post post) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/commentsPopup.fxml"));
+            Parent root = loader.load();
+    
+            CommentController commentController = loader.getController();
+            commentController.setPost(post);
+    
+            Stage commentsPopupStage = new Stage();
+            commentsPopupStage.initModality(Modality.APPLICATION_MODAL);
+            commentsPopupStage.setTitle("Comments Popup for Post #" + post.getId());
+    
+            Scene scene = new Scene(root);
+            commentsPopupStage.setScene(scene);
+    
+            commentsPopupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Gestion de l'exception
+        }
+    }
+    
 
 }
