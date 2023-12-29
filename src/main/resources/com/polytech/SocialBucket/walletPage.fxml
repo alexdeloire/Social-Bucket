@@ -19,5 +19,10 @@
     <!-- Troisième ligne -->
     <Label fx:id="moneyInWallet" GridPane.rowIndex="5" GridPane.halignment="CENTER" />
 
-    <!-- Ajoutez d'autres éléments au besoin en spécifiant les colonnes et les lignes -->
+    <!-- Quatrième ligne -->
+    <Button text="Top Up My Wallet"  GridPane.rowIndex="6" GridPane.halignment="CENTER" />
+
+    <!-- Cinquième ligne -->
+    <Button text="My Cards" onAction="#handleOpenCardsPopup"  GridPane.rowIndex="7" GridPane.halignment="CENTER" />
+
 </GridPane>

@@ -18,7 +18,10 @@ public class Wallet {
         this.user = user;
     }
 
-    // Getter Setters
+    public Wallet() {
+    }
+
+// Getter Setters
    public float getBalance() {
         return balance;
     }

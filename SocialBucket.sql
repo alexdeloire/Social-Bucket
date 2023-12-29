@@ -79,3 +79,10 @@ CREATE TABLE wallet (
 );
 INSERT INTO "user" (username, mail, "password") 
 VALUES ('u1', 'utilisateur1@example.com', 'mdp1');
+
+INSERT INTO wallet (balance, iduser, secret_code)
+VALUES (
+    100.0,
+    (SELECT iduser FROM "user" WHERE username = 'u1'),
+    123
+);

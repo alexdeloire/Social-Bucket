@@ -21,6 +21,7 @@ public class Card {
 
     // Getter and Setter
 
+    
     public String getCardNumber() {
         return cardNumber;
     }

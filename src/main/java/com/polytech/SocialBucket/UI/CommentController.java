@@ -63,96 +63,96 @@ public class CommentController {
 
       
     @FXML
-private VBox createCommentDetails(Comment comment) {
-    VBox commentDetails = new VBox();
+    private VBox createCommentDetails(Comment comment) {
+        VBox commentDetails = new VBox();
 
-    // Créer une grille pour organiser les éléments
-    GridPane gridPane = new GridPane();
-    gridPane.setHgap(10); // Espacement horizontal
+        // Créer une grille pour organiser les éléments
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10); // Espacement horizontal
 
-    Label contentLabel = new Label("Content: " + comment.getContent());
-    Label pseudo = new Label("Pseudo : " + comment.getUser().getUsername());
-    
+        Label contentLabel = new Label("Content: " + comment.getContent());
+        Label pseudo = new Label("Pseudo : " + comment.getUser().getUsername());
+        
 
-    Button deleteCommentButton = new Button("Delete");
-    deleteCommentButton.setOnAction(event -> handleDeleteComment(comment));
-    if (comment.getUser().getId() != userFacade.getCurrentUser().getId()){
-        deleteCommentButton.setVisible(false);
-    }
-    else{
-        deleteCommentButton.setVisible(true);
-    }
-    
+        Button deleteCommentButton = new Button("Delete");
+        deleteCommentButton.setOnAction(event -> handleDeleteComment(comment));
+        if (comment.getUser().getId() != userFacade.getCurrentUser().getId()){
+            deleteCommentButton.setVisible(false);
+        }
+        else{
+            deleteCommentButton.setVisible(true);
+        }
+        
 
-    Button dislikeButton = new Button("Dislike");
-    Button likeButton = new Button("Like");
+        Button dislikeButton = new Button("Dislike");
+        Button likeButton = new Button("Like");
 
-    int numberOfLikes = 0;
-    int numberOfDislikes = 0;
+        int numberOfLikes = 0;
+        int numberOfDislikes = 0;
 
-    List<Reaction> reactions = comment.getReactions();
-    if (reactions != null) {
-        for (Reaction reaction : reactions) {
+        List<Reaction> reactions = comment.getReactions();
+        if (reactions != null) {
+            for (Reaction reaction : reactions) {
+                
+                if ("like".equalsIgnoreCase(reaction.getType())) {
+                    numberOfLikes++;
+                }
+                if ("dislike".equalsIgnoreCase(reaction.getType())) {
+                    numberOfDislikes++;
+                }
             
-            if ("like".equalsIgnoreCase(reaction.getType())) {
-                numberOfLikes++;
-            }
-            if ("dislike".equalsIgnoreCase(reaction.getType())) {
-                numberOfDislikes++;
-            }
-           
-        }
-    }
-
-    dislikeButton.setOnAction(event -> handleAddReaction(comment, "dislike"));
-    likeButton.setOnAction(event -> handleAddReaction(comment, "like"));
-
-    // Ajouter les éléments à la grille
-    gridPane.add(contentLabel, 0, 0);
-    gridPane.add(pseudo,0,1);
-    gridPane.add(deleteCommentButton, 3, 0);
-    gridPane.add(new Label("Dislikes: " + numberOfDislikes), 2, 2);
-    gridPane.add(new Label("Likes: " + numberOfLikes), 2, 3);
-    gridPane.add(likeButton, 0, 3);
-    gridPane.add(dislikeButton, 0, 2);
-    commentDetails.getChildren().add(gridPane);
-
-    // Style
-    commentDetails.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
-
-    VBox.setMargin(commentDetails, new Insets(5, 0, 5, 0));
-
-    return commentDetails;
-}
-
-    
-private void handleAddReaction(Comment comment, String typeReaction) {
-    CommentFacade commentFacade = CommentFacade.getInstance();
-    List<Reaction> reactions = commentFacade.getReactionsByComment(comment);
-    
-    boolean userAlreadyReacted = false;
-
-    
-
-    if (reactions != null) {
-        for (Reaction reaction : reactions) {
-            if (reaction.getIduser() == userFacade.getCurrentUser().getId() ) {
-                userAlreadyReacted = true;
-                break; // Sortir de la boucle dès que l'on trouve une réaction de l'utilisateur
             }
         }
-    }
-    
-    if (userAlreadyReacted) {
-        // L'utilisateur a déjà réagi, supprimer la réaction
-        handleDeleteReaction(comment);
-    } else {
-        // L'utilisateur n'a pas encore réagi, ajouter la réaction
-        commentFacade.addReaction(typeReaction, comment, userFacade.getCurrentUser());
+
+        dislikeButton.setOnAction(event -> handleAddReaction(comment, "dislike"));
+        likeButton.setOnAction(event -> handleAddReaction(comment, "like"));
+
+        // Ajouter les éléments à la grille
+        gridPane.add(contentLabel, 0, 0);
+        gridPane.add(pseudo,0,1);
+        gridPane.add(deleteCommentButton, 3, 0);
+        gridPane.add(new Label("Dislikes: " + numberOfDislikes), 2, 2);
+        gridPane.add(new Label("Likes: " + numberOfLikes), 2, 3);
+        gridPane.add(likeButton, 0, 3);
+        gridPane.add(dislikeButton, 0, 2);
+        commentDetails.getChildren().add(gridPane);
+
+        // Style
+        commentDetails.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
+
+        VBox.setMargin(commentDetails, new Insets(5, 0, 5, 0));
+
+        return commentDetails;
     }
 
-    loadComments();
-}
+    
+    private void handleAddReaction(Comment comment, String typeReaction) {
+        CommentFacade commentFacade = CommentFacade.getInstance();
+        List<Reaction> reactions = commentFacade.getReactionsByComment(comment);
+        
+        boolean userAlreadyReacted = false;
+
+        
+
+        if (reactions != null) {
+            for (Reaction reaction : reactions) {
+                if (reaction.getIduser() == userFacade.getCurrentUser().getId() ) {
+                    userAlreadyReacted = true;
+                    break; // Sortir de la boucle dès que l'on trouve une réaction de l'utilisateur
+                }
+            }
+        }
+        
+        if (userAlreadyReacted) {
+            // L'utilisateur a déjà réagi, supprimer la réaction
+            handleDeleteReaction(comment);
+        } else {
+            // L'utilisateur n'a pas encore réagi, ajouter la réaction
+            commentFacade.addReaction(typeReaction, comment, userFacade.getCurrentUser());
+        }
+
+        loadComments();
+    }
 
       
     private void handleDeleteReaction(Comment comment) {

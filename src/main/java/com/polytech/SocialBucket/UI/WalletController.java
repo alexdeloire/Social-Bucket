@@ -2,14 +2,21 @@ package com.polytech.SocialBucket.UI;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
+import com.polytech.SocialBucket.Logic.Post;
+import com.polytech.SocialBucket.Logic.Wallet;
+import com.polytech.SocialBucket.Logic.WalletFacade;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 public class WalletController {
@@ -17,12 +24,41 @@ public class WalletController {
     @FXML
     private Label moneyInWallet;
 
+
     private void updateMoneyWallet(){
-        double count = 0;
+        WalletFacade walletFacade = WalletFacade.getInstance();
+        float count = walletFacade.getBalance();
+
         moneyInWallet.setText("Money : " +  count );
     }
-
     
+    
+
+    @FXML
+    private void handleOpenCardsPopup() {
+        openCardsPopup();
+    }
+
+    private void openCardsPopup() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/cardsPopup.fxml"));
+            Parent root = loader.load();
+        
+            Stage parametersPopupStage = new Stage();
+            parametersPopupStage.initModality(Modality.APPLICATION_MODAL);
+            parametersPopupStage.setTitle("Cards Popup ");
+    
+            Scene scene = new Scene(root);
+            parametersPopupStage.setScene(scene);
+    
+            parametersPopupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Gestion de l'exception
+        }
+    }
+
+
     public void initialize() {
         // Initialisez la valeur de moneyInWallet ici
         updateMoneyWallet();
