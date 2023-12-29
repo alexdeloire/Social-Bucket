@@ -42,6 +42,16 @@ public class ProfileController {
     }
 
     @FXML
+    private void goToSidebar() {
+        try {
+            FXRouter.goTo("sidebarPage");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
     private void goToUserPosts() {
         try {
             FXRouter.goTo("userPosts");
