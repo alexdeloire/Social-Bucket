@@ -1,8 +1,10 @@
-TABLE IF EXISTS "reaction" CASCADE;
+DROP TABLE IF EXISTS "reaction" CASCADE;
 DROP TABLE IF EXISTS "comment" CASCADE;
 DROP TABLE IF EXISTS "post" CASCADE;
 DROP TABLE IF EXISTS "user" CASCADE;
 DROP TABLE IF EXISTS "reactioncomment" CASCADE;
+DROP TABLE IF EXISTS "card" CASCADE;
+DROP TABLE IF EXISTS "wallet" CASCADE;
 
 CREATE TABLE "user" (
     iduser SERIAL PRIMARY KEY,
@@ -55,6 +57,25 @@ CREATE TABLE "reactioncomment" (
     FOREIGN KEY (idcomment) REFERENCES "comment"(idcomment) ON DELETE CASCADE
 );
 
+CREATE TABLE card (
+    iduser INT NOT NULL,
+    idcard SERIAL PRIMARY KEY,
+    card_number VARCHAR(16) NOT NULL,
+    holder VARCHAR(255) NOT NULL,
+    valid_thru DATE NOT NULL,
+    cvc VARCHAR(3) NOT NULL,
+    FOREIGN KEY (iduser) REFERENCES "user"(iduser)ON DELETE CASCADE
+);
 
+CREATE TABLE wallet (
+    idwallet SERIAL PRIMARY KEY,
+    balance FLOAT NOT NULL,
+    iddefaultcard INT,
+    secret_code INT NOT NULL,
+	iduser INT NOT NULL,
+    
+	FOREIGN KEY (iduser) REFERENCES "user"(iduser) ON DELETE CASCADE,
+    FOREIGN KEY (iddefaultcard) REFERENCES "card"(idcard) ON DELETE CASCADE
+);
 INSERT INTO "user" (username, mail, "password") 
 VALUES ('u1', 'utilisateur1@example.com', 'mdp1');
