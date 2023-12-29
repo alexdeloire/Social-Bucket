@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.polytech.SocialBucket.UI.WalletPageController"
+          hgap="10" vgap="10">
+
+    
+    
+    
+
+    <Label text="Welcome to Wallet Page" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+
+    <!-- Add more elements as needed -->
+
+</GridPane>
