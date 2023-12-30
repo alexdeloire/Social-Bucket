@@ -17,7 +17,6 @@ public class PostgreSQLWalletDAO extends WalletDAO {
 
     @Override
     public float getBalance() {
-
         UserFacade userFacade = UserFacade.getInstance();
         int iduser = userFacade.getCurrentUser().getId();
 
@@ -31,6 +30,7 @@ public class PostgreSQLWalletDAO extends WalletDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     resultat = resultSet.getFloat("balance");
+                    System.out.println(resultat);
                 }
             }
 
@@ -98,8 +98,77 @@ public class PostgreSQLWalletDAO extends WalletDAO {
         }
         return null;  // Return null if card not found or an exception occurs
     }
+    
+    @Override
+    public void modifyDefaultCard(String selectedDefaultCard) {
 
-    private List<Card> cardsByUser(int iduser) {
+        UserFacade userFacade = UserFacade.getInstance();
+        int iduser = userFacade.getCurrentUser().getId();
+
+        String sql = "SELECT idcard FROM public.card WHERE card_number = ? and iduser = ?";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, selectedDefaultCard);
+            preparedStatement.setInt(2, iduser);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int new_idcard = resultSet.getInt("idcard");
+
+                    // Now you have the new_idcard, you can proceed to update the default card
+                    String sql2 = "UPDATE wallet SET iddefaultcard = ? WHERE iduser = ?";
+
+                    try (PreparedStatement preparedStatement2 = connection.prepareStatement(sql2)) {
+                        preparedStatement2.setInt(1, new_idcard);
+                        preparedStatement2.setInt(2, iduser);
+
+                        // Use executeUpdate for update queries
+                        int affectedRows = preparedStatement2.executeUpdate();
+
+                        if (affectedRows > 0) {
+                            System.out.println("Default card updated successfully.");
+                        } else {
+                            System.out.println("Failed to update default card.");
+                        }
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getDefaultCard() {
+        UserFacade userFacade = UserFacade.getInstance();
+        int iduser = userFacade.getCurrentUser().getId();
+        int defaultCardId = -1;  // Valeur par défaut si la carte par défaut n'est pas trouvée
+    
+        String sql = "SELECT iddefaultcard FROM public.wallet WHERE iduser = ?";
+    
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, iduser);
+    
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    defaultCardId = resultSet.getInt("iddefaultcard");
+                }
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        return defaultCardId;
+    }
+    
+
+   
+   
+    @Override
+    public List<Card> cardsByUser(int iduser) {
         String sql = "SELECT * FROM public.card WHERE iduser = ?";
         List<Card> cards = new ArrayList<>();
         try (Connection connection = PostgreSQLDAOFactory.getConnection();
@@ -146,24 +215,133 @@ public class PostgreSQLWalletDAO extends WalletDAO {
     }
 
     @Override
-    public void deleteCard(String cardNumber) {
+    public void deleteCard(String selectedDefaultCard) {
+        UserFacade userFacade = UserFacade.getInstance();
+        int iduser = userFacade.getCurrentUser().getId();
+    
+        // Utilisez la fonction getDefaultCard pour obtenir l'ID de la carte par défaut actuelle
+        int currentDefaultCardId = getDefaultCard();
+        
+        // On récup l'id de la carte selectionné
+        String sql = "SELECT idcard FROM public.card WHERE card_number = ? AND iduser = ?";
+    
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, selectedDefaultCard);
+            preparedStatement.setInt(2, iduser);
+    
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int new_idcard = resultSet.getInt("idcard");
+    
+                    // Vérifiez si la nouvelle carte est la carte par défaut actuelle
+                    if (new_idcard == currentDefaultCardId) {
+                        // Si c'est le cas, mettez à jour le wallet pour que la carte par défaut soit nulle
+                        String updateWalletSql = "UPDATE wallet SET iddefaultcard = NULL WHERE iduser = ?";
+    
+                        try (PreparedStatement updateWalletStatement = connection.prepareStatement(updateWalletSql)) {
+                            updateWalletStatement.setInt(1, iduser);
+    
+                            // Utilisez executeUpdate pour les requêtes de mise à jour
+                            int affectedRows = updateWalletStatement.executeUpdate();
+    
+                            if (affectedRows > 0) {
+                                System.out.println("Default card set to null in wallet.");
+                            } else {
+                                System.out.println("Failed to set default card to null in wallet.");
+                            }
+                        }
+                    }
+    
+                    // Maintenant que vous avez new_idcard, vous pouvez procéder à la suppression de la carte
+                    String deleteCardSql = "DELETE FROM public.card WHERE iduser = ? AND idcard = ?";
+    
+                    try (PreparedStatement deleteCardStatement = connection.prepareStatement(deleteCardSql)) {
+                        deleteCardStatement.setInt(1, iduser);
+                        deleteCardStatement.setInt(2, new_idcard);
+    
+                        // Utilisez executeUpdate pour les requêtes de suppression
+                        int affectedRows = deleteCardStatement.executeUpdate();
+    
+                        if (affectedRows > 0) {
+                            System.out.println("Card deleted successfully.");
+                        } else {
+                            System.out.println("Failed to delete card.");
+                        }
+                    }
+                }
+            }
+    
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void modifySecretCode(int iduser, int currentSecretCode, int newSecretCode) {
+        // Validate the currentSecretCode before attempting to modify
+        
+        String updateSql = "UPDATE wallet SET secret_code = ? WHERE iduser = ? AND secret_code = ?";
+        
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateSql)) {
+            
+            preparedStatement.setInt(1, newSecretCode);
+            preparedStatement.setInt(2, iduser);
+            preparedStatement.setInt(3, currentSecretCode);
+
+            // Execute the update query
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows > 0) {
+                System.out.println("Secret Code updated successfully.");
+            } else {
+                System.out.println("Failed to update Secret Code. Please check the current code.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+
+    
+
+    @Override
+    public void chargeMoney(int amount) {
         UserFacade userFacade = UserFacade.getInstance();
         int iduser = userFacade.getCurrentUser().getId();
 
-        String sql = "DELETE FROM public.card WHERE iduser = ? AND card_number = ?";
-        
-        try (Connection connection = PostgreSQLDAOFactory.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            
-            preparedStatement.setInt(1, iduser);
-            preparedStatement.setString(2, cardNumber);
+        // Get the current balance
+        float currentBalance = getBalance();
 
-            preparedStatement.executeUpdate();
+        // Calculate the new balance after adding the amount
+        float newBalance = currentBalance + amount;
+
+        // Update the balance in the database
+        String updateBalanceSql = "UPDATE wallet SET balance = ? WHERE iduser = ?";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateBalanceSql)) {
+
+            preparedStatement.setFloat(1, newBalance);
+            preparedStatement.setInt(2, iduser);
+
+            // Execute the update query
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows > 0) {
+                System.out.println("Money charged successfully. New balance: " + newBalance);
+            } else {
+                System.out.println("Failed to charge money.");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
+    
 
 
 

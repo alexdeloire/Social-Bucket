@@ -75,7 +75,7 @@ CREATE TABLE wallet (
 	iduser INT NOT NULL,
     
 	FOREIGN KEY (iduser) REFERENCES "user"(iduser) ON DELETE CASCADE,
-    FOREIGN KEY (iddefaultcard) REFERENCES "card"(idcard) ON DELETE CASCADE
+    FOREIGN KEY (iddefaultcard) REFERENCES "card"(idcard) 
 );
 INSERT INTO "user" (username, mail, "password") 
 VALUES ('u1', 'utilisateur1@example.com', 'mdp1');

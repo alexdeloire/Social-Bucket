@@ -110,8 +110,7 @@ public class CardsController {
 
     private void loadCards() {
         WalletFacade walletFacade = WalletFacade.getInstance();
-        List<Card> cards = walletFacade.getCurrentWallet().getCards();
-        System.out.println(cards.size());
+        List<Card> cards = walletFacade.getCurrentCards();
         if (cards != null){
             cardContainer.getChildren().clear();
 
