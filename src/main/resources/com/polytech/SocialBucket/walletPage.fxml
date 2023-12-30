@@ -5,6 +5,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 
+
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="com.polytech.SocialBucket.UI.WalletController"
@@ -20,9 +21,12 @@
     <Label fx:id="moneyInWallet" GridPane.rowIndex="5" GridPane.halignment="CENTER" />
 
     <!-- Quatrième ligne -->
-    <Button text="Top Up My Wallet"  GridPane.rowIndex="6" GridPane.halignment="CENTER" />
+    <Button text="Top Up My Wallet" onAction="#handleChargePopup" GridPane.rowIndex="6" GridPane.halignment="CENTER" />
 
     <!-- Cinquième ligne -->
     <Button text="My Cards" onAction="#handleOpenCardsPopup"  GridPane.rowIndex="7" GridPane.halignment="CENTER" />
+
+    <!-- Cinquième ligne -->
+    <Button text="Parameters" onAction="#handleOpenParametersPopup"  GridPane.rowIndex="8" GridPane.halignment="CENTER" />
 
 </GridPane>

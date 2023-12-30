@@ -44,9 +44,29 @@ public class WalletController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/cardsPopup.fxml"));
             Parent root = loader.load();
         
+            Stage cardsPopupStage = new Stage();
+            cardsPopupStage.initModality(Modality.APPLICATION_MODAL);
+            cardsPopupStage.setTitle("Cards Popup ");
+    
+            Scene scene = new Scene(root);
+            cardsPopupStage.setScene(scene);
+    
+            cardsPopupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Gestion de l'exception
+        }
+    }
+
+    @FXML
+    private void handleOpenParametersPopup(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/parametersPopup.fxml"));
+            Parent root = loader.load();
+        
             Stage parametersPopupStage = new Stage();
             parametersPopupStage.initModality(Modality.APPLICATION_MODAL);
-            parametersPopupStage.setTitle("Cards Popup ");
+            parametersPopupStage.setTitle("Parameters Popup ");
     
             Scene scene = new Scene(root);
             parametersPopupStage.setScene(scene);
@@ -56,6 +76,27 @@ public class WalletController {
             e.printStackTrace();
             // Gestion de l'exception
         }
+    }
+
+    @FXML
+    private void handleChargePopup(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/chargePopup.fxml"));
+            Parent root = loader.load();
+        
+            Stage chargePopupStage = new Stage();
+            chargePopupStage.initModality(Modality.APPLICATION_MODAL);
+            chargePopupStage.setTitle("Charge Popup ");
+    
+            Scene scene = new Scene(root);
+            chargePopupStage.setScene(scene);
+    
+            chargePopupStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Gestion de l'exception
+        }
+        updateMoneyWallet();
     }
 
 

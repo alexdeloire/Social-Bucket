@@ -3,6 +3,7 @@ package com.polytech.SocialBucket.Persistence;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.polytech.SocialBucket.Logic.Card;
 import com.polytech.SocialBucket.Logic.Comment;
 import com.polytech.SocialBucket.Logic.Post;
 import com.polytech.SocialBucket.Logic.Reaction;
@@ -24,8 +25,12 @@ public abstract class WalletDAO {
  public abstract float getBalance();
  public abstract Wallet getCurrentWallet() ;
  public abstract void addCard(String cardNumber, String holder, String cvc, LocalDate dateThru);
-
+ public abstract List<Card> cardsByUser( int iduser);
  public abstract void deleteCard(String cardNumber);
+ public abstract void modifyDefaultCard(String selectedCardNumber);
+ public abstract void modifySecretCode(int iduser,int currentSecretCode, int newSecretCode);
+
+ public abstract void chargeMoney(int amount) ;
 
 
  
