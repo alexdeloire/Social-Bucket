@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
+import com.polytech.SocialBucket.UI.FXRouter;
+
 public class SidebarController {
 
     
@@ -46,6 +48,15 @@ public class SidebarController {
 
             // Définir la page du portefeuille comme contenu principal
             mainContent.setCenter(infosPage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void changeToChat() {
+        try {
+            FXRouter.goTo("clientConsole");
         } catch (IOException e) {
             e.printStackTrace();
         }
