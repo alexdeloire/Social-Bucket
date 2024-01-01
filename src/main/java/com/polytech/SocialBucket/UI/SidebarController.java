@@ -1,6 +1,5 @@
 package com.polytech.SocialBucket.UI;
 
-
 import java.io.IOException;
 
 import javafx.fxml.FXML;
@@ -15,7 +14,6 @@ import com.polytech.SocialBucket.UI.FXRouter;
 
 public class SidebarController {
 
-    
     @FXML
     private BorderPane mainContent;
 
@@ -29,7 +27,8 @@ public class SidebarController {
         // Logique pour changer le contenu vers la page Wallet
         try {
             // Charger la page du portefeuille depuis le fichier FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/walletPage.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/polytech/SocialBucket/Wallet/walletPage.fxml"));
             GridPane walletPage = loader.load();
 
             // Définir la page du portefeuille comme contenu principal
@@ -43,7 +42,8 @@ public class SidebarController {
     private void changeToInfos() {
         try {
             // Charger la page du portefeuille depuis le fichier FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/infosPage.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/polytech/SocialBucket/profile/infosPage.fxml"));
             GridPane infosPage = loader.load();
 
             // Définir la page du portefeuille comme contenu principal
@@ -66,9 +66,9 @@ public class SidebarController {
     private void changeToMain() {
         try {
             FXRouter.goTo("profile");
-           } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-           }
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.polytech.SocialBucket.Persistence;
 
 import com.polytech.SocialBucket.Logic.User;
+import com.polytech.SocialBucket.Persistence.PostgreSQLDAO.PostgreSQLUserDAO;
 
 // Singleton Design Pattern
 public abstract class UserDAO {

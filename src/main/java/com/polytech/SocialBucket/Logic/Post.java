@@ -2,6 +2,7 @@ package com.polytech.SocialBucket.Logic;
 
 import javafx.scene.image.Image;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +15,14 @@ public class Post {
  private String fileName;
  private User user;
  private int id;
+ private byte[] bytes;
 
  private List<Reaction> reactions;
 
  // Constructeur
- public Post(String text, String type, File file, String fileName, User user, int id) {
+ public Post(String text, String type, User user, int id) {
   this.text = text;
-  this.file = file;
   this.type = type;
-  this.fileName = fileName;
   this.user = user;
   this.id = id;
   this.reactions = new ArrayList<Reaction>();
@@ -92,5 +92,13 @@ public class Post {
 
  public void setFileName(String fileName) {
   this.fileName = fileName;
+ }
+
+ public byte[] getBytes() {
+  return bytes;
+ }
+
+ public void setBytes(byte[] bytes) {
+  this.bytes = bytes;
  }
 }

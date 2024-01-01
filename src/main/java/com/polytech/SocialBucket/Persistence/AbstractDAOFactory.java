@@ -1,5 +1,7 @@
 package com.polytech.SocialBucket.Persistence;
 
+import com.polytech.SocialBucket.Persistence.PostgreSQLDAO.PostgreSQLDAOFactory;
+
 // Abstract Factory Design Pattern
 // Singleton Design Pattern
 public abstract class AbstractDAOFactory {
@@ -21,12 +23,12 @@ public abstract class AbstractDAOFactory {
     return PostDAO.getPostDAO();
   };
 
-  public CommentDAO getCommentDAO(){
+  public CommentDAO getCommentDAO() {
     return CommentDAO.getCommentDAO();
   }
 
-public WalletDAO getWalletDAO() {
+  public WalletDAO getWalletDAO() {
     return WalletDAO.getWalletDAO();
-}
+  }
 
 }
