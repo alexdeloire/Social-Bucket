@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 
 import com.polytech.SocialBucket.Logic.Post;
 import com.polytech.SocialBucket.Logic.User;
+import com.polytech.SocialBucket.Persistence.PostgreSQLDAO.PostgreSQLPostDAO;
 import com.polytech.SocialBucket.Logic.Reaction;
 
 // Singleton Design Pattern
