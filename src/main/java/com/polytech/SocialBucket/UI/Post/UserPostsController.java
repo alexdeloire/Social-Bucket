@@ -199,6 +199,7 @@ public class UserPostsController {
         Label textLabel = new Label("" + post.getText());
         textLabel.setWrapText(true);
         textLabel.setMaxWidth(250);
+        textLabel.setMinWidth(250);
         textLabel.setMinHeight(Region.USE_PREF_SIZE);
 
         // Ajouter les éléments à la grille
