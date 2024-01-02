@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class RegisterController {
-    
+
     @FXML
     private TextField mailField;
 

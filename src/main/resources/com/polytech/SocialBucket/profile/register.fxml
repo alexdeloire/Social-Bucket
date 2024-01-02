@@ -77,7 +77,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="101.0" layoutY="377.0" onAction="#goToLogin" prefHeight="39.0" prefWidth="198.0" style="-fx-background-color: transparent;" text="already an account ?">
+            <Button layoutX="101.0" layoutY="377.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#goToLogin" prefHeight="39.0" prefWidth="198.0" style="-fx-background-color: transparent;" text="already an account ?">
                <font>
                   <Font size="18.0" />
                </font>
@@ -85,7 +85,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Label fx:id="statusLabel" layoutX="99.0" layoutY="304.0" prefHeight="25.0" prefWidth="204.0" textFill="#a10000">
+            <Label fx:id="statusLabel" layoutX="99.0" layoutY="304.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="204.0" textFill="#a10000">
                <font>
                   <Font name="System Italic" size="16.0" />
                </font>

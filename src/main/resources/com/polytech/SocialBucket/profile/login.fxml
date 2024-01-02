@@ -33,7 +33,7 @@
                <font>
                   <Font name="System Bold" size="18.0" />
                </font></Button>
-            <Button layoutX="118.0" layoutY="357.0" onAction="#goToRegister" style="-fx-background-color: transparent;" text="create an account">
+            <Button layoutX="118.0" layoutY="357.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#goToRegister" prefHeight="39.0" prefWidth="165.0" style="-fx-background-color: transparent;" text="create an account">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
