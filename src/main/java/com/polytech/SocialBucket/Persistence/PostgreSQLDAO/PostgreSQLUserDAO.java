@@ -32,6 +32,11 @@ public class PostgreSQLUserDAO extends UserDAO {
 
                     // Create a new User object
                     user = new User(usernameDB, mail, password, id);
+
+                    // Get the number of followers
+                    user.setNbFollowers(getNbFollowersById(id));
+                    // Get the number of following
+                    user.setNbFollowing(getNbFollowingById(id));
                 }
             }
 
@@ -130,6 +135,11 @@ public class PostgreSQLUserDAO extends UserDAO {
 
                     // Create a new User object
                     user = new User(usernameDB, mail, password, id);
+
+                    // Get the number of followers
+                    user.setNbFollowers(getNbFollowersById(id));
+                    // Get the number of following
+                    user.setNbFollowing(getNbFollowingById(id));
                 }
             }
 
@@ -138,5 +148,108 @@ public class PostgreSQLUserDAO extends UserDAO {
         }
 
         return user;
+    }
+
+
+    public int getNbFollowersById(int id) {
+        int nbFollowers = 0;
+        String sql = "SELECT COUNT(*) FROM public.follow WHERE idfollowed = ?";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Get the data from the row
+                    nbFollowers = resultSet.getInt("count");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nbFollowers;
+    }
+
+    public boolean followUser(int iduser, int idFollowed) {
+        String sql = "INSERT INTO public.follow (iduser, idfollowed) VALUES (?, ?)";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, iduser);
+            preparedStatement.setInt(2, idFollowed);
+
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean unfollowUser(int iduser, int idFollowed) {
+        String sql = "DELETE FROM public.follow WHERE iduser = ? AND idfollowed = ?";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, iduser);
+            preparedStatement.setInt(2, idFollowed);
+
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean isFollowing(int iduser, int idFollowed) {
+        String sql = "SELECT * FROM public.follow WHERE iduser = ? AND idfollowed = ?";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, iduser);
+            preparedStatement.setInt(2, idFollowed);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public int getNbFollowingById(int id) {
+        int nbFollowing = 0;
+        String sql = "SELECT COUNT(*) FROM public.follow WHERE iduser = ?";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Get the data from the row
+                    nbFollowing = resultSet.getInt("count");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nbFollowing;
     }
 }

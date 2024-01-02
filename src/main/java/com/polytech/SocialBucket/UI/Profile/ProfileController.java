@@ -20,6 +20,12 @@ public class ProfileController {
     private Label usernameLabel;
 
     @FXML
+    private Label followingLabel;
+
+    @FXML
+    private Label followersLabel;
+
+    @FXML
     private void initialize() {
         // init name
         User user = UserFacade.getInstance().getCurrentUser();
@@ -30,6 +36,10 @@ public class ProfileController {
         String name = user.getUsername();
         System.out.println(name);
         usernameLabel.setText(name);
+        int nbFollowing = user.getNbFollowing();
+        int nbFollowers = user.getNbFollowers();
+        followingLabel.setText("Following: " + nbFollowing);
+        followersLabel.setText("Followers: " + nbFollowers);
     }
 
     @FXML

@@ -25,4 +25,14 @@ public abstract class UserDAO {
 
     public abstract User getUserById(int id);
 
+    public abstract int getNbFollowersById(int id);
+
+    public abstract int getNbFollowingById(int id);
+
+    public abstract boolean followUser(int idUser, int idUserToFollow);
+
+    public abstract boolean unfollowUser(int idUser, int idUserToUnfollow);
+
+    public abstract boolean isFollowing(int idUser, int idUserToFollow);
+
 }
