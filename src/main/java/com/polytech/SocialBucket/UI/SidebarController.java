@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
-import com.polytech.SocialBucket.UI.FXRouter;
 
 public class SidebarController {
 
@@ -28,7 +27,7 @@ public class SidebarController {
         try {
             // Charger la page du portefeuille depuis le fichier FXML
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/polytech/SocialBucket/Wallet/walletPage.fxml"));
+                    getClass().getResource("/com/polytech/SocialBucket/wallet/walletPage.fxml"));
             GridPane walletPage = loader.load();
 
             // Définir la page du portefeuille comme contenu principal
