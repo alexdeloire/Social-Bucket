@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS "reactioncomment" CASCADE;
 DROP TABLE IF EXISTS "card" CASCADE;
 DROP TABLE IF EXISTS "wallet" CASCADE;
 DROP TABLE IF EXISTS "advertising" CASCADE;
+DROP TABLE IF EXISTS "follow" CASCADE;
 
 CREATE TABLE "user" (
     iduser SERIAL PRIMARY KEY,
@@ -98,4 +99,13 @@ VALUES (
     100.0,
     (SELECT iduser FROM "user" WHERE username = 'u1'),
     123
+);
+
+
+CREATE TABLE follow (
+    iduser INT NOT NULL,
+    idfollowed INT NOT NULL,
+    PRIMARY KEY (iduser, idfollowed),
+    FOREIGN KEY (iduser) REFERENCES "user"(iduser) ON DELETE CASCADE,
+    FOREIGN KEY (idfollowed) REFERENCES "user"(iduser) ON DELETE CASCADE
 );
