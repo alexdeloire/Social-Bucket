@@ -39,7 +39,7 @@ public class WalletController {
     private void openCardsPopup() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/polytech/SocialBucket/wallet/cardsPopup.fxml"));
+                    getClass().getResource("/com/polytech/SocialBucket/wallet/cardsPopUp.fxml"));
             Parent root = loader.load();
 
             Stage cardsPopupStage = new Stage();
@@ -81,7 +81,7 @@ public class WalletController {
     private void handleChargePopup() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/polytech/SocialBucket/wallet/chargePopup.fxml"));
+                    getClass().getResource("/com/polytech/SocialBucket/wallet/chargePopUp.fxml"));
             Parent root = loader.load();
 
             Stage chargePopupStage = new Stage();
