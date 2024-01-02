@@ -14,8 +14,6 @@ import javafx.scene.layout.GridPane;
 
 public class LoginController {
 
-    @FXML
-    private GridPane gridPane;
 
     @FXML
     private TextField nameField;
