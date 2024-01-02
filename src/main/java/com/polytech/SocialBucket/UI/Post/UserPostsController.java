@@ -143,22 +143,30 @@ public class UserPostsController {
         Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(event -> handleDeletePost(post.getId()));
 
-        Button likeButton = new Button();
-        ImageView likeImageView = new ImageView(
-                new Image(getClass().getResource("/com/polytech/SocialBucket/UI/Icones/heart.png").toExternalForm()));
-        likeImageView.setFitWidth(20); // Définir la largeur souhaitée
-        likeImageView.setFitHeight(20); // Définir la hauteur souhaitée
-        likeButton.setGraphic(likeImageView);
-        likeButton.setStyle("-fx-background-color: transparent; -fx-border-width: 0;");
-
-        Button heartButton = new Button();
-        ImageView heartImageView = new ImageView(
-                new Image(getClass().getResource("/com/polytech/SocialBucket/UI/Icones/heart.png").toExternalForm()));
-        heartImageView.setFitWidth(20); // Définir la largeur souhaitée
-        heartImageView.setFitHeight(20); // Définir la hauteur souhaitée
-        heartButton.setGraphic(heartImageView);
-        heartButton.setStyle("-fx-background-color: transparent; -fx-border-width: 0;");
-
+        Button likeButton = new Button("Like");
+        /*
+         * ImageView likeImageView = new ImageView(
+         * new
+         * Image(getClass().getResource("/com/polytech/SocialBucket/UI/Icones/heart.png"
+         * ).toExternalForm()));
+         * likeImageView.setFitWidth(20); // Définir la largeur souhaitée
+         * likeImageView.setFitHeight(20); // Définir la hauteur souhaitée
+         * likeButton.setGraphic(likeImageView);
+         * likeButton.setStyle("-fx-background-color: transparent; -fx-border-width: 0;"
+         * );
+         */
+        Button heartButton = new Button("Heart");
+        /*
+         * ImageView heartImageView = new ImageView(
+         * new
+         * Image(getClass().getResource("/com/polytech/SocialBucket/UI/Icones/heart.png"
+         * ).toExternalForm()));
+         * heartImageView.setFitWidth(20); // Définir la largeur souhaitée
+         * heartImageView.setFitHeight(20); // Définir la hauteur souhaitée
+         * heartButton.setGraphic(heartImageView);
+         * heartButton.
+         * setStyle("-fx-background-color: transparent; -fx-border-width: 0;");
+         */
         heartButton.setOnAction(event -> handleAddReaction(post, "heart"));
         likeButton.setOnAction(event -> handleAddReaction(post, "like"));
 
