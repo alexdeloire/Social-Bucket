@@ -1,8 +1,5 @@
 package com.polytech.SocialBucket.Logic;
 
-import javafx.scene.image.Image;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +7,6 @@ import java.util.List;
 public class Post {
 
  private String text;
- private File file;
  private String type;
  private String fileName;
  private User user;
@@ -60,14 +56,6 @@ public class Post {
 
  public void setType(String type) {
   this.type = type;
- }
-
- public File getFile() {
-  return file;
- }
-
- public void setFile(File file) {
-  this.file = file;
  }
 
  public User getUser() {

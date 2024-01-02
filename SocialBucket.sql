@@ -5,12 +5,13 @@ DROP TABLE IF EXISTS "user" CASCADE;
 DROP TABLE IF EXISTS "reactioncomment" CASCADE;
 DROP TABLE IF EXISTS "card" CASCADE;
 DROP TABLE IF EXISTS "wallet" CASCADE;
+DROP TABLE IF EXISTS "advertising" CASCADE;
 
 CREATE TABLE "user" (
     iduser SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     mail VARCHAR(100) NOT NULL,
-    "password" VARCHAR(50) NOT NULL
+    "password" VARCHAR(50) NOT NULL,
 );
 
 CREATE TABLE "post" (
@@ -77,6 +78,18 @@ CREATE TABLE wallet (
 	FOREIGN KEY (iduser) REFERENCES "user"(iduser) ON DELETE CASCADE,
     FOREIGN KEY (iddefaultcard) REFERENCES "card"(idcard) 
 );
+
+CREATE TABLE advertising (
+    idadvertising SERIAL PRIMARY KEY,
+    iduser INT NOT NULL,
+    begin_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    image BYTEA NOT NULL,
+    link VARCHAR(255) NOT NULL,
+    text VARCHAR(255) NOT NULL,
+    FOREIGN KEY (iduser) REFERENCES "user"(iduser) ON DELETE CASCADE
+)
+
 INSERT INTO "user" (username, mail, "password") 
 VALUES ('u1', 'utilisateur1@example.com', 'mdp1');
 

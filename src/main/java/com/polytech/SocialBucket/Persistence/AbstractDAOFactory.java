@@ -31,4 +31,8 @@ public abstract class AbstractDAOFactory {
     return WalletDAO.getWalletDAO();
   }
 
+  public AdvertisingDAO getAdvertisingDAO() {
+    return AdvertisingDAO.getAdvertisingDAO();
+  }
+
 }
