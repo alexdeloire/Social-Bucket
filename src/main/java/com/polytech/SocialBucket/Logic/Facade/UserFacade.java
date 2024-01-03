@@ -10,6 +10,7 @@ public class UserFacade {
 
     private static UserFacade userFacade;
     private User currentUser;
+    private User currentViewedUser;
 
     public static UserFacade getInstance() {
         if (userFacade == null) {
@@ -20,6 +21,14 @@ public class UserFacade {
 
     public User getCurrentUser() {
         return this.currentUser;
+    }
+
+    public User getCurrentViewedUser() {
+        return this.currentViewedUser;
+    }
+
+    public void setCurrentViewedUser(User user) {
+        this.currentViewedUser = user;
     }
 
     public User login(String username, String password) {
