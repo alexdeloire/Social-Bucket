@@ -19,6 +19,7 @@ public class Controller extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Initialize FXRouter
+        primaryStage.setResizable(false);
         FXRouter.bind(this, primaryStage, "Social Bucket", 900, 600);
 
         // Set routes for the application
