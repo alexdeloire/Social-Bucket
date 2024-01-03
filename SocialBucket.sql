@@ -12,7 +12,7 @@ CREATE TABLE "user" (
     iduser SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     mail VARCHAR(100) NOT NULL,
-    "password" VARCHAR(50) NOT NULL,
+    "password" VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE "post" (
@@ -89,7 +89,7 @@ CREATE TABLE advertising (
     link VARCHAR(255) NOT NULL,
     text VARCHAR(255) NOT NULL,
     FOREIGN KEY (iduser) REFERENCES "user"(iduser) ON DELETE CASCADE
-)
+);
 
 INSERT INTO "user" (username, mail, "password") 
 VALUES ('u1', 'utilisateur1@example.com', 'mdp1');
