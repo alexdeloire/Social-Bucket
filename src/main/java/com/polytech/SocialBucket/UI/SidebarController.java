@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.GridPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,11 +15,22 @@ import javafx.scene.layout.BorderPane;
 public class SidebarController {
 
     @FXML
-    private BorderPane mainContent;
+    private Pane mainContent;
 
     @FXML
     private void initialize() {
         // Vous pouvez effectuer des initialisations ici si nécessaire
+        try {
+            // Charger la page du portefeuille depuis le fichier FXML
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/polytech/SocialBucket/profile/profile.fxml"));
+            Pane walletPage = loader.load();
+            walletPage.setPrefWidth(720);
+            // Définir la page du portefeuille comme contenu principal
+            mainContent.getChildren().add(walletPage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -31,7 +43,7 @@ public class SidebarController {
             GridPane walletPage = loader.load();
 
             // Définir la page du portefeuille comme contenu principal
-            mainContent.setCenter(walletPage);
+            mainContent.getChildren().add(walletPage);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,7 +58,7 @@ public class SidebarController {
             GridPane infosPage = loader.load();
 
             // Définir la page du portefeuille comme contenu principal
-            mainContent.setCenter(infosPage);
+            mainContent.getChildren().add(infosPage);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,7 +71,7 @@ public class SidebarController {
                     getClass().getResource("/com/polytech/SocialBucket/advertising/userAdvertisings.fxml"));
             GridPane advertisingPage = loader.load();
 
-            mainContent.setCenter(advertisingPage);
+            mainContent.getChildren().add(advertisingPage);
         } catch (IOException e) {
             e.printStackTrace();
         }

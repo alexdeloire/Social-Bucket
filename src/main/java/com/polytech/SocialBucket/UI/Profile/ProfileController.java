@@ -14,9 +14,6 @@ import javafx.scene.layout.GridPane;
 public class ProfileController {
 
     @FXML
-    private GridPane gridPane;
-
-    @FXML
     private Label usernameLabel;
 
     @FXML
