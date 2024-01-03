@@ -53,9 +53,31 @@ public class SidebarController {
     }
 
     @FXML
+    public void changeToAdvertising() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/polytech/SocialBucket/advertising/userAdvertisings.fxml"));
+            GridPane advertisingPage = loader.load();
+
+            mainContent.setCenter(advertisingPage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void changeToChat() {
         try {
             FXRouter.goTo("clientConsole");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void changeToSearchUsers() {
+        try {
+            FXRouter.goTo("searchUsers");
         } catch (IOException e) {
             e.printStackTrace();
         }

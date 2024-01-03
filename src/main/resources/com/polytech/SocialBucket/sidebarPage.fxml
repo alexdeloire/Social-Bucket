@@ -12,7 +12,9 @@
         <VBox spacing="10">
             <Button text="Wallet" onAction="#changeToWallet" />
             <Button text="Infos" onAction="#changeToInfos" />
+            <Button text="Advertising" onAction="#changeToAdvertising" />
             <Button text="Chat" onAction="#changeToChat" />
+            <Button text="Search Users" onAction="#changeToSearchUsers" />
             <Button text="Retour" onAction="#changeToMain" />
         </VBox>
     </left>
