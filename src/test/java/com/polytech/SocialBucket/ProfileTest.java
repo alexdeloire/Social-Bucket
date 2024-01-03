@@ -48,4 +48,19 @@ public class ProfileTest {
         assertTrue(shouldBeNull == null);
     }
 
+
+    // /**
+    //  * Follow/Unfollow test
+    //  */
+    // @Test
+    // public void testFollow() {
+
+    //     // User 1
+    //     String username = "u1";
+    //     // User 2
+    //     String username2 = "u2";
+
+
+
+
 }

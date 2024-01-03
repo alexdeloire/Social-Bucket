@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Persistence.UserDAO;
 
@@ -252,4 +255,43 @@ public class PostgreSQLUserDAO extends UserDAO {
 
         return nbFollowing;
     }
+
+    public List<User> searchUsers(String query) {
+        String sql = "SELECT * FROM public.\"user\" WHERE username LIKE ?";
+        List<User> users = new ArrayList<>();
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, "%" + query + "%");
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    // Get the data from the row
+                    String usernameDB = resultSet.getString("username");
+                    String mail = resultSet.getString("mail");
+                    String password = resultSet.getString("password");
+                    int id = resultSet.getInt("iduser");
+
+                    // Create a new User object
+                    User user = new User(usernameDB, mail, password, id);
+
+                    // Get the number of followers
+                    user.setNbFollowers(getNbFollowersById(id));
+                    // Get the number of following
+                    user.setNbFollowing(getNbFollowingById(id));
+
+                    users.add(user);
+                }
+
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return users;
+    }
+
 }

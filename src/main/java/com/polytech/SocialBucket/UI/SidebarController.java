@@ -75,6 +75,15 @@ public class SidebarController {
     }
 
     @FXML
+    private void changeToSearchUsers() {
+        try {
+            FXRouter.goTo("searchUsers");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void changeToMain() {
         try {
             FXRouter.goTo("profile");

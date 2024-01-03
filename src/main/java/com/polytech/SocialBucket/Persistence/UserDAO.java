@@ -2,6 +2,7 @@ package com.polytech.SocialBucket.Persistence;
 
 import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Persistence.PostgreSQLDAO.PostgreSQLUserDAO;
+import java.util.List;
 
 // Singleton Design Pattern
 public abstract class UserDAO {
@@ -35,4 +36,5 @@ public abstract class UserDAO {
 
     public abstract boolean isFollowing(int idUser, int idUserToFollow);
 
+    public abstract List<User> searchUsers(String query);
 }
