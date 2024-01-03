@@ -61,10 +61,4 @@ public class PostFacade {
   return postDAO.deleteReaction(typeReaction, post, user);
  }
 
- public List<Reaction> getReactions(Post post) {
-  AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
-  PostDAO postDAO = factory.getPostDAO();
-  return null;
- }
-
 }
