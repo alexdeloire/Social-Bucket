@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox prefWidth="625.0" style="-fx-background-radius: 20; -fx-background-color: #f5f3f0; -fx-border-color: #d3d2ce; -fx-border-width: 2; -fx-border-radius: 12;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.Post.PostComponent">
+   <children>
+      <HBox maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #e3e2de; -fx-background-radius: 10 10 0 0;">
+         <children>
+            <Label fx:id="username" text="user">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Pane prefHeight="30.0" prefWidth="75.0">
+               <children>
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDeletePost" style="-fx-background-color: #850900; -fx-background-radius: 15;" text="Delete" textFill="WHITE" visible="false">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="50.0" top="5.0" />
+         </padding>
+      </HBox>
+      <HBox minWidth="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox prefWidth="100.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="description" prefWidth="413.0" text="Description" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefWidth="400.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Pane visible="false" HBox.hgrow="ALWAYS" />
+                        <Pane fx:id="imageBox" minHeight="-Infinity" prefHeight="0.0" prefWidth="400.0" style="-fx-border-color: #d3d2ce; -fx-background-color: white; -fx-border-radius: 20; -fx-background-radius: 20;" visible="false">
+                           <children>
+                              <ImageView fx:id="imageContainer" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Pane visible="false" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="fileBox" prefHeight="0.0" prefWidth="200.0" style="-fx-background-color: transparent;" visible="false" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="filenameLabel" text="filename">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="downloadButton" mnemonicParsing="false" onAction="#handleFileDownload" style="-fx-background-color: #078500; -fx-background-radius: 15;" text="Download" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="60.0" right="60.0" top="15.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox maxHeight="-Infinity" minHeight="50.0" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #e3e2de; -fx-background-radius: 0 0 10 10;">
+         <children>
+            <HBox minWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" spacing="5.0" style="-fx-background-color: transparent;">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#handleAddHeart" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                           <image>
+                              <Image url="file:src/main/java/com/polytech/SocialBucket/UI/Icones/heart.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Label fx:id="heartNumber" text="0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#handleAddLike" style="-fx-background-color: transparent;">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:src/main/java/com/polytech/SocialBucket/UI/Icones/like.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Label fx:id="likeNumber" text="0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#openComment" style="-fx-background-color: transparent;">
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:src/main/java/com/polytech/SocialBucket/UI/Icones/comment.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+            <Pane style="-fx-background-color: #e3e2de;" HBox.hgrow="ALWAYS" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>

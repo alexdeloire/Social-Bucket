@@ -235,6 +235,7 @@ public class UserPostsController {
         }
     }
 
+
     private void handleAddReaction(Post post, String typeReaction) {
         Boolean addSucces = postFacade.addReaction(typeReaction, post, userFacade.getCurrentUser());
         // Mettez ici votre logique d'ajout de réaction au post en utilisant postId
