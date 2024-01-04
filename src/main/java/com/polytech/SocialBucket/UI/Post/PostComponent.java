@@ -32,7 +32,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class PostComponent{
+public class PostComponent {
 
     @FXML
     private Label likeNumber;
@@ -64,11 +64,9 @@ public class PostComponent{
     @FXML
     private Button deleteButton;
 
-
     private Post post;
     private UserFacade userFacade = UserFacade.getInstance();
     private PostFacade postFacade = PostFacade.getInstance();
-
 
     private boolean hasLiked = false;
     private boolean hasHearted = false;
@@ -82,7 +80,7 @@ public class PostComponent{
 
     }
 
-    //take a post and a function to refresh the posts
+    // take a post and a function to refresh the posts
     public void loadPost(Post post, Runnable refreshPosts, boolean isCurrentUser) {
 
         this.post = post;
@@ -99,7 +97,6 @@ public class PostComponent{
             deleteButton.setVisible(true);
         }
 
-
         byte[] fileBytes = post.getBytes();
 
         if ("image".equalsIgnoreCase(post.getType()) && fileBytes != null) {
@@ -114,17 +111,15 @@ public class PostComponent{
             } else {
                 imageBox.setPrefHeight(400);
             }
-        } else if ("file".equalsIgnoreCase(post.getType()) && fileBytes != null){
+        } else if ("file".equalsIgnoreCase(post.getType()) && fileBytes != null) {
             fileBox.setVisible(true);
             fileBox.setPrefHeight(50);
             filenameLabel.setText(post.getFileName());
         }
 
-
     }
 
-
-    private void actualizeReaction(){
+    private void actualizeReaction() {
         int numberOfLikes = 0;
         int numberOfHearts = 0;
 
@@ -142,14 +137,17 @@ public class PostComponent{
         likeNumber.setText(String.valueOf(numberOfLikes));
         heartNumber.setText(String.valueOf(numberOfHearts));
 
-        if (reactions.stream().anyMatch(reaction -> "like".equalsIgnoreCase(reaction.getType()))) {
+        User currentUser = userFacade.getCurrentUser();
+
+        if (reactions.stream().anyMatch(reaction -> "like".equalsIgnoreCase(reaction.getType())
+                && currentUser.getId() == reaction.getIduser())) {
             hasLiked = true;
         }
-        if (reactions.stream().anyMatch(reaction -> "heart".equalsIgnoreCase(reaction.getType()))) {
+        if (reactions.stream().anyMatch(reaction -> "heart".equalsIgnoreCase(reaction.getType())
+                && currentUser.getId() == reaction.getIduser())) {
             hasHearted = true;
         }
     }
-
 
     @FXML
     private void handleFileDownload() {
@@ -175,7 +173,7 @@ public class PostComponent{
     }
 
     @FXML
-    private void handleAddHeart(){
+    private void handleAddHeart() {
         if (hasHearted) {
             Boolean deleteSucces = deleteReaction("heart");
             if (deleteSucces) {
@@ -191,9 +189,8 @@ public class PostComponent{
         }
     }
 
-
     @FXML
-    private void handleAddLike(){
+    private void handleAddLike() {
         if (hasLiked) {
             Boolean deleteSucces = deleteReaction("like");
             if (deleteSucces) {
@@ -209,22 +206,18 @@ public class PostComponent{
         }
     }
 
-
-    private boolean addReaction(String typeReaction){
+    private boolean addReaction(String typeReaction) {
         Boolean addSucces = postFacade.addReaction(typeReaction, post, userFacade.getCurrentUser());
         return addSucces;
     }
 
-    private boolean deleteReaction(String typeReaction){
+    private boolean deleteReaction(String typeReaction) {
         Boolean deleteSucces = postFacade.deleteReaction(typeReaction, post, userFacade.getCurrentUser());
         return deleteSucces;
     }
 
-
-
-
     @FXML
-    private void openComment(){
+    private void openComment() {
         // a modifier
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -249,7 +242,7 @@ public class PostComponent{
     }
 
     @FXML
-    private void handleDeletePost(){
+    private void handleDeletePost() {
         Boolean deleteSucces = postFacade.deletePost(post.getId());
         if (deleteSucces) {
             System.out.println("Post deleted");

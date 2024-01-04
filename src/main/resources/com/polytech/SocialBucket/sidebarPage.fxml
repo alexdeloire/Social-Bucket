@@ -43,6 +43,13 @@
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
+      <Button onAction="#changeToLogin" style="-fx-background-color: transparent;" text="Logout" underline="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Button>
    </children>
    <padding>
       <Insets left="5.0" top="30.0" />
