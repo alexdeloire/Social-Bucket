@@ -53,6 +53,11 @@ public class EchoServer implements Observer
     this.observableServer = new ObservableOriginatorServer(port);
     observableServer.addObserver(this);
     this.serverUI = serverUI;
+    try {
+        observableServer.listen();
+      } catch (Exception e) {
+        serverUI.display("ERROR - Could not listen for clients!");
+      }
   }
 
   

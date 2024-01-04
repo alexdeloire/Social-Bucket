@@ -6,7 +6,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import com.polytech.SocialBucket.Chat.client.ChatClient;
 import com.polytech.SocialBucket.Chat.common.ChatIF;
-import com.polytech.SocialBucket.Chat.ServerConsole;
+import com.polytech.SocialBucket.Chat.EchoServer;
+import com.polytech.SocialBucket.Logic.User;
+import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 
 import java.io.IOException;
 
@@ -18,43 +20,57 @@ public class ClientController implements ChatIF{
     @FXML
     private TextField inputField;
 
-    // Replace this with your actual client logic
     private ChatClient client;
 
-    //private ServerConsole server;
+    // Just for development
+    private EchoServer server;
+
+    private class DisplayImpl implements ChatIF {
+        public void display(String message) {
+            System.out.println("> " + message);
+        }
+    }
 
     @FXML
     private void initialize() {
-        // Initialization code, if needed
-        //this.server = new ServerConsole(5555);
 
+        // Just for development
+        DisplayImpl display = new DisplayImpl();
 
+        // Just for development
+        this.server = new EchoServer(5555, display);
+
+        // Try to connect to server
         try {
             client = new ChatClient("localhost", 5555, this);
         } catch (IOException exception) {
             System.out.println("Error: Can't set up connection! Terminating client.");
             System.exit(1);
         }
+
+        // Login
+        UserFacade userFacade = UserFacade.getInstance();
+        User user = userFacade.getCurrentUser();
+
+        client.handleMessageFromClientUI("#login " + user.getUsername());
     }
 
     @FXML
     private void sendMessage() {
         String message = inputField.getText().trim();
+        UserFacade userFacade = UserFacade.getInstance();
+        User user = userFacade.getCurrentUser();
         if (!message.isEmpty()) {
-            // Append the sent message to the message area
-            display("You: " + message);
+            message = user.getUsername() + ": " + message;
 
-            // Replace this with your actual logic to send the message
             client.handleMessageFromClientUI(message);
             inputField.clear();
         }
     }
 
-    // This method is called by ChatClient to display received messages
     public void display(String message) {
         messageArea.appendText(message + "\n");
     }
 
-    // You can have additional methods or fields for your client logic
 }
 
