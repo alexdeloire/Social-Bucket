@@ -2,6 +2,8 @@ package com.polytech.SocialBucket.UI.OtherUsers;
 
 import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
+import com.polytech.SocialBucket.UI.FXRouter;
+
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -22,21 +24,20 @@ public class SearchUsersController {
 
     @FXML
     private TextField searchField;
-    
+
     @FXML
     private Button searchButton;
-    
+
     @FXML
     private VBox resultsContainer;
-    
+
     @FXML
     private ListView<String> userListView;
-    
+
     @FXML
     private Label noUsersLabel;
 
     private ObservableList<User> UserList = FXCollections.observableArrayList();
-
 
     @FXML
     public void searchUsers() {
@@ -98,15 +99,24 @@ public class SearchUsersController {
                 HBox userBox = new HBox(10);
                 Label usernameLabel = new Label(username);
                 Button goToProfileButton = new Button("Go to Profile");
-                goToProfileButton.setOnAction(event -> goToProfile(username));
+                User userToGoTo = UserList.stream().filter(user -> user.getUsername().equals(username)).findFirst()
+                        .orElse(null);
+                goToProfileButton.setOnAction(event -> goToProfile(userToGoTo));
                 userBox.getChildren().addAll(usernameLabel, goToProfileButton);
                 setGraphic(userBox);
             }
         }
     }
 
-    private void goToProfile(String username) {
+    private void goToProfile(User user) {
         // Implement the logic to navigate to the profile of the selected user
-        System.out.println("Navigating to the profile of: " + username);
+        System.out.println("Navigating to the profile of: " + user.getUsername());
+        UserFacade.getInstance().setCurrentViewedUser(user);
+        try {
+            FXRouter.goTo("otherUser");
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
     }
 }
