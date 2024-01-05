@@ -39,4 +39,8 @@ public abstract class WalletDAO {
 
  public abstract void chargeMoney(int amount);
 
+ public abstract boolean checkSecretCode(int iduser, int secretCode);
+
+ public abstract boolean pay(int iduser, int amount);
+
 }

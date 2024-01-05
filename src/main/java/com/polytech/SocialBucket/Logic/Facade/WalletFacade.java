@@ -79,4 +79,14 @@ public class WalletFacade {
         walletDAO.chargeMoney(amount);
     }
 
+    public boolean checkSecretCode(int iduser, int secretCode) {
+        WalletDAO walletDAO = WalletDAO.getWalletDAO();
+        return walletDAO.checkSecretCode(iduser, secretCode);
+    }
+
+    public boolean pay(int iduser, int amount) {
+        WalletDAO walletDAO = WalletDAO.getWalletDAO();
+        return walletDAO.pay(iduser, amount);
+    }
+
 }

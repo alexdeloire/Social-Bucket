@@ -26,7 +26,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -69,8 +68,6 @@ public class ProfileController {
 
     @FXML
     private Pane postContainer;
-
-
 
     private UserFacade userFacade = UserFacade.getInstance();
     private PostFacade postFacade = PostFacade.getInstance();
@@ -121,7 +118,6 @@ public class ProfileController {
 
             handleButtonNavbar(true);
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -130,12 +126,12 @@ public class ProfileController {
 
     @FXML
     private void closeNavbar() {
-            navbar.setPrefWidth(0);
-            mainContent.setPrefWidth(900);
+        navbar.setPrefWidth(0);
+        mainContent.setPrefWidth(900);
 
-            handleButtonNavbar(false);
+        handleButtonNavbar(false);
 
-            navbar.getChildren().clear();
+        navbar.getChildren().clear();
     }
 
     private void handleButtonNavbar(boolean open) {
@@ -158,7 +154,6 @@ public class ProfileController {
 
     }
 
-
     private void loadPosts() {
         // Appeler la méthode getAllPosts() du modèle ou du service
 
@@ -177,10 +172,10 @@ public class ProfileController {
         }
     }
 
-
     private VBox createPostDetails(Post post) {
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/post/postComponent.fxml"));
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/polytech/SocialBucket/post/postComponent.fxml"));
 
             VBox postContainer = loader.load();
             PostComponent controller = loader.getController();
@@ -190,10 +185,9 @@ public class ProfileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        VBox postContainer= new VBox();
+        VBox postContainer = new VBox();
         return postContainer;
     }
-
 
     // COMMENTS
 

@@ -124,7 +124,7 @@
                               <Font name="Arial" size="27.0" />
                            </font>
                         </Label>
-                        <Button onAction="#goToAddPost" prefHeight="32.0" prefWidth="60.0" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="ADD" textFill="WHITE">
+                        <Button onAction="#goToAddPost" prefHeight="32.0" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="ADD" textFill="WHITE">
                            <HBox.margin>
                               <Insets top="2.0" />
                            </HBox.margin>
