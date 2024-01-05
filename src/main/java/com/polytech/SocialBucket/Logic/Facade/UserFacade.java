@@ -68,4 +68,21 @@ public class UserFacade {
         UserDAO userDAO = factory.getUserDAO();
         return userDAO.searchUsers(query);
     }
+
+    public boolean updateUser(User user) {
+        AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+        UserDAO userDAO = factory.getUserDAO();
+        Boolean updated = userDAO.updateUser(user);
+        if (updated) {
+            this.currentUser = user;
+        }
+        return updated;
+    }
+
+    public boolean verifyPassword(int idUser, String password) {
+        AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+        UserDAO userDAO = factory.getUserDAO();
+        return userDAO.verifyPassword(idUser, password);
+    }
+
 }
