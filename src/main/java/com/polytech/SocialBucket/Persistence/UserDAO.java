@@ -37,4 +37,8 @@ public abstract class UserDAO {
     public abstract boolean isFollowing(int idUser, int idUserToFollow);
 
     public abstract List<User> searchUsers(String query);
+
+    public abstract boolean updateUser(User user);
+
+    public abstract boolean verifyPassword(int idUser, String password);
 }
