@@ -1,27 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.polytech.SocialBucket.UI.ClientController">
-
-    <center>
-        <ScrollPane>
-            <TextArea fx:id="messageArea" editable="false" />
-        </ScrollPane>
-    </center>
-
-    <bottom>
-        <HBox spacing="10">
-            <TextField fx:id="inputField" promptText="Type your message..." HBox.hgrow="ALWAYS" />
-            <Button text="Send" onAction="#sendMessage" />
-        </HBox>
-    </bottom>
-
-</BorderPane>
+<HBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.ClientController">
+   <children>
+      <HBox maxWidth="180.0" prefHeight="600.0" style="-fx-background-color: #e3e2de; -fx-border-width: 0 2 0 0; -fx-border-color: #d3d2ce;">
+         <children>
+            <Pane fx:id="navbar" maxWidth="125.0" prefHeight="600.0" prefWidth="0.0" style="-fx-background-color: #e3e2de;" />
+            <Button fx:id="closeButton" minWidth="-Infinity" onAction="#closeNavbar" prefHeight="47.0" prefWidth="55.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="file:src/main/java/com/polytech/SocialBucket/UI/Icones/hide-panel.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+      <VBox fx:id="mainContent" style="-fx-background-color: #f5f3f0;" HBox.hgrow="ALWAYS">
+         <children>
+            <HBox minHeight="-Infinity" prefHeight="60.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="openButton" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#openNavbar" prefHeight="47.0" prefWidth="54.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="file:src/main/java/com/polytech/SocialBucket/UI/Icones/show-panel.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Label alignment="CENTER" focusTraversable="false" prefWidth="100000.0" text="Global Tchat" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="Arial Bold" size="27.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets right="69.0" />
+               </padding>
+            </HBox>
+            <TextArea fx:id="messageArea" editable="false" focusTraversable="false" wrapText="true" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="17.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></TextArea>
+            <HBox minHeight="-Infinity" prefHeight="40.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: transparent;">
+               <children>
+                  <TextField fx:id="inputField" onAction="#sendMessage" promptText="Type your message..." style="-fx-background-radius: 20;" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Button minWidth="-Infinity" onAction="#sendMessage" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #0073e6;" text="Send" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>

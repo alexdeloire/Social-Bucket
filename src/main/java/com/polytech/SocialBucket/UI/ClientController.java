@@ -4,6 +4,10 @@ package com.polytech.SocialBucket.UI;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+
 import com.polytech.SocialBucket.Chat.client.ChatClient;
 import com.polytech.SocialBucket.Chat.common.ChatIF;
 import com.polytech.SocialBucket.Chat.EchoServer;
@@ -18,6 +22,18 @@ public class ClientController implements ChatIF{
     private TextArea messageArea;
 
     @FXML
+    private Pane mainContent;
+
+    @FXML
+    private Pane navbar;
+
+    @FXML
+    private Button openButton;
+
+    @FXML
+    private Button closeButton;
+
+    @FXML
     private TextField inputField;
 
     private ChatClient client;
@@ -29,10 +45,13 @@ public class ClientController implements ChatIF{
         public void display(String message) {
             System.out.println("> " + message);
         }
+
     }
 
     @FXML
     private void initialize() {
+
+        openNavbar();
 
         // Just for development
         DisplayImpl display = new DisplayImpl();
@@ -53,6 +72,7 @@ public class ClientController implements ChatIF{
         User user = userFacade.getCurrentUser();
 
         client.handleMessageFromClientUI("#login " + user.getUsername());
+
     }
 
     @FXML
@@ -72,5 +92,45 @@ public class ClientController implements ChatIF{
         messageArea.appendText(message + "\n");
     }
 
+    @FXML
+    private void openNavbar() {
+        try {
+            // Charger la page du portefeuille depuis le fichier FXML
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/polytech/SocialBucket/sidebarPage.fxml"));
+            Pane navbarContent = loader.load();
+
+            navbar.setPrefWidth(140);
+            mainContent.setPrefWidth(705);
+
+            navbar.getChildren().add(navbarContent);
+
+            handleButtonNavbar(true);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    private void closeNavbar() {
+        navbar.setPrefWidth(0);
+        mainContent.setPrefWidth(900);
+
+        handleButtonNavbar(false);
+
+        navbar.getChildren().clear();
+    }
+
+    private void handleButtonNavbar(boolean open) {
+        openButton.setVisible(!open);
+        openButton.setManaged(!open);
+        closeButton.setVisible(open);
+        closeButton.setManaged(open);
+        if (open) {
+            closeButton.toFront();
+        }
+    }
 }
 

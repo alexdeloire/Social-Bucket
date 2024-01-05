@@ -12,7 +12,7 @@ import com.polytech.SocialBucket.Logic.Reaction;
 import com.polytech.SocialBucket.Logic.Facade.PostFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 import com.polytech.SocialBucket.UI.FXRouter;
-import com.polytech.SocialBucket.UI.Comment.CommentController;
+import com.polytech.SocialBucket.UI.Comment.CommentComponent;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -282,6 +282,7 @@ public class UserPostsController {
     }
 
     private void openCommentsPopup(Post post) {
+        /*
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/polytech/SocialBucket/comment/commentsPopup.fxml"));
@@ -302,6 +303,7 @@ public class UserPostsController {
             e.printStackTrace();
             // Gestion de l'exception
         }
+        */
     }
 
 }

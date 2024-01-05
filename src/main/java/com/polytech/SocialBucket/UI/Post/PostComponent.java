@@ -9,10 +9,12 @@ import java.util.List;
 import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Logic.Post;
 import com.polytech.SocialBucket.Logic.Reaction;
+import com.polytech.SocialBucket.Logic.Comment;
 import com.polytech.SocialBucket.Logic.Facade.PostFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
+import com.polytech.SocialBucket.Logic.Facade.CommentFacade;
 import com.polytech.SocialBucket.UI.FXRouter;
-import com.polytech.SocialBucket.UI.Comment.CommentController;
+import com.polytech.SocialBucket.UI.Comment.CommentComponent;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +22,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.layout.Region;
+
 
 public class PostComponent {
 
@@ -59,20 +64,32 @@ public class PostComponent {
     @FXML
     private Button deleteButton;
 
+    @FXML
+    private Pane commentsBox;
+
+    @FXML
+    private Pane commentsContainer;
+
+    @FXML
+    private TextField commentTextfield;
+
+
     private Post post;
     private UserFacade userFacade = UserFacade.getInstance();
     private PostFacade postFacade = PostFacade.getInstance();
+    private CommentFacade commentFacade = CommentFacade.getInstance();
+
 
     private boolean hasLiked = false;
     private boolean hasHearted = false;
 
     private boolean isCurrentUser = false;
+    private boolean isCommentOpened = false;
 
     private Runnable refreshPosts;
 
     @FXML
     private void initialize() {
-
     }
 
     // take a post and a function to refresh the posts
@@ -112,6 +129,7 @@ public class PostComponent {
             filenameLabel.setText(post.getFileName());
         }
 
+        openCommentBox(false);
     }
 
     private void actualizeReaction() {
@@ -211,29 +229,6 @@ public class PostComponent {
         return deleteSucces;
     }
 
-    @FXML
-    private void openComment() {
-        // a modifier
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/polytech/SocialBucket/comment/commentsPopup.fxml"));
-            Parent root = loader.load();
-
-            CommentController commentController = loader.getController();
-            commentController.setPost(post);
-
-            Stage commentsPopupStage = new Stage();
-            commentsPopupStage.initModality(Modality.APPLICATION_MODAL);
-            commentsPopupStage.setTitle("Comments Popup for Post #" + post.getId());
-
-            Scene scene = new Scene(root);
-            commentsPopupStage.setScene(scene);
-
-            commentsPopupStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     private void handleDeletePost() {
@@ -245,4 +240,73 @@ public class PostComponent {
             System.out.println("Post deletion failed");
         }
     }
+
+
+    @FXML
+    private void handleCommentBox() {
+
+        openCommentBox(!isCommentOpened);
+
+        if (isCommentOpened) {
+            loadComments();
+        }
+        
+    }
+
+    private void openCommentBox(boolean open) {
+        System.out.println("openCommentBox " + open);
+        this.isCommentOpened = open;
+        commentsBox.setVisible(open);
+        if (isCommentOpened) {
+            commentsBox.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        } else {
+            commentsBox.setPrefHeight(0);
+        }
+        commentsBox.setManaged(open);
+    }
+
+    private void loadComments() {
+        List<Comment> comments = commentFacade.getComments(post);
+        if (comments != null) {
+            commentsContainer.getChildren().clear();
+
+            for (Comment comment : comments) {
+                Pane commentDetails = createCommentDetails(comment);
+                commentsContainer.getChildren().add(commentDetails);
+            }
+
+        }
+    }
+
+    @FXML
+    private Pane createCommentDetails(Comment comment) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/comment/commentComponent.fxml"));
+            Pane commentDetails = loader.load();
+
+            CommentComponent commentComponent = loader.getController();
+            commentComponent.loadComment(comment);
+
+            return commentDetails;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    @FXML
+    public void handleAddComment() {
+
+        String content = commentTextfield.getText();
+        if (content.isEmpty()) {
+            return;
+        }
+        boolean success = commentFacade.addComment(content, post);
+        commentTextfield.clear();
+        if (success) {
+            loadComments();
+        }
+    }
+
 }

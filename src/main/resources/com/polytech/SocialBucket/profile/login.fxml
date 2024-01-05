@@ -10,15 +10,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f5f3f0;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.Profile.LoginController">
+<Pane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f5f3f0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.Profile.LoginController">
    <children>
       <Pane layoutX="250.0" layoutY="95.0" prefHeight="410.0" prefWidth="401.0" style="-fx-background-color: #e3e2de; -fx-background-radius: 20;">
          <children>
-            <TextField fx:id="nameField" layoutX="135.0" layoutY="136.0" prefHeight="38.0" prefWidth="216.0">
+            <TextField fx:id="nameField" layoutX="135.0" layoutY="136.0" onAction="#handleLogin" prefHeight="38.0" prefWidth="216.0">
                <font>
                   <Font size="18.0" />
                </font></TextField>
-            <PasswordField fx:id="passwordField" layoutX="135.0" layoutY="209.0" prefHeight="38.0" prefWidth="216.0">
+            <PasswordField fx:id="passwordField" layoutX="135.0" layoutY="209.0" onAction="#handleLogin" prefHeight="38.0" prefWidth="216.0">
                <font>
                   <Font size="18.0" />
                </font></PasswordField>

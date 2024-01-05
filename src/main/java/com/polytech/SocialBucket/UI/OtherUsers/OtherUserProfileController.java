@@ -11,7 +11,7 @@ import com.polytech.SocialBucket.Logic.Reaction;
 import com.polytech.SocialBucket.Logic.Facade.PostFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 import com.polytech.SocialBucket.UI.FXRouter;
-import com.polytech.SocialBucket.UI.Comment.CommentController;
+import com.polytech.SocialBucket.UI.Comment.CommentComponent;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -333,26 +333,7 @@ public class OtherUserProfileController {
     }
 
     private void openCommentsPopup(Post post) {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/polytech/SocialBucket/comment/commentsPopup.fxml"));
-            Parent root = loader.load();
-
-            CommentController commentController = loader.getController();
-            commentController.setPost(post);
-
-            Stage commentsPopupStage = new Stage();
-            commentsPopupStage.initModality(Modality.APPLICATION_MODAL);
-            commentsPopupStage.setTitle("Comments Popup for Post #" + post.getId());
-
-            Scene scene = new Scene(root);
-            commentsPopupStage.setScene(scene);
-
-            commentsPopupStage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Gestion de l'exception
-        }
+        
     }
 
 }
