@@ -33,6 +33,7 @@ public class SidebarController {
         }
     }
 
+
     @FXML
     public void changeToAdvertising() {
         try {

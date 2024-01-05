@@ -3,55 +3,85 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="600.0" minWidth="125.0" prefHeight="600.0" prefWidth="125.0" spacing="10" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.SidebarController">
+<VBox minHeight="600.0" minWidth="140.0" prefHeight="600.0" prefWidth="125.0" spacing="10" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.SidebarController">
    <children>
-      <Button onAction="#changeToWallet" style="-fx-background-color: transparent;" text="Wallet" underline="true">
+      <Button onAction="#changeToProfile" style="-fx-background-color: transparent;" text="Profile" underline="true" wrapText="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:src/main/java/com/polytech/SocialBucket/UI/Icones/avatar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button onAction="#changeToWallet" style="-fx-background-color: transparent;" text="Wallet" underline="true" wrapText="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button onAction="#changeToInfos" style="-fx-background-color: transparent;" text="Infos" underline="true">
+      <Button onAction="#changeToInfos" style="-fx-background-color: transparent;" text="Infos" underline="true" wrapText="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button onAction="#changeToAdvertising" style="-fx-background-color: transparent;" text="Advertising" underline="true">
+      <Button alignment="TOP_LEFT" onAction="#changeToAdvertising" style="-fx-background-color: transparent;" text="Advertising" textOverrun="CLIP" underline="true" wrapText="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button onAction="#changeToChat" style="-fx-background-color: transparent;" text="Chat" underline="true">
+      <Button onAction="#changeToChat" style="-fx-background-color: transparent;" text="Chat" underline="true" wrapText="true">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
-      <Button onAction="#changeToSearchUsers" style="-fx-background-color: transparent;" text="Search Users" underline="true">
+      <Button onAction="#changeToSearchUsers" style="-fx-background-color: transparent;" text="Search Users" underline="true" wrapText="true">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
-      <Button onAction="#changeToLogin" style="-fx-background-color: transparent;" text="Logout" underline="true">
+      <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+      <Button onAction="#changeToLogin" style="-fx-background-color: transparent;" text="Logout" wrapText="true">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
             <Font name="System Bold" size="16.0" />
-         </font></Button>
+         </font>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="file:src/main/java/com/polytech/SocialBucket/UI/Icones/logout.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <VBox.margin>
+            <Insets left="10.0" />
+         </VBox.margin>
+      </Button>
    </children>
    <padding>
-      <Insets left="5.0" top="30.0" />
+      <Insets top="50.0" />
    </padding>
 </VBox>
