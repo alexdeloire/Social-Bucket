@@ -10,8 +10,10 @@ import java.util.Optional;
 
 import com.polytech.SocialBucket.Logic.Advertising;
 import com.polytech.SocialBucket.Logic.Post;
+import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Logic.Facade.AdvertisingFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
+import com.polytech.SocialBucket.UI.FXRouter;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,27 +24,103 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class UserAdvertisingsController implements Observer {
+public class UserAdvertisingsController {
   @FXML
   private VBox advertisingContainer;
+
+  @FXML
+  private Label usernameLabel;
+
+  @FXML
+  private ScrollPane mainContent;
+
+  @FXML
+  private Pane navbar;
+
+  @FXML
+  private Button openButton;
+
+  @FXML
+  private Button closeButton;
 
   private UserFacade userFacade = UserFacade.getInstance();
   private AdvertisingFacade advertisingFacade = AdvertisingFacade.getInstance();
 
-  private AddAdvertisingController addAdvertisingController;
-
   public void initialize() {
-    addAdvertisingController = new AddAdvertisingController();
-    addAdvertisingController.addObserver(this);
+    // init name
+    User user = UserFacade.getInstance().getCurrentUser();
+    if (user == null) {
+      usernameLabel.setText("Anonymous");
+      return;
+    }
+    String name = user.getUsername();
+    System.out.println(name);
+    usernameLabel.setText(name);
+
     // Charger les posts lors de l'initialisation
     loadAdvertisings();
+
+    openNavbar();
+  }
+
+  @FXML
+  private void goToProfile() {
+    try {
+      FXRouter.goTo("profile");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+  }
+
+  @FXML
+  private void openNavbar() {
+    try {
+      // Charger la page du portefeuille depuis le fichier FXML
+      FXMLLoader loader = new FXMLLoader(
+          getClass().getResource("/com/polytech/SocialBucket/sidebarPage.fxml"));
+      Pane navbarContent = loader.load();
+
+      navbar.setPrefWidth(125);
+      mainContent.setPrefWidth(720);
+
+      navbar.getChildren().add(navbarContent);
+
+      handleButtonNavbar(true);
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
+
+  @FXML
+  private void closeNavbar() {
+    navbar.setPrefWidth(0);
+    mainContent.setPrefWidth(900);
+
+    handleButtonNavbar(false);
+
+    navbar.getChildren().clear();
+  }
+
+  private void handleButtonNavbar(boolean open) {
+    openButton.setVisible(!open);
+    openButton.setManaged(!open);
+    closeButton.setVisible(open);
+    closeButton.setManaged(open);
+    if (open) {
+      closeButton.toFront();
+    }
   }
 
   private void loadAdvertisings() {
@@ -50,10 +128,6 @@ public class UserAdvertisingsController implements Observer {
     List<Advertising> advertisings = advertisingFacade.getAdvertisingByUser(userFacade.getCurrentUser());
     advertisingContainer.getChildren().clear();
 
-    Button addButton = new Button("New advertising");
-    addButton.setOnAction(event -> openNewADPopup());
-    advertisingContainer.getChildren().add(addButton);
-    // Ajouter les détails de chaque post dans le postContainer
     if (advertisings == null || advertisings.isEmpty()) {
       advertisingContainer.getChildren().add(new Label("No advertising to display"));
     } else {
@@ -83,7 +157,6 @@ public class UserAdvertisingsController implements Observer {
     Button infoButton = new Button("+infos");
     infoButton.setOnAction(event -> infosPopup(advertising));
 
-    //////////////////// TODOOOOOOO
     gridPane.add(text, 0, 0);
     gridPane.add(advertisingLink, 1, 0);
     gridPane.add(infoButton, 2, 0);
@@ -169,6 +242,10 @@ public class UserAdvertisingsController implements Observer {
           getClass().getResource("/com/polytech/SocialBucket/advertising/addAdvertising.fxml"));
       GridPane newADLayout = loader.load();
 
+      // why ?????????????
+      // AddAdvertisingController addAdvertisingController = loader.getController();
+      // addAdvertisingController.setRefreshAd(this::loadAdvertisings);
+
       // Créer la scène et la fenêtre modale
       Scene newADScene = new Scene(newADLayout);
       Stage newADStage = new Stage();
@@ -177,16 +254,10 @@ public class UserAdvertisingsController implements Observer {
       newADStage.setScene(newADScene);
 
       // Afficher la fenêtre modale
-      newADStage.showAndWait();
+      newADStage.show();
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  @Override
-  public void update(Observable o, Object arg) {
-    System.out.println("test observer");
-    loadAdvertisings();
   }
 
 }

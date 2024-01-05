@@ -341,4 +341,60 @@ public class PostgreSQLWalletDAO extends WalletDAO {
         }
     }
 
+    @Override
+    public boolean checkSecretCode(int iduser, int secretCode) {
+        String sql = "SELECT secret_code FROM public.wallet WHERE iduser = ?";
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, iduser);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int correctSecretCode = resultSet.getInt("secret_code");
+                    return secretCode == correctSecretCode;
+                } else {
+                    return false;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean pay(int iduser, int amount) {
+
+        float currentBalance = getBalance();
+        float newBalance = currentBalance - amount;
+        if (newBalance < 0) {
+            return false;
+        } else {
+            String updateBalanceSql = "UPDATE wallet SET balance = ? WHERE iduser = ?";
+
+            try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                    PreparedStatement preparedStatement = connection.prepareStatement(updateBalanceSql)) {
+
+                preparedStatement.setFloat(1, newBalance);
+                preparedStatement.setInt(2, iduser);
+                int affectedRows = preparedStatement.executeUpdate();
+
+                if (affectedRows > 0) {
+                    System.out.println("Money paid successfully. New balance: " + newBalance);
+                    return true;
+                } else {
+                    System.out.println("Failed to pay money.");
+                    return false;
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+        }
+    }
+
 }
