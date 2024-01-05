@@ -153,7 +153,6 @@ public class PostgreSQLUserDAO extends UserDAO {
         return user;
     }
 
-
     public int getNbFollowersById(int id) {
         int nbFollowers = 0;
         String sql = "SELECT COUNT(*) FROM public.follow WHERE idfollowed = ?";
@@ -286,12 +285,54 @@ public class PostgreSQLUserDAO extends UserDAO {
 
             }
 
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return users;
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        String sql = "UPDATE public.\"user\" SET username = ?, mail = ?, password = ? WHERE iduser = ?";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getMail());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setInt(4, user.getId());
+
+            preparedStatement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean verifyPassword(int idUser, String password) {
+        String sql = "SELECT * FROM public.\"user\" WHERE iduser = ? AND password = ?";
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, idUser);
+            preparedStatement.setString(2, password);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

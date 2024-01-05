@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="900.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.Advertising.UserAdvertisingsController">
+<HBox maxHeight="-Infinity" maxWidth="900.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.Profile.InfoPageController">
    <children>
       <HBox maxWidth="180.0" prefHeight="600.0" style="-fx-background-color: #e3e2de; -fx-border-width: 0 2 0 0; -fx-border-color: #d3d2ce;">
          <children>
@@ -39,7 +39,7 @@
          <content>
             <VBox maxHeight="5000.0" prefHeight="598.0" prefWidth="900.0" style="-fx-background-color: #f5f3f0;">
                <children>
-                  <HBox maxWidth="5000.0" minHeight="-Infinity" prefHeight="130.0" prefWidth="900.0" style="-fx-background-color: transparent;">
+                   <HBox maxWidth="5000.0" minHeight="-Infinity" prefHeight="130.0" prefWidth="900.0" style="-fx-background-color: transparent;">
                      <children>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
                            <children>
@@ -60,12 +60,12 @@
                   </HBox>
                   <HBox minHeight="-Infinity" prefHeight="38.0" prefWidth="900.0" spacing="50.0" translateY="-15.0">
                      <children>
-                        <Label text="My Advertisings">
+                        <Label text="My Informations">
                            <font>
                               <Font name="Arial" size="27.0" />
                            </font>
                         </Label>
-                        <Button onAction="#openNewADPopup" prefHeight="32.0" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="New advertising" textFill="WHITE">
+                        <Button onAction="#goToModifyInfos" prefHeight="32.0" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="Modify" textFill="WHITE">
                            <HBox.margin>
                               <Insets top="2.0" />
                            </HBox.margin>
@@ -83,12 +83,30 @@
                         <Insets left="50.0" />
                      </padding>
                   </HBox>
-                  <HBox maxWidth="5000.0" prefHeight="382.0" prefWidth="806.0" style="-fx-background-color: transparent;">
+                  <HBox maxWidth="5000.0" prefHeight="150.0" prefWidth="806.0" style="-fx-background-color: transparent;">
                      <children>
-                        <VBox fx:id="advertisingContainer" prefHeight="350.0" prefWidth="868.0" spacing="20.0" style="-fx-background-color: #ebeae7; -fx-background-radius: 20;" HBox.hgrow="ALWAYS">
+                        <VBox fx:id="infoContainer" prefHeight="350.0" prefWidth="868.0" spacing="20.0" style="-fx-background-color: #ebeae7; -fx-background-radius: 20;" HBox.hgrow="ALWAYS">
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding></VBox>
+                           </padding>
+                           <children>
+                               <Label fx:id="userIdLabel">
+                                <font>
+                                    <Font name="Arial" size="15.0" />
+                                </font>
+                                </Label>
+                                <Label fx:id="usernameLabel">
+                                <font>
+                                    <Font name="Arial" size="15.0" />
+                                </font>
+                                </Label>
+                                <Label fx:id="mailLabel">
+                                <font>
+                                    <Font name="Arial" size="15.0" />
+                                </font>
+                                </Label>
+                           </children>
+                        </VBox>
                      </children>
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" />

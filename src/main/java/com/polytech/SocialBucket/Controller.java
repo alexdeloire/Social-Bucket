@@ -27,8 +27,8 @@ public class Controller extends Application {
         FXRouter.when("login", "/com/polytech/SocialBucket/profile/login.fxml");
         FXRouter.when("register", "/com/polytech/SocialBucket/profile/register.fxml");
         FXRouter.when("profile", "/com/polytech/SocialBucket/profile/profile.fxml");
-        FXRouter.when("modify-information", "/com/polytech/SocialBucket/modify-information.fxml");
-        FXRouter.when("infos", "/com/polytech/SocialBucket/profile/infosPage.fxml");
+        FXRouter.when("modifyInfo", "/com/polytech/SocialBucket/profile/modifyInfo.fxml");
+        FXRouter.when("infos", "/com/polytech/SocialBucket/profile/infoPage.fxml");
         FXRouter.when("searchUsers", "/com/polytech/SocialBucket/otherusers/searchUsers.fxml");
         FXRouter.when("otherUser", "/com/polytech/SocialBucket/otherusers/otherUsersProfile.fxml");
 

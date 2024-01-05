@@ -38,9 +38,6 @@ public class UserAdvertisingsController {
   private VBox advertisingContainer;
 
   @FXML
-  private Label usernameLabel;
-
-  @FXML
   private ScrollPane mainContent;
 
   @FXML
@@ -59,12 +56,8 @@ public class UserAdvertisingsController {
     // init name
     User user = UserFacade.getInstance().getCurrentUser();
     if (user == null) {
-      usernameLabel.setText("Anonymous");
       return;
     }
-    String name = user.getUsername();
-    System.out.println(name);
-    usernameLabel.setText(name);
 
     // Charger les posts lors de l'initialisation
     loadAdvertisings();
