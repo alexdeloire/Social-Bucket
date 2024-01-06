@@ -91,7 +91,7 @@
             </VBox>
             <VBox fx:id="resume" prefWidth="400.0" HBox.hgrow="ALWAYS">
                <children>
-               <Label fx:id="description" prefWidth="413.0" text="Description" textOverrun="CLIP" wrapText="true">
+               <Label fx:id="resumeText" prefWidth="413.0" text="" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -110,6 +110,14 @@
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
+                  <Label fx:id="description" prefWidth="413.0" text="" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
                            
                   <Label fx:id="link" prefWidth="413.0" text="" textOverrun="CLIP" wrapText="true">
                      <font>

@@ -147,102 +147,107 @@ public class UserAdvertisingsController {
     VBox adContainer = new VBox();
     return adContainer;
   }
-
-  private VBox createAdDetails2(Advertising advertising) {
-    VBox adBox = new VBox();
-    GridPane gridPane = new GridPane();
-    Label text = new Label(advertising.getText());
-    Label advertisingLink = new Label(advertising.getEnddate().toString());
-    LocalDate todat = LocalDate.now();
-
-    if (todat.isAfter(advertising.getEnddate())) {
-      Label expiredLabel = new Label("Expired");
-      gridPane.add(expiredLabel, 0, 1);
-    } else {
-      Button deleteButton = new Button("Withdrawal");
-      deleteButton.setOnAction(event -> deletePopup(advertising));
-      gridPane.add(deleteButton, 0, 1);
-    }
-
-    Button infoButton = new Button("+infos");
-    infoButton.setOnAction(event -> infosPopup(advertising));
-
-    gridPane.add(text, 0, 0);
-    gridPane.add(advertisingLink, 1, 0);
-    gridPane.add(infoButton, 2, 0);
-    adBox.getChildren().add(gridPane);
-    adBox.setStyle("-fx-background-color: #e6e6e6; -fx-border-width: 0;");
-
-    VBox.setMargin(adBox, new Insets(5, 0, 5, 0));
-    return adBox;
-  }
-
-  public void infosPopup(Advertising advertising) {
-    GridPane gridPane = new GridPane();
-    byte[] fileBytes = advertising.getImage();
-
-    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileBytes);
-    Image image = new Image(byteArrayInputStream);
-
-    ImageView imageView = new ImageView(image);
-    imageView.setFitWidth(250);
-    imageView.setPreserveRatio(true);
-
-    gridPane.add(imageView, 0, 1);
-
-    Label text2 = new Label("Text: " + advertising.getText());
-    Label text3 = new Label("Link: " + advertising.getLink());
-    Label text4 = new Label("Start date: " + advertising.getBegindate().toString());
-    Label text5 = new Label("End date: " + advertising.getEnddate().toString());
-
-    gridPane.add(text2, 0, 1);
-    gridPane.add(text3, 0, 2);
-    gridPane.add(text4, 0, 3);
-    gridPane.add(text5, 0, 4);
-
-    Scene newADScene = new Scene(gridPane);
-    Stage newADStage = new Stage();
-    newADStage.initModality(Modality.APPLICATION_MODAL);
-    newADStage.setScene(newADScene);
-    newADStage.showAndWait();
-  }
-
-  public void handleDeleteAdvertising(int advertisingId) {
-    advertisingFacade.deleteAdvertising(advertisingId);
-    loadAdvertisings();
-  }
-
-  public void deletePopup(Advertising advertising) {
-
-    GridPane gridPane = new GridPane();
-    Label text = new Label("Are you sure you want to delete this advertising?");
-    Label text2 = new Label("(Please note: advertising costs will not be refunded)");
-
-    Button deleteButton = new Button("Delete");
-    deleteButton.setOnAction(event -> {
-      handleDeleteAdvertising(advertising.getId());
-      Stage stage = (Stage) deleteButton.getScene().getWindow();
-      stage.close();
-    });
-
-    Button cancelButton = new Button("Cancel");
-    cancelButton.setOnAction(event -> {
-      Stage stage = (Stage) cancelButton.getScene().getWindow();
-      stage.close();
-    });
-
-    gridPane.add(text, 0, 0);
-    gridPane.add(text2, 0, 1);
-    gridPane.add(deleteButton, 0, 2);
-    gridPane.add(cancelButton, 1, 2);
-
-    Scene newADScene = new Scene(gridPane);
-    Stage newADStage = new Stage();
-    newADStage.initModality(Modality.APPLICATION_MODAL);
-    newADStage.setScene(newADScene);
-    newADStage.showAndWait();
-
-  }
+  /*
+   * private VBox createAdDetails2(Advertising advertising) {
+   * VBox adBox = new VBox();
+   * GridPane gridPane = new GridPane();
+   * Label text = new Label(advertising.getText());
+   * Label advertisingLink = new Label(advertising.getEnddate().toString());
+   * LocalDate todat = LocalDate.now();
+   * 
+   * if (todat.isAfter(advertising.getEnddate())) {
+   * Label expiredLabel = new Label("Expired");
+   * gridPane.add(expiredLabel, 0, 1);
+   * } else {
+   * Button deleteButton = new Button("Withdrawal");
+   * deleteButton.setOnAction(event -> deletePopup(advertising));
+   * gridPane.add(deleteButton, 0, 1);
+   * }
+   * 
+   * Button infoButton = new Button("+infos");
+   * infoButton.setOnAction(event -> infosPopup(advertising));
+   * 
+   * gridPane.add(text, 0, 0);
+   * gridPane.add(advertisingLink, 1, 0);
+   * gridPane.add(infoButton, 2, 0);
+   * adBox.getChildren().add(gridPane);
+   * adBox.setStyle("-fx-background-color: #e6e6e6; -fx-border-width: 0;");
+   * 
+   * VBox.setMargin(adBox, new Insets(5, 0, 5, 0));
+   * return adBox;
+   * }
+   * 
+   * public void infosPopup(Advertising advertising) {
+   * GridPane gridPane = new GridPane();
+   * byte[] fileBytes = advertising.getImage();
+   * 
+   * ByteArrayInputStream byteArrayInputStream = new
+   * ByteArrayInputStream(fileBytes);
+   * Image image = new Image(byteArrayInputStream);
+   * 
+   * ImageView imageView = new ImageView(image);
+   * imageView.setFitWidth(250);
+   * imageView.setPreserveRatio(true);
+   * 
+   * gridPane.add(imageView, 0, 1);
+   * 
+   * Label text2 = new Label("Text: " + advertising.getText());
+   * Label text3 = new Label("Link: " + advertising.getLink());
+   * Label text4 = new Label("Start date: " +
+   * advertising.getBegindate().toString());
+   * Label text5 = new Label("End date: " + advertising.getEnddate().toString());
+   * 
+   * gridPane.add(text2, 0, 1);
+   * gridPane.add(text3, 0, 2);
+   * gridPane.add(text4, 0, 3);
+   * gridPane.add(text5, 0, 4);
+   * 
+   * Scene newADScene = new Scene(gridPane);
+   * Stage newADStage = new Stage();
+   * newADStage.initModality(Modality.APPLICATION_MODAL);
+   * newADStage.setScene(newADScene);
+   * newADStage.showAndWait();
+   * }
+   * 
+   * public void handleDeleteAdvertising(int advertisingId) {
+   * advertisingFacade.deleteAdvertising(advertisingId);
+   * loadAdvertisings();
+   * }
+   * 
+   * 
+   * public void deletePopup(Advertising advertising) {
+   * 
+   * GridPane gridPane = new GridPane();
+   * Label text = new Label("Are you sure you want to delete this advertising?");
+   * Label text2 = new
+   * Label("(Please note: advertising costs will not be refunded)");
+   * 
+   * Button deleteButton = new Button("Delete");
+   * deleteButton.setOnAction(event -> {
+   * handleDeleteAdvertising(advertising.getId());
+   * Stage stage = (Stage) deleteButton.getScene().getWindow();
+   * stage.close();
+   * });
+   * 
+   * Button cancelButton = new Button("Cancel");
+   * cancelButton.setOnAction(event -> {
+   * Stage stage = (Stage) cancelButton.getScene().getWindow();
+   * stage.close();
+   * });
+   * 
+   * gridPane.add(text, 0, 0);
+   * gridPane.add(text2, 0, 1);
+   * gridPane.add(deleteButton, 0, 2);
+   * gridPane.add(cancelButton, 1, 2);
+   * 
+   * Scene newADScene = new Scene(gridPane);
+   * Stage newADStage = new Stage();
+   * newADStage.initModality(Modality.APPLICATION_MODAL);
+   * newADStage.setScene(newADScene);
+   * newADStage.showAndWait();
+   * 
+   * }
+   */
 
   @FXML
   private void openNewADPopup() {

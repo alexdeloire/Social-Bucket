@@ -25,6 +25,9 @@ public class UserAdComponent {
  private Label expired;
 
  @FXML
+ private Label resumeText;
+
+ @FXML
  private Label description;
 
  @FXML
@@ -83,19 +86,16 @@ public class UserAdComponent {
   } else {
    resume.setPrefHeight(0);
   }
-
   if (confirmDeleteBox.isVisible()) {
    confirmDeleteBox.setPrefHeight(300);
-   confirmDeleteBox.setMaxHeight(300);
-
   } else {
    confirmDeleteBox.setPrefHeight(0);
-   confirmDeleteBox.setMaxHeight(0);
   }
  }
 
  @FXML
  public void handleAdBox() {
+  resume.setVisible(!resume.isVisible());
   details.setVisible(!details.isVisible());
   plusInfoButton.setVisible(!plusInfoButton.isVisible());
   hideInfoButton.setVisible(!hideInfoButton.isVisible());
@@ -114,10 +114,13 @@ public class UserAdComponent {
  public void loadAdvertising(Advertising advertising, Runnable refreshAds) {
   this.refreshAds = refreshAds;
   this.advertising = advertising;
+
   description.setText(advertising.getText());
+  resumeText.setText(advertising.getText());
   link.setText("Link : " + advertising.getLink());
   beginDate.setText("Start date : " + advertising.getBegindate().toString());
   endDate.setText("Expired : " + advertising.getEnddate().toString());
+
   LocalDate today = LocalDate.now();
   if (today.isAfter(advertising.getEnddate())) {
    expired.setVisible(true);
