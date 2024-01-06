@@ -13,13 +13,10 @@ import com.polytech.SocialBucket.Logic.Comment;
 import com.polytech.SocialBucket.Logic.Facade.PostFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 import com.polytech.SocialBucket.Logic.Facade.CommentFacade;
-import com.polytech.SocialBucket.UI.FXRouter;
 import com.polytech.SocialBucket.UI.Comment.CommentComponent;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -27,7 +24,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.Region;
 
@@ -81,6 +77,7 @@ public class PostComponent {
 
 
     private Post post;
+    private User user;
     private UserFacade userFacade = UserFacade.getInstance();
     private PostFacade postFacade = PostFacade.getInstance();
     private CommentFacade commentFacade = CommentFacade.getInstance();
@@ -98,13 +95,13 @@ public class PostComponent {
     private void initialize() {
     }
 
-    // take a post and a function to refresh the posts
-    public void loadPost(Post post, Runnable refreshPosts, boolean isCurrentUser) {
+
+    public void loadPost(Post post, Runnable refreshPosts) {
 
         this.post = post;
-        // refreshPosts is a function that refresh the posts
+        this.user = post.getUser();
         this.refreshPosts = refreshPosts;
-        this.isCurrentUser = isCurrentUser;
+        this.isCurrentUser = userFacade.getCurrentUser().getId() == user.getId();
 
         actualizeReaction();
 
@@ -151,7 +148,7 @@ public class PostComponent {
                 numberOfHearts++;
             }
 
-            if (reaction.getIduser() == userFacade.getCurrentUser().getId()) {
+            if (userFacade.getCurrentUser().getId() == reaction.getIduser()) {
                 if ("like".equalsIgnoreCase(reaction.getType())) {
                     setHasLiked(true);
                 }
@@ -163,8 +160,6 @@ public class PostComponent {
 
         likeNumber.setText(String.valueOf(numberOfLikes));
         heartNumber.setText(String.valueOf(numberOfHearts));
-
-        User currentUser = userFacade.getCurrentUser();
     }
 
     @FXML

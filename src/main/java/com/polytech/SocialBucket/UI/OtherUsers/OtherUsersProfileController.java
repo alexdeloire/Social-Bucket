@@ -1,4 +1,4 @@
-package com.polytech.SocialBucket.UI.Profile;
+package com.polytech.SocialBucket.UI.OtherUsers;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,7 +9,6 @@ import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Logic.Post;
 import com.polytech.SocialBucket.Logic.Facade.PostFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
-import com.polytech.SocialBucket.UI.FXRouter;
 import com.polytech.SocialBucket.UI.Post.PostComponent;
 
 import javafx.fxml.FXML;
@@ -23,7 +22,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
 
-public class ProfileController {
+public class OtherUsersProfileController {
 
     @FXML
     private Label usernameLabel;
@@ -50,15 +49,19 @@ public class ProfileController {
     private Pane postsContainer;
 
     @FXML
+    private Button followingButton;
+
+    @FXML
     private Pane loading;
 
     private UserFacade userFacade = UserFacade.getInstance();
     private PostFacade postFacade = PostFacade.getInstance();
+    private boolean isFollowing;
 
     @FXML
     private void initialize() {
         // init name
-        User user = UserFacade.getInstance().getCurrentUser();
+        User user = UserFacade.getInstance().getCurrentViewedUser();
         if (user == null) {
             usernameLabel.setText("Anonymous");
             return;
@@ -71,19 +74,38 @@ public class ProfileController {
         followingLabel.setText("Following: " + nbFollowing);
         followersLabel.setText("Followers: " + nbFollowers);
 
+        this.isFollowing = userFacade.isFollowing(userFacade.getCurrentUser().getId(), userFacade.getCurrentViewedUser().getId());
+        updateFollowButton();
+
         loadPosts();
 
         openNavbar();
     }
 
-    @FXML
-    private void goToAddPost() {
-        try {
-            FXRouter.goTo("addPost");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
+    @FXML
+    private void handleFollow() {
+        if (isFollowing) {
+            userFacade.unfollowUser(userFacade.getCurrentUser().getId(),userFacade.getCurrentViewedUser().getId());
+            userFacade.getCurrentViewedUser().setNbFollowers(userFacade.getCurrentViewedUser().getNbFollowers() - 1);
+            userFacade.getCurrentUser().setNbFollowing(userFacade.getCurrentUser().getNbFollowing() - 1);
+            followersLabel.setText("Followers: " + userFacade.getCurrentViewedUser().getNbFollowers());
+        } else {
+            userFacade.followUser(userFacade.getCurrentUser().getId(),userFacade.getCurrentViewedUser().getId());
+            userFacade.getCurrentViewedUser().setNbFollowers(userFacade.getCurrentViewedUser().getNbFollowers() + 1);
+            userFacade.getCurrentUser().setNbFollowing(userFacade.getCurrentUser().getNbFollowing() + 1);
+            followersLabel.setText("Followers: " + userFacade.getCurrentViewedUser().getNbFollowers());
+        }
+        isFollowing = !isFollowing;
+        updateFollowButton();
+    }
+
+    private void updateFollowButton() {
+        if (isFollowing) {
+            followingButton.setText("Unfollow");
+        } else {
+            followingButton.setText("Follow");
+        }
     }
 
     @FXML
@@ -140,7 +162,7 @@ public class ProfileController {
             public void run() {
                 System.out.println("debut requete");
                 try {
-                    List<Post> posts = postFacade.getPostsByUser(userFacade.getCurrentUser());
+                    List<Post> posts = postFacade.getPostsByUser(userFacade.getCurrentViewedUser());
                     System.out.println("fin requete");
                     Platform.runLater(new Runnable() {
                         @Override

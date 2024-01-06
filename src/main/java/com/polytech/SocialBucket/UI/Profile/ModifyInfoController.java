@@ -38,15 +38,6 @@ public class ModifyInfoController {
   private PasswordField confirmPwField;
 
   @FXML
-  private Label newPwLabel;
-
-  @FXML
-  private Label oldPwLabel;
-
-  @FXML
-  private Label confirmPwLabel;
-
-  @FXML
   private Label statusLabel;
 
   @FXML
@@ -62,7 +53,14 @@ public class ModifyInfoController {
   private Button pwButton;
 
   @FXML
-  private HBox infoContainer;
+  private Pane passwordBox;
+
+  @FXML
+  private Pane newPBox;
+
+  @FXML
+  private Pane confirmPBox;
+
 
   private UserFacade userFacade = UserFacade.getInstance();
 
@@ -82,6 +80,7 @@ public class ModifyInfoController {
 
     openNavbar();
     closePW();
+
   }
 
   @FXML
@@ -118,31 +117,31 @@ public class ModifyInfoController {
   @FXML
   private void openPW() {
 
-    oldPwField.setVisible(true);
-    oldPwLabel.setVisible(true);
-    newPwField.setVisible(true);
-    newPwLabel.setVisible(true);
-    confirmPwField.setVisible(true);
-    confirmPwLabel.setVisible(true);
-    infoContainer.setPrefHeight(330);
+    passwordBox.setVisible(true);
+    passwordBox.setManaged(true);
+    newPBox.setVisible(true);
+    newPBox.setManaged(true);
+    confirmPBox.setVisible(true);
+    confirmPBox.setManaged(true);
     this.isModifyingPW = true;
 
     pwButton.setVisible(false);
+    pwButton.setManaged(false);
   }
 
   @FXML
   private void closePW() {
 
-    oldPwField.setVisible(false);
-    oldPwLabel.setVisible(false);
-    newPwField.setVisible(false);
-    newPwLabel.setVisible(false);
-    confirmPwField.setVisible(false);
-    confirmPwLabel.setVisible(false);
-    infoContainer.setPrefHeight(200);
+    passwordBox.setVisible(false);
+    passwordBox.setManaged(false);
+    newPBox.setVisible(false);
+    newPBox.setManaged(false);
+    confirmPBox.setVisible(false);
+    confirmPBox.setManaged(false);
     this.isModifyingPW = false;
-
+    
     pwButton.setVisible(true);
+    pwButton.setManaged(true);
 
   }
 

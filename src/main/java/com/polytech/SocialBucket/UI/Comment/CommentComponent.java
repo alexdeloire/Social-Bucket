@@ -3,27 +3,19 @@ package com.polytech.SocialBucket.UI.Comment;
 import java.util.List;
 
 import com.polytech.SocialBucket.Logic.Comment;
-import com.polytech.SocialBucket.Logic.Post;
 import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Logic.Reaction;
 import com.polytech.SocialBucket.Logic.Facade.CommentFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 public class CommentComponent {
 
-    private Post post;
     private Comment comment;
     private User user;
     private UserFacade userFacade = UserFacade.getInstance();
@@ -64,7 +56,6 @@ public class CommentComponent {
 
     public void loadComment(Comment comment) {
         this.comment = comment;
-        this.post = comment.getPost();
         this.user = comment.getUser();
         if (comment != null) {
             contentLabel.setText(comment.getContent());

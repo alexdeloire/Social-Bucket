@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.image.Image; 
 
 import java.io.IOException;
 
@@ -20,6 +21,8 @@ public class Controller extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Initialize FXRouter
         primaryStage.setResizable(false);
+        primaryStage.setTitle("Social Bucket");
+        primaryStage.getIcons().add(new Image("file:src/main/java/com/polytech/SocialBucket/UI/Icones/logo.png"));
         FXRouter.bind(this, primaryStage, "Social Bucket", 900, 600);
 
         // Set routes for the application

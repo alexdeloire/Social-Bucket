@@ -1,122 +1,169 @@
 package com.polytech.SocialBucket.UI.OtherUsers;
 
-import com.polytech.SocialBucket.Logic.User;
-import com.polytech.SocialBucket.Logic.Facade.UserFacade;
-import com.polytech.SocialBucket.UI.FXRouter;
-
+import java.io.IOException;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import java.lang.Thread;
+
+import com.polytech.SocialBucket.Logic.User;
+import com.polytech.SocialBucket.Logic.Post;
+import com.polytech.SocialBucket.Logic.Facade.PostFacade;
+import com.polytech.SocialBucket.Logic.Facade.UserFacade;
+import com.polytech.SocialBucket.UI.FXRouter;
+import com.polytech.SocialBucket.UI.OtherUsers.OtherUsersComponent;
+
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 public class SearchUsersController {
 
     @FXML
-    private TextField searchField;
+    private ScrollPane mainContent;
 
     @FXML
-    private Button searchButton;
+    private Pane navbar;
 
     @FXML
-    private VBox resultsContainer;
+    private Button openButton;
 
     @FXML
-    private ListView<String> userListView;
+    private Button closeButton;
 
     @FXML
-    private Label noUsersLabel;
-
-    private ObservableList<User> UserList = FXCollections.observableArrayList();
+    private Pane usersContainer;
 
     @FXML
-    public void searchUsers() {
-        // Get the search query from the TextField
-        String query = searchField.getText().trim();
+    private Pane usersBox;
 
-        // Perform your search logic here (replace with your actual search logic)
-        ObservableList<String> searchResults = performSearch(query);
+    @FXML
+    private Label statusLabel;
 
-        // Update the UI based on the search results
-        updateUI(searchResults);
+    @FXML
+    private Pane statusBox;
+
+    @FXML
+    private TextField inputField;
+
+
+    private UserFacade userFacade = UserFacade.getInstance();
+
+    @FXML
+    private void initialize() {
+        openNavbar();
+
+        setStatusLabel("");
+        handleUsersBox(false);
+
     }
 
-    private ObservableList<String> performSearch(String query) {
-        // Dummy method for testing, replace with your actual search logic
-        ObservableList<String> searchResults = FXCollections.observableArrayList();
-
-        List<User> tempList = UserFacade.getInstance().searchUsers(query);
-
-        this.UserList.clear();
-        this.UserList.addAll(tempList);
-
-        for (User user : UserList) {
-            // Add users matching the query to the searchResults
-            if (user.getUsername().toLowerCase().contains(query.toLowerCase())) {
-                searchResults.add(user.getUsername());
-            }
-        }
-
-        return searchResults;
-    }
-
-    private void updateUI(ObservableList<String> searchResults) {
-        // Update the ListView with search results
-        userListView.setItems(searchResults);
-
-        // Create buttons for each user and add them to the list view
-        userListView.setCellFactory(param -> new UserCell());
-
-        // Update visibility of the ListView and Label based on search results
-        if (searchResults.isEmpty()) {
-            resultsContainer.setVisible(false);
-            noUsersLabel.setVisible(true);
-        } else {
-            resultsContainer.setVisible(true);
-            noUsersLabel.setVisible(false);
-        }
-    }
-
-    private class UserCell extends ListCell<String> {
-        @Override
-        protected void updateItem(String username, boolean empty) {
-            super.updateItem(username, empty);
-
-            if (empty || username == null) {
-                setText(null);
-                setGraphic(null);
-            } else {
-                HBox userBox = new HBox(10);
-                Label usernameLabel = new Label(username);
-                Button goToProfileButton = new Button("Go to Profile");
-                User userToGoTo = UserList.stream().filter(user -> user.getUsername().equals(username)).findFirst()
-                        .orElse(null);
-                goToProfileButton.setOnAction(event -> goToProfile(userToGoTo));
-                userBox.getChildren().addAll(usernameLabel, goToProfileButton);
-                setGraphic(userBox);
-            }
-        }
-    }
-
-    private void goToProfile(User user) {
-        // Implement the logic to navigate to the profile of the selected user
-        System.out.println("Navigating to the profile of: " + user.getUsername());
-        UserFacade.getInstance().setCurrentViewedUser(user);
+    @FXML
+    private void openNavbar() {
         try {
-            FXRouter.goTo("otherUser");
-        } catch (Exception e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/sidebarPage.fxml"));
+            Pane navbarContent = loader.load();
+
+            navbar.setPrefWidth(140);
+            mainContent.setPrefWidth(705);
+
+            navbar.getChildren().add(navbarContent);
+
+            handleButtonNavbar(true);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    private void closeNavbar() {
+        navbar.setPrefWidth(0);
+        mainContent.setPrefWidth(900);
+
+        handleButtonNavbar(false);
+
+        navbar.getChildren().clear();
+    }
+
+    private void handleButtonNavbar(boolean open) {
+        openButton.setVisible(!open);
+        openButton.setManaged(!open);
+        closeButton.setVisible(open);
+        closeButton.setManaged(open);
+        if (open) {
+            closeButton.toFront();
         }
     }
+
+    private void setStatusLabel(String status) {
+        if (status == null || status.isEmpty()) {
+            statusBox.setVisible(false);
+            statusBox.setManaged(false);
+        } else {
+            statusLabel.setText(status);
+            statusBox.setVisible(true);
+            statusBox.setManaged(true);
+        }
+    }
+
+    private void handleUsersBox(boolean open) {
+        usersBox.setVisible(open);
+        usersBox.setManaged(open);
+    }
+
+    @FXML
+    private void handleSearch() {
+        handleUsersBox(false);
+        setStatusLabel("");
+        String query = inputField.getText().trim();
+        if (query.isEmpty()) {
+            setStatusLabel("Please enter a username");
+            return;
+        }
+
+        List<User> users = userFacade.searchUsers(query);
+
+        displayUsers(users);
+    }
+
+
+
+
+    private void displayUsers(List<User> users) {
+        usersContainer.getChildren().clear();
+        if (users == null || users.isEmpty()) {
+            setStatusLabel("No users found");
+            return;
+        } else {
+            for (User user : users) {
+                Pane usersDetails = createUserDetails(user);
+                usersContainer.getChildren().add(usersDetails);
+            }
+            handleUsersBox(true);
+        }
+    }
+
+    private Pane createUserDetails(User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/otherusers/otherUsersComponent.fxml"));
+
+            Pane userDetail = loader.load();
+            OtherUsersComponent controller = loader.getController();
+            controller.loadUser(user);
+
+            return userDetail;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Pane userDetail = new Pane();
+        return userDetail;
+    }
+
 }
