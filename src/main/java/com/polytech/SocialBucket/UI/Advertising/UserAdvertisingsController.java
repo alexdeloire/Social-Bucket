@@ -14,6 +14,7 @@ import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Logic.Facade.AdvertisingFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 import com.polytech.SocialBucket.UI.FXRouter;
+import com.polytech.SocialBucket.UI.Post.PostComponent;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -125,13 +126,29 @@ public class UserAdvertisingsController {
       advertisingContainer.getChildren().add(new Label("No advertising to display"));
     } else {
       for (Advertising advertising : advertisings) {
-        VBox advertisingDetails = createAdvertising(advertising);
+        VBox advertisingDetails = createAdDetails(advertising);
         advertisingContainer.getChildren().add(advertisingDetails);
       }
     }
   }
 
-  private VBox createAdvertising(Advertising advertising) {
+  private VBox createAdDetails(Advertising advertising) {
+    try {
+      FXMLLoader loader = new FXMLLoader(
+          getClass().getResource("/com/polytech/SocialBucket/advertising/userAdComponent.fxml"));
+
+      VBox adContainer = loader.load();
+      UserAdComponent controller = loader.getController();
+      controller.loadAdvertising(advertising, this::loadAdvertisings);
+      return adContainer;
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    VBox adContainer = new VBox();
+    return adContainer;
+  }
+
+  private VBox createAdDetails2(Advertising advertising) {
     VBox adBox = new VBox();
     GridPane gridPane = new GridPane();
     Label text = new Label(advertising.getText());
