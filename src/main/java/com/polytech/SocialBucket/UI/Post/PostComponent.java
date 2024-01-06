@@ -73,6 +73,12 @@ public class PostComponent {
     @FXML
     private TextField commentTextfield;
 
+    @FXML
+    private ImageView likeIcon;
+
+    @FXML
+    private ImageView heartIcon;
+
 
     private Post post;
     private UserFacade userFacade = UserFacade.getInstance();
@@ -141,9 +147,17 @@ public class PostComponent {
         for (Reaction reaction : reactions) {
             if ("like".equalsIgnoreCase(reaction.getType())) {
                 numberOfLikes++;
-            }
-            if ("heart".equalsIgnoreCase(reaction.getType())) {
+            } else if ("heart".equalsIgnoreCase(reaction.getType())) {
                 numberOfHearts++;
+            }
+
+            if (reaction.getIduser() == userFacade.getCurrentUser().getId()) {
+                if ("like".equalsIgnoreCase(reaction.getType())) {
+                    setHasLiked(true);
+                }
+                if ("heart".equalsIgnoreCase(reaction.getType())) {
+                    setHasHearted(true);
+               }
             }
         }
 
@@ -151,15 +165,6 @@ public class PostComponent {
         heartNumber.setText(String.valueOf(numberOfHearts));
 
         User currentUser = userFacade.getCurrentUser();
-
-        if (reactions.stream().anyMatch(reaction -> "like".equalsIgnoreCase(reaction.getType())
-                && currentUser.getId() == reaction.getIduser())) {
-            hasLiked = true;
-        }
-        if (reactions.stream().anyMatch(reaction -> "heart".equalsIgnoreCase(reaction.getType())
-                && currentUser.getId() == reaction.getIduser())) {
-            hasHearted = true;
-        }
     }
 
     @FXML
@@ -185,18 +190,36 @@ public class PostComponent {
         }
     }
 
+    private void setHasLiked(boolean hasLiked) {
+        this.hasLiked = hasLiked;
+        if (hasLiked) {
+            likeIcon.setImage(new Image("file:src/main/java/com/polytech/SocialBucket/UI/Icones/like-filled.png"));
+        } else {
+            likeIcon.setImage(new Image("file:src/main/java/com/polytech/SocialBucket/UI/Icones/like.png"));
+        }
+    }
+
+    private void setHasHearted(boolean hasHearted) {
+        this.hasHearted = hasHearted;
+        if (hasHearted) {
+            heartIcon.setImage(new Image("file:src/main/java/com/polytech/SocialBucket/UI/Icones/heart-filled.png"));
+        } else {
+            heartIcon.setImage(new Image("file:src/main/java/com/polytech/SocialBucket/UI/Icones/heart.png"));
+        }
+    }
+
     @FXML
     private void handleAddHeart() {
         if (hasHearted) {
             Boolean deleteSucces = deleteReaction("heart");
             if (deleteSucces) {
-                hasHearted = false;
+                setHasHearted(false);
                 heartNumber.setText(String.valueOf(Integer.parseInt(heartNumber.getText()) - 1));
             }
         } else {
             Boolean addSucces = addReaction("heart");
             if (addSucces) {
-                hasHearted = true;
+                setHasHearted(true);
                 heartNumber.setText(String.valueOf(Integer.parseInt(heartNumber.getText()) + 1));
             }
         }
@@ -207,13 +230,13 @@ public class PostComponent {
         if (hasLiked) {
             Boolean deleteSucces = deleteReaction("like");
             if (deleteSucces) {
-                hasLiked = false;
+                setHasLiked(false);
                 likeNumber.setText(String.valueOf(Integer.parseInt(likeNumber.getText()) - 1));
             }
         } else {
             Boolean addSucces = addReaction("like");
             if (addSucces) {
-                hasLiked = true;
+                setHasLiked(true);
                 likeNumber.setText(String.valueOf(Integer.parseInt(likeNumber.getText()) + 1));
             }
         }

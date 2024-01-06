@@ -65,7 +65,7 @@
                      <children>
                         <Button mnemonicParsing="false" onAction="#handleLike" style="-fx-background-color: transparent;">
                            <graphic>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="likeIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <viewport>
                                     <Rectangle2D />
                                  </viewport>
@@ -89,7 +89,7 @@
                      <children>
                         <Button mnemonicParsing="false" onAction="#handleDislike" style="-fx-background-color: transparent;">
                            <graphic>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="dislikeIcon" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <viewport>
                                     <Rectangle2D />
                                  </viewport>

@@ -17,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class CommentComponent {
@@ -38,6 +40,12 @@ public class CommentComponent {
 
     @FXML
     private Label dislikeLabel;
+
+    @FXML
+    private ImageView likeIcon;
+
+    @FXML
+    private ImageView dislikeIcon;
 
     @FXML
     private Button deleteButton;
@@ -81,10 +89,10 @@ public class CommentComponent {
 
                 if (reaction.getIduser() == userFacade.getCurrentUser().getId()) {
                     if ("like".equalsIgnoreCase(reaction.getType())) {
-                        isLiked = true;
+                        setIsLiked(true);
                     }
                     if ("dislike".equalsIgnoreCase(reaction.getType())) {
-                        isDisliked = true;
+                        setIsDisliked(true);
                     }
                 }
 
@@ -103,6 +111,24 @@ public class CommentComponent {
         }
     }
 
+    private void setIsLiked(boolean isLiked) {
+        this.isLiked = isLiked;
+        if (isLiked) {
+            likeIcon.setImage(new Image("file:src/main/java/com/polytech/SocialBucket/UI/Icones/like-filled.png"));
+        } else {
+            likeIcon.setImage(new Image("file:src/main/java/com/polytech/SocialBucket/UI/Icones/like.png"));
+        }
+    }
+
+    private void setIsDisliked(boolean isDisliked) {
+        this.isDisliked = isDisliked;
+        if (isDisliked) {
+            dislikeIcon.setImage(new Image("file:src/main/java/com/polytech/SocialBucket/UI/Icones/dislike-filled.png"));
+        } else {
+            dislikeIcon.setImage(new Image("file:src/main/java/com/polytech/SocialBucket/UI/Icones/dislike.png"));
+        }
+    }
+
     @FXML
     private void handleLike(){
         if (isDeleted) {
@@ -110,18 +136,18 @@ public class CommentComponent {
         }
         if (isLiked) {
             commentFacade.deleteReaction(comment, userFacade.getCurrentUser());
-            isLiked = false;
+            setIsLiked(false);
             numberOfLikes--;
         } else if (isDisliked) {
             commentFacade.deleteReaction(comment, userFacade.getCurrentUser());
             commentFacade.addReaction("like", comment, userFacade.getCurrentUser());
-            isLiked = true;
-            isDisliked = false;
+            setIsLiked(true);
+            setIsDisliked(false);
             numberOfLikes++;
             numberOfDislikes--;
         } else {
             commentFacade.addReaction("like", comment, userFacade.getCurrentUser());
-            isLiked = true;
+            setIsLiked(true);
             numberOfLikes++;
         }
         updateReactionLabels();
@@ -134,18 +160,18 @@ public class CommentComponent {
         }
         if (isDisliked) {
             commentFacade.deleteReaction(comment, userFacade.getCurrentUser());
-            isDisliked = false;
+            setIsDisliked(false);
             numberOfDislikes--;
         } else if (isLiked) {
             commentFacade.deleteReaction(comment, userFacade.getCurrentUser());
             commentFacade.addReaction("dislike", comment, userFacade.getCurrentUser());
-            isDisliked = true;
-            isLiked = false;
+            setIsLiked(false);
+            setIsDisliked(true);
             numberOfDislikes++;
             numberOfLikes--;
         } else {
             commentFacade.addReaction("dislike", comment, userFacade.getCurrentUser());
-            isDisliked = true;
+            setIsDisliked(true);
             numberOfDislikes++;
         }
         updateReactionLabels();

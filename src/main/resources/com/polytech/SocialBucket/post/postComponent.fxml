@@ -101,7 +101,7 @@
                            <children>
                               <Button mnemonicParsing="false" onAction="#handleAddHeart" style="-fx-background-color: transparent;">
                                  <graphic>
-                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="heartIcon" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                        <viewport>
                                           <Rectangle2D />
                                        </viewport>
@@ -127,7 +127,7 @@
                                     <Insets left="15.0" />
                                  </HBox.margin>
                                  <graphic>
-                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="likeIcon" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="file:src/main/java/com/polytech/SocialBucket/UI/Icones/like.png" />
                                        </image>

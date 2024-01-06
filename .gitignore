@@ -4,4 +4,4 @@ lib/
 target/
 .idea
 .vscode
-src/main/java/com/polytech/SocialBucket/Persistence/PostgreSQLDAO/PostgreSQLDAOFactory.java
+src.main.java.com.polytech.SocialBucket.Persistence.PostgreSQLDAO.PostgreSQLDAOFactory.java
