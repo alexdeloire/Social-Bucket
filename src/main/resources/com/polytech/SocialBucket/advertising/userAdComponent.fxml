@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefWidth="625.0" style="-fx-background-radius: 20; -fx-background-color: #f5f3f0; -fx-border-color: #d3d2ce; -fx-border-width: 2; -fx-border-radius: 12;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.Advertising.UserAdComponent">
+   <children>
+      <HBox maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #e3e2de; -fx-background-radius: 10 10 0 0;">
+         <children>
+            <Label fx:id="endDate" text="">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+            <Pane prefHeight="30.0" prefWidth="75.0">
+               <children>
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleConfirmDeleteBox" style="-fx-background-color: #850900; -fx-background-radius: 15;" text="Withdraw" textFill="WHITE" visible="false">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="expired" text="Expired">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+         <padding>
+            <Insets bottom="5.0" right="15.0" left="15.0" top="5.0" />
+         </padding>
+      </HBox>
+      <VBox  minWidth="200.0" prefWidth="400.0" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+         <children>
+            <VBox fx:id="confirmDeleteBox" prefWidth="400.0" HBox.hgrow="ALWAYS">
+               <children>
+                   <Label prefWidth="413.0" text="Are you sure you want to withdraw this advertisement? Please note: advertising costs will not be refunded" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox minHeight="-Infinity" prefHeight="38.0" prefWidth="900.0" spacing="50.0">
+                     <children>
+                        <Button onAction="#handleDeleteAdvertising" prefHeight="32.0" style="-fx-background-color: #098500; -fx-background-radius: 15;" text="Confirm" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets top="2.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                         <Button onAction="#handleConfirmDeleteBox" prefHeight="32.0" style="-fx-background-color: #850900; -fx-background-radius: 15;" text="Cancel" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets top="2.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                            <padding>
+                  <Insets bottom="15.0" left="60.0" right="60.0" top="15.0" />
+               </padding>
+                  </HBox>
+                </children>
+            </VBox>
+            <VBox fx:id="resume" prefWidth="400.0" HBox.hgrow="ALWAYS">
+               <children>
+               <Label fx:id="resumeText" prefWidth="413.0" text="" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                </children>
+                               <padding>
+                  <Insets bottom="15.0" left="60.0" right="60.0" top="15.0" />
+               </padding>
+            </VBox>
+           
+            <VBox fx:id="details" prefWidth="400.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <ImageView fx:id="imageContainer" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+                  <Label fx:id="description" prefWidth="413.0" text="" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                           
+                  <Label fx:id="link" prefWidth="413.0" text="" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                   <Label fx:id="beginDate" prefWidth="413.0" text="" textOverrun="CLIP" wrapText="true">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="60.0" right="60.0" top="15.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+      <HBox minHeight="-Infinity" prefWidth="200.0" style="-fx-background-color: #e3e2de; -fx-background-radius: 0 0 10 10;" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0">
+                     <children>
+                        <HBox minWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" spacing="5.0" style="-fx-background-color: transparent;">
+                           <children>
+                              <Button fx:id="plusInfoButton" mnemonicParsing="false" text="+Info" onAction="#handleAdBox" style="-fx-background-color: #0073e6; -fx-background-radius: 15;">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                                     <font>
+                                        <Font size="15.0" />
+                                     </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                               <Button fx:id="hideInfoButton" mnemonicParsing="false" text="-Info" onAction="#handleAdBox" style="-fx-background-color: #0073e6; -fx-background-radius: 15;">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                                     <font>
+                                       <Font size="15.0" />
+                                    </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Pane style="-fx-background-color: #e3e2de;" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>

@@ -9,9 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.polytech.SocialBucket.Logic.Advertising;
 import com.polytech.SocialBucket.Logic.Post;
 import com.polytech.SocialBucket.Logic.Reaction;
 import com.polytech.SocialBucket.Logic.User;
@@ -196,6 +198,121 @@ public class PostgreSQLPostDAO extends PostDAO {
     }
 
     return false;
+  }
+
+  @Override
+  public List<Object> getNews(User user) {
+    List<Post> posts = new ArrayList<>();
+    List<Advertising> advertisings = new ArrayList<>();
+    List<Object> news = new ArrayList<>();
+
+    String sql = "SELECT * FROM public.\"post\" WHERE iduser IN (SELECT idfollowed FROM public.\"follow\" WHERE iduser = ?) ORDER BY idpost DESC";
+
+    try (Connection connection = PostgreSQLDAOFactory.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+      preparedStatement.setInt(1, user.getId());
+
+      try (ResultSet resultSet = preparedStatement.executeQuery()) {
+        while (resultSet.next()) {
+          // Get the data from the row
+          String text = resultSet.getString("text");
+          String type = resultSet.getString("type");
+          String fileName = resultSet.getString("filename");
+          byte[] fileBytes = resultSet.getBytes("file");
+          int id = resultSet.getInt("idpost");
+
+          // Create a new Post object and add it to the list
+          Post post = new Post(text, type, user, id);
+
+          if (fileBytes != null) {
+            post.setBytes(fileBytes);
+            post.setFileName(fileName);
+          }
+
+          String sql2 = "SELECT * FROM public.\"reaction\" WHERE idpost = " + id;
+          try (Connection connection2 = PostgreSQLDAOFactory.getConnection();
+              PreparedStatement preparedStatement2 = connection2.prepareStatement(sql2)) {
+            try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
+              while (resultSet2.next()) {
+                String typeReaction = resultSet2.getString("type");
+                int iduser = resultSet2.getInt("iduser");
+                Reaction reaction = new Reaction(typeReaction, iduser);
+                post.addReaction(reaction);
+              }
+            }
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+          posts.add(post);
+        }
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    String sql2 = "SELECT * FROM public.\"advertising\" WHERE end_date >= CURRENT_DATE AND iduser IN (SELECT idfollowed FROM public.\"follow\" WHERE iduser = ?) ORDER BY idadvertising DESC";
+
+    try (Connection connection = PostgreSQLDAOFactory.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql2)) {
+
+      preparedStatement.setInt(1, user.getId());
+
+      try (ResultSet resultSet = preparedStatement.executeQuery()) {
+        while (resultSet.next()) {
+          String text = resultSet.getString("text");
+          String link = resultSet.getString("link");
+          LocalDate beginDate = resultSet.getDate("begin_date").toLocalDate();
+          LocalDate endDate = resultSet.getDate("end_date").toLocalDate();
+          byte[] image = resultSet.getBytes("image");
+          int id = resultSet.getInt("idadvertising");
+
+          Advertising advertising = new Advertising(user, beginDate, endDate, text, link, image);
+          advertising.setId(id);
+          advertisings.add(advertising);
+        }
+
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    int postIndex = 0;
+    int adIndex = 0;
+
+    while (postIndex < posts.size() || adIndex < advertisings.size()) {
+      // Ajouter 2 posts à la liste news
+      if (postIndex < posts.size()) {
+        news.add(posts.get(postIndex));
+        postIndex++;
+      }
+      if (postIndex < posts.size()) {
+        news.add(posts.get(postIndex));
+        postIndex++;
+      }
+
+      // Ajouter 1 ad à la liste news
+      if (adIndex < advertisings.size()) {
+        news.add(advertisings.get(adIndex));
+        adIndex++;
+      }
+    }
+
+    for (Object n : news) {
+      if (n instanceof Post) {
+        System.out.println("post");
+      }
+      if (n instanceof Advertising) {
+        System.out.println("ad");
+      }
+    }
+
+    return news;
+
   }
 
 }
