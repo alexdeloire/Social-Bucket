@@ -147,6 +147,28 @@ public class UserAdvertisingsController {
     VBox adContainer = new VBox();
     return adContainer;
   }
+
+  @FXML
+  private void openNewADPopup() {
+    try {
+      // Charger le fichier FXML
+      FXMLLoader loader = new FXMLLoader(
+          getClass().getResource("/com/polytech/SocialBucket/advertising/addAdvertising.fxml"));
+      GridPane newADLayout = loader.load();
+
+      // Créer la scène et la fenêtre modale
+      Scene newADScene = new Scene(newADLayout);
+      Stage newADStage = new Stage();
+      newADStage.setTitle("Nouvelle Publicité");
+      newADStage.initModality(Modality.APPLICATION_MODAL);
+      newADStage.setScene(newADScene);
+
+      // Afficher la fenêtre modale
+      newADStage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
   /*
    * private VBox createAdDetails2(Advertising advertising) {
    * VBox adBox = new VBox();
@@ -248,31 +270,5 @@ public class UserAdvertisingsController {
    * 
    * }
    */
-
-  @FXML
-  private void openNewADPopup() {
-    try {
-      // Charger le fichier FXML
-      FXMLLoader loader = new FXMLLoader(
-          getClass().getResource("/com/polytech/SocialBucket/advertising/addAdvertising.fxml"));
-      GridPane newADLayout = loader.load();
-
-      // why ?????????????
-      // AddAdvertisingController addAdvertisingController = loader.getController();
-      // addAdvertisingController.setRefreshAd(this::loadAdvertisings);
-
-      // Créer la scène et la fenêtre modale
-      Scene newADScene = new Scene(newADLayout);
-      Stage newADStage = new Stage();
-      newADStage.setTitle("Nouvelle Publicité");
-      newADStage.initModality(Modality.APPLICATION_MODAL);
-      newADStage.setScene(newADScene);
-
-      // Afficher la fenêtre modale
-      newADStage.show();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
 
 }

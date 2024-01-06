@@ -33,7 +33,6 @@ public class SidebarController {
         }
     }
 
-
     @FXML
     public void changeToAdvertising() {
         try {
@@ -74,6 +73,15 @@ public class SidebarController {
     private void changeToLogin() {
         try {
             FXRouter.goTo("login");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void changeToNews() {
+        try {
+            FXRouter.goTo("news");
         } catch (Exception e) {
             e.printStackTrace();
         }

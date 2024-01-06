@@ -61,6 +61,13 @@
          <font>
             <Font name="System Bold" size="16.0" />
          </font></Button>
+      <Button onAction="#changeToNews" style="-fx-background-color: transparent;" text="News" underline="true" wrapText="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Button>
       <Pane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
       <Button onAction="#changeToLogin" style="-fx-background-color: transparent;" text="Logout" wrapText="true">
          <cursor>

@@ -32,4 +32,6 @@ public abstract class PostDAO {
  public abstract Boolean addReaction(String typeReaction, Post post, User user);
 
  public abstract Boolean deleteReaction(String typeReaction, Post post, User user);
+
+ public abstract List<Object> getNews(User user);
 }

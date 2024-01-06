@@ -25,7 +25,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <Pane prefHeight="30.0" prefWidth="75.0">
                <children>
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleConfirmDeleteBox" style="-fx-background-color: #850900; -fx-background-radius: 15;" text="Delete" textFill="WHITE" visible="false">
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleConfirmDeleteBox" style="-fx-background-color: #850900; -fx-background-radius: 15;" text="Withdraw" textFill="WHITE" visible="false">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -39,15 +39,14 @@
             </Pane>
          </children>
          <padding>
-            <Insets bottom="5.0" left="50.0" top="5.0" />
+            <Insets bottom="5.0" right="15.0" left="15.0" top="5.0" />
          </padding>
       </HBox>
       <VBox  minWidth="200.0" prefWidth="400.0" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
          <children>
             <VBox fx:id="confirmDeleteBox" prefWidth="400.0" HBox.hgrow="ALWAYS">
                <children>
-                   <Label prefWidth="413.0" text="Are you sure you want to withdraw this advertisement?
-(Please note: advertising costs will not be refunded)" textOverrun="CLIP" wrapText="true">
+                   <Label prefWidth="413.0" text="Are you sure you want to withdraw this advertisement? Please note: advertising costs will not be refunded" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -80,12 +79,9 @@
                            </cursor>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets left="75.0" />
-                     </padding>
+                            <padding>
+                  <Insets bottom="15.0" left="60.0" right="60.0" top="15.0" />
+               </padding>
                   </HBox>
                 </children>
             </VBox>
@@ -100,11 +96,13 @@
                      </VBox.margin>
                   </Label>
                 </children>
+                               <padding>
+                  <Insets bottom="15.0" left="60.0" right="60.0" top="15.0" />
+               </padding>
             </VBox>
            
             <VBox fx:id="details" prefWidth="400.0" HBox.hgrow="ALWAYS">
                <children>
-                 
                   <ImageView fx:id="imageContainer" fitHeight="400.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
                      <viewport>
                         <Rectangle2D />
