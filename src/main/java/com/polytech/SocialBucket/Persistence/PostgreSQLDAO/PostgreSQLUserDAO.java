@@ -335,4 +335,76 @@ public class PostgreSQLUserDAO extends UserDAO {
         }
     }
 
+    @Override
+    public List<User> getFollowers(int idUser) {
+        String sql = "SELECT * FROM public.\"user\" WHERE iduser IN (SELECT iduser FROM public.follow WHERE idfollowed = ?)";
+        List<User> users = new ArrayList<>();
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, idUser);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    // Get the data from the row
+                    String usernameDB = resultSet.getString("username");
+                    String mail = resultSet.getString("mail");
+                    String password = resultSet.getString("password");
+                    int id = resultSet.getInt("iduser");
+
+                    // Create a new User object
+                    User user = new User(usernameDB, mail, password, id);
+                    // Get the number of followers
+                    user.setNbFollowers(getNbFollowersById(id));
+                    // Get the number of following
+                    user.setNbFollowing(getNbFollowingById(id));
+
+                    users.add(user);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+    @Override
+    public List<User> getFollowing(int idUser) {
+        String sql = "SELECT * FROM public.\"user\" WHERE iduser IN (SELECT idfollowed FROM public.follow WHERE iduser = ?)";
+        List<User> users = new ArrayList<>();
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, idUser);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    // Get the data from the row
+                    String usernameDB = resultSet.getString("username");
+                    String mail = resultSet.getString("mail");
+                    String password = resultSet.getString("password");
+                    int id = resultSet.getInt("iduser");
+
+                    // Create a new User object
+                    User user = new User(usernameDB, mail, password, id);
+                    // Get the number of followers
+                    user.setNbFollowers(getNbFollowersById(id));
+                    // Get the number of following
+                    user.setNbFollowing(getNbFollowingById(id));
+
+                    users.add(user);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
 }

@@ -85,4 +85,16 @@ public class UserFacade {
         return userDAO.verifyPassword(idUser, password);
     }
 
+    public List<User> getFollowers(int idUser) {
+        AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+        UserDAO userDAO = factory.getUserDAO();
+        return userDAO.getFollowers(idUser);
+    }
+
+    public List<User> getFollowing(int idUser) {
+        AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+        UserDAO userDAO = factory.getUserDAO();
+        return userDAO.getFollowing(idUser);
+    }
+
 }
