@@ -1,11 +1,10 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="900.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.Post.NewsController">
+<HBox maxHeight="-Infinity" maxWidth="900.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.Post.NewsController">
    <children>
       <HBox maxWidth="180.0" prefHeight="600.0" style="-fx-background-color: #e3e2de; -fx-border-width: 0 2 0 0; -fx-border-color: #d3d2ce;">
          <children>
@@ -39,38 +38,41 @@
          <content>
             <VBox maxHeight="5000.0" prefHeight="598.0" prefWidth="900.0" style="-fx-background-color: #f5f3f0;">
                <children>
-                  <HBox maxWidth="5000.0" minHeight="-Infinity" prefHeight="130.0" prefWidth="900.0" style="-fx-background-color: transparent;">
+                  <HBox prefWidth="900.0">
                      <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                        <Button fx:id="openButton" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#openNavbar" prefHeight="47.0" prefWidth="54.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="file:src/main/java/com/polytech/SocialBucket/UI/Icones/show-panel.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <VBox alignment="CENTER" prefWidth="100.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Button fx:id="openButton" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#openNavbar" prefHeight="47.0" prefWidth="54.0" style="-fx-background-color: transparent;">
-                                 <graphic>
-                                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="file:src/main/java/com/polytech/SocialBucket/UI/Icones/show-panel.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor></Button>
+                              <Label text="News">
+                                 <font>
+                                    <Font name="Arial Bold" size="27.0" />
+                                 </font>
+                              </Label>
                            </children>
-                        </Pane>
-                     </children>
-                  </HBox>
-                  <HBox minHeight="-Infinity" prefHeight="38.0" prefWidth="900.0" spacing="50.0" translateY="-15.0">
-                     <children>
-                        <Label text="News">
-                           <font>
-                              <Font name="Arial" size="27.0" />
-                           </font>
-                        </Label>
+                           <HBox.margin>
+                              <Insets top="15.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="15.0" />
+                           </padding>
+                        </VBox>
                      </children>
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                      <padding>
-                        <Insets left="50.0" />
+                        <Insets right="50.0" />
                      </padding>
                   </HBox>
                   <HBox maxWidth="5000.0" prefHeight="382.0" prefWidth="806.0" style="-fx-background-color: transparent;">

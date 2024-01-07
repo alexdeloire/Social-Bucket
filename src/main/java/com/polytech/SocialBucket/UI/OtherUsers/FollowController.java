@@ -50,7 +50,7 @@ public class FollowController {
 
  @FXML
  private void initialize() {
-  closeNavbar();
+  openNavbar();
  }
 
  @FXML

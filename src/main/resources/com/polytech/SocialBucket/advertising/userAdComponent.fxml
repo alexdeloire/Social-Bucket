@@ -42,17 +42,17 @@
       </HBox>
       <VBox minWidth="200.0" prefWidth="400.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
          <children>
-            <VBox fx:id="confirmDeleteBox" prefWidth="400.0" HBox.hgrow="ALWAYS">
+            <VBox fx:id="confirmDeleteBox" prefWidth="400.0" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
-                   <Label text="Are you sure you want to withdraw this advertisement? Please note: advertising costs will not be refunded" textOverrun="CLIP" wrapText="true">
+                   <Label minHeight="-Infinity" prefHeight="80.0" text="Are you sure you want to withdraw this advertisement? Please note: advertising costs will not be refunded" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font size="15.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="15.0" />
+                        <Insets />
                      </VBox.margin>
                   </Label>
-                  <HBox minHeight="-Infinity" prefHeight="38.0" prefWidth="900.0" spacing="50.0">
+                  <HBox alignment="CENTER" minHeight="-Infinity" prefWidth="900.0" spacing="50.0">
                      <children>
                         <Button onAction="#handleDeleteAdvertising" prefHeight="32.0" style="-fx-background-color: #098500; -fx-background-radius: 15;" text="Confirm" textFill="WHITE">
                            <HBox.margin>
@@ -78,7 +78,7 @@
                         </Button>
                      </children>
                             <padding>
-                  <Insets bottom="15.0" left="60.0" right="60.0" />
+                  <Insets bottom="15.0" />
                </padding>
                   </HBox>
                 </children>
