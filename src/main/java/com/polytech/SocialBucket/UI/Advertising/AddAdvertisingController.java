@@ -181,6 +181,7 @@ public class AddAdvertisingController {
   selectedImage = null;
   imageView.setImage(null);
   imageBox.setVisible(false);
+  imageBox.setManaged(false);
   imageBox.setPrefHeight(0);
   handleButton(false);
  }
@@ -189,6 +190,7 @@ public class AddAdvertisingController {
   imageButton.setVisible(!hasFile);
   imageButton.setManaged(!hasFile);
   imageBox.setVisible(hasFile);
+  imageBox.setManaged(hasFile);
   removeButton.setVisible(hasFile);
   removeButton.setManaged(hasFile);
  }
@@ -203,6 +205,15 @@ public class AddAdvertisingController {
    // Load the selected image into the ImageView
    selectedImage = new Image(selectedFile.toURI().toString());
    imageView.setImage(selectedImage);
+    int width = (int) selectedImage.getWidth();
+    int height = (int) selectedImage.getHeight();
+    if (width > height && width > 0) {
+     imageBox.setPrefHeight(height * 400 / width);
+    } else {
+     imageBox.setPrefHeight(400);
+    }
+    imageBox.setVisible(true);
+    imageBox.setManaged(true);
   }
   handleButton(true);
  }
