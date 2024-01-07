@@ -2,9 +2,15 @@ package com.polytech.SocialBucket;
 
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 import org.junit.Test;
 
 import com.polytech.SocialBucket.*;
+import com.polytech.SocialBucket.Persistence.PostgreSQLDAO.PostgreSQLDAOFactory;
+import com.polytech.SocialBucket.Persistence.AbstractDAOFactory;
+import com.polytech.SocialBucket.Persistence.UserDAO;
 import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 
@@ -13,54 +19,86 @@ import com.polytech.SocialBucket.Logic.Facade.UserFacade;
  */
 public class ProfileTest {
     /**
-     * Rigorous Test :-)
+     * Register two test users
      */
     @Test
-    public void shouldAnswerWithTrue() {
-        assertTrue(true);
-    }
+    public void testRegisterAndLogin() {
 
-    /**
-     * Login test
-     */
-    @Test
-    public void testLogin() {
+        // Delete test users if they already exist
+        String sql = "DELETE FROM \"user\" WHERE username = 'test1' OR username = 'test2'";
 
-        // Real user
-        String username = "u1";
-        String password = "mdp1";
-        String mail = "utilisateur1@example.com";
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-        // Fake user
-        String username2 = "u2";
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        // User 1
+        String username1 = "test1";
+        String password1 = "mdp1";
+        String mail1 = "test1@test1.com";
+
+        // User 2
+        String username2 = "test2";
         String password2 = "mdp2";
-        String mail2 = "fakeemail@example.com";
+        String mail2 = "test2@test2.com";
 
         UserFacade userFacade = UserFacade.getInstance();
-        User userTest = new User(username, mail, password);
 
-        User userDB = userFacade.login(username, password);
-        User shouldBeNull = userFacade.login(username2, password2);
+        userFacade.register(username1, mail1, password1);
+        userFacade.register(username2, mail2, password2);
 
-        assertTrue(userTest.getUsername().equals(userDB.getUsername()));
-        assertTrue(userTest.getMail().equals(userDB.getMail()));
-        assertTrue(userTest.getPassword().equals(userDB.getPassword()));
-        assertTrue(shouldBeNull == null);
+        User user1 = userFacade.login(username1, password1);
+        User user2 = userFacade.login(username2, password2);
+
+        assertTrue(user1.getUsername().equals(username1));
+        assertTrue(user1.getMail().equals(mail1));
+        assertTrue(user1.getPassword().equals(password1));
+        assertTrue(user2.getUsername().equals(username2));
+        assertTrue(user2.getMail().equals(mail2));
+        assertTrue(user2.getPassword().equals(password2));
     }
 
 
-    // /**
-    //  * Follow/Unfollow test
-    //  */
-    // @Test
-    // public void testFollow() {
+    /**
+     * Follow/Unfollow test
+     */
+    @Test
+    public void testFollow() {
 
-    //     // User 1
-    //     String username = "u1";
-    //     // User 2
-    //     String username2 = "u2";
+        // User 1
+        String username1 = "test1";
+        // User 2
+        String username2 = "test2";
 
 
+        UserFacade userFacade = UserFacade.getInstance();
+
+        AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+        UserDAO userDAO = factory.getUserDAO();
+
+        User user1 = userDAO.getUserByUsername(username1);
+        User user2 = userDAO.getUserByUsername(username2);
+
+        System.out.println(user1.getId());
+        System.out.println(user2.getId());
+
+        // User 1 follows User 2
+        userFacade.followUser(user1.getId(), user2.getId());
+
+        // Check if User 1 is following User 2
+        assertTrue(userFacade.isFollowing(user1.getId(), user2.getId()));
+
+        // User 1 unfollows User 2
+        userFacade.unfollowUser(user1.getId(), user2.getId());
+
+        // Check if User 1 is not following User 2
+        assertTrue(!userFacade.isFollowing(user1.getId(), user2.getId()));
+
+    }
 
 
 }
