@@ -36,9 +36,9 @@
       </HBox>
       <ScrollPane fx:id="mainContent" fitToWidth="true" hbarPolicy="NEVER" minViewportHeight="550.0" prefHeight="600.0" prefWidth="870.0" style="-fx-background-color: #f5f3f0;" HBox.hgrow="ALWAYS">
          <content>
-            <VBox maxHeight="5000.0" prefHeight="598.0" prefWidth="900.0" style="-fx-background-color: #f5f3f0;">
+            <VBox maxHeight="5000.0" prefHeight="598.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: #f5f3f0;">
                <children>
-                  <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="38.0" prefWidth="900.0">
+                  <HBox minHeight="-Infinity" prefWidth="900.0">
                      <children>
                         <Button fx:id="openButton" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#openNavbar" prefHeight="47.0" prefWidth="54.0" style="-fx-background-color: transparent;">
                            <graphic>
@@ -52,33 +52,31 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Label alignment="CENTER" contentDisplay="TOP" prefHeight="32.0" prefWidth="10000.0" text="My Advertisings">
-                           <font>
-                              <Font name="Arial Bold" size="27.0" />
-                           </font>
+                        <VBox alignment="CENTER" spacing="15.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="TOP" prefHeight="32.0" prefWidth="10000.0" text="My Advertisings">
+                                 <font>
+                                    <Font name="Arial Bold" size="27.0" />
+                                 </font>
+                              </Label>
+                              <Button onAction="#openNewADPopup" prefHeight="32.0" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="New advertising" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                           </children>
                            <HBox.margin>
-                              <Insets />
+                              <Insets top="15.0" />
                            </HBox.margin>
-                        </Label>
+                        </VBox>
                         <Pane minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" />
                      </children>
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button onAction="#openNewADPopup" prefHeight="32.0" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="New advertising" textFill="WHITE">
-                           <HBox.margin>
-                              <Insets top="2.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor></Button>
-                     </children>
                   </HBox>
                   <HBox maxWidth="5000.0" prefHeight="382.0" prefWidth="806.0" style="-fx-background-color: transparent;">
                      <children>

@@ -44,7 +44,7 @@
          <children>
             <VBox fx:id="confirmDeleteBox" prefWidth="400.0" HBox.hgrow="ALWAYS">
                <children>
-                   <Label prefWidth="413.0" text="Are you sure you want to withdraw this advertisement? Please note: advertising costs will not be refunded" textOverrun="CLIP" wrapText="true">
+                   <Label text="Are you sure you want to withdraw this advertisement? Please note: advertising costs will not be refunded" textOverrun="CLIP" wrapText="true">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -78,10 +78,13 @@
                         </Button>
                      </children>
                             <padding>
-                  <Insets bottom="15.0" left="60.0" right="60.0" top="15.0" />
+                  <Insets bottom="15.0" left="60.0" right="60.0" />
                </padding>
                   </HBox>
                 </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
             </VBox>
             <VBox fx:id="resume" prefWidth="400.0" HBox.hgrow="ALWAYS">
                <children>
@@ -146,7 +149,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" minWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" spacing="5.0" style="-fx-background-color: transparent;">
                            <children>
-                              <Button fx:id="plusInfoButton" mnemonicParsing="false" onAction="#handleAdBox" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="+Info">
+                              <Button fx:id="plusInfoButton" mnemonicParsing="false" onAction="#handleAdBox" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="+Info" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -157,7 +160,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                               <Button fx:id="hideInfoButton" mnemonicParsing="false" onAction="#handleAdBox" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="-Info">
+                               <Button fx:id="hideInfoButton" mnemonicParsing="false" onAction="#handleAdBox" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="-Info" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>

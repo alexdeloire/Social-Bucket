@@ -78,6 +78,8 @@ public class UserAdComponent {
         resume.setManaged(resume.isVisible());
         details.setManaged(details.isVisible());
         confirmDeleteBox.setManaged(confirmDeleteBox.isVisible());
+        plusInfoButton.setManaged(plusInfoButton.isVisible());
+        hideInfoButton.setManaged(hideInfoButton.isVisible());
     }
 
     @FXML
