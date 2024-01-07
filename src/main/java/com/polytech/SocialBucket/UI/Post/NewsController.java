@@ -11,6 +11,7 @@ import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 import com.polytech.SocialBucket.UI.Advertising.OtherUserAdComponent;
 import com.polytech.SocialBucket.UI.Advertising.UserAdComponent;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -36,6 +37,9 @@ public class NewsController {
  @FXML
  private Button closeButton;
 
+ @FXML
+ private Pane loading;
+
  private UserFacade userFacade = UserFacade.getInstance();
 
  private PostFacade postFacade = PostFacade.getInstance();
@@ -54,24 +58,85 @@ public class NewsController {
  }
 
  public void loadNews() {
-  List<Object> news = postFacade.getNews(userFacade.getCurrentUser());
-  newsContainer.getChildren().clear();
-  if (news.size() == 0) {
-   newsContainer.getChildren().add(new Label("No post to display"));
-  } else {
-   for (Object n : news) {
-    if (n instanceof Post) {
-     VBox postDetails = createPostDetails((Post) n);
-     newsContainer.getChildren().add(postDetails);
+  /*
+   * 
+   List<Object> news = postFacade.getNews(userFacade.getCurrentUser());
+   newsContainer.getChildren().clear();
+   if (news.size() == 0) {
+     newsContainer.getChildren().add(new Label("No post to display"));
+    } else {
+      for (Object n : news) {
+        if (n instanceof Post) {
+          VBox postDetails = createPostDetails((Post) n);
+          newsContainer.getChildren().add(postDetails);
+        }
+        if (n instanceof Advertising) {
+          VBox advertisingDetails = createAdDetails((Advertising) n);
+          newsContainer.getChildren().add(advertisingDetails);
+          
+        }
+      }
     }
-    if (n instanceof Advertising) {
-     VBox advertisingDetails = createAdDetails((Advertising) n);
-     newsContainer.getChildren().add(advertisingDetails);
+    */
 
-    }
-   }
-  }
+    loading.setVisible(true);
+    loading.setManaged(true);
+    loading.setPrefHeight(100);
+
+    Thread thread = new Thread(new Runnable() {
+      @Override
+      public void run() {
+        System.out.println("debut requete");
+        try {
+          List<Object> news = postFacade.getNews(userFacade.getCurrentUser());
+          System.out.println("fin requete");
+          Platform.runLater(new Runnable() {
+          @Override
+          public void run() {
+            try {
+            System.out.println("debut affichage");
+            loading.setVisible(false);
+            loading.setManaged(false);
+            System.out.println("milieu affichage");
+            displayNews(news);
+            System.out.println("fin affichage");
+            } catch (Exception e) {
+            e.printStackTrace();
+            }
+          }
+          });
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+
+      }
+      });
+
+      thread.start();
  }
+
+  private void displayNews(List<Object> news) {
+    newsContainer.getChildren().clear();
+    // Ajouter les détails de chaque post dans le postsContainer
+    if (news == null || news.isEmpty()) {
+    newsContainer.getChildren().add(new Label("No news to display"));
+    } else {
+    System.out.println("debut boucle");
+    for (Object n : news) {
+      if (n instanceof Post) {
+      VBox postDetails = createPostDetails((Post) n);
+      newsContainer.getChildren().add(postDetails);
+      }
+      if (n instanceof Advertising) {
+      VBox advertisingDetails = createAdDetails((Advertising) n);
+      newsContainer.getChildren().add(advertisingDetails);
+  
+      }
+    }
+    System.out.println("fin boucle");
+  
+    }
+  }
 
  private VBox createAdDetails(Advertising advertising) {
   try {
