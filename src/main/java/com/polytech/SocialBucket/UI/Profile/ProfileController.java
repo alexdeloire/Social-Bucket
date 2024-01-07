@@ -10,6 +10,7 @@ import com.polytech.SocialBucket.Logic.Post;
 import com.polytech.SocialBucket.Logic.Facade.PostFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 import com.polytech.SocialBucket.UI.FXRouter;
+import com.polytech.SocialBucket.UI.OtherUsers.FollowController;
 import com.polytech.SocialBucket.UI.Post.PostComponent;
 
 import javafx.fxml.FXML;
@@ -18,10 +19,10 @@ import javafx.application.Platform;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-
 
 public class ProfileController {
 
@@ -52,6 +53,9 @@ public class ProfileController {
     @FXML
     private Pane loading;
 
+    @FXML
+    private HBox mainPage;
+
     private UserFacade userFacade = UserFacade.getInstance();
     private PostFacade postFacade = PostFacade.getInstance();
 
@@ -71,9 +75,41 @@ public class ProfileController {
         followingLabel.setText("Following: " + nbFollowing);
         followersLabel.setText("Followers: " + nbFollowers);
 
+        followersLabel.setOnMouseClicked(e -> {
+            try {
+                goToFollow("followers");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        followingLabel.setOnMouseClicked(e -> {
+            try {
+                goToFollow("following");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
         loadPosts();
 
         openNavbar();
+    }
+
+    private void goToFollow(String type) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/polytech/SocialBucket/otherusers/follow.fxml"));
+
+            HBox followPane = loader.load();
+            FollowController controller = loader.getController();
+            controller.loadUsers(type);
+            mainPage.getChildren().clear();
+            mainPage.getChildren().add(followPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -127,7 +163,6 @@ public class ProfileController {
         }
     }
 
-
     private void loadPosts() {
         // Appeler la méthode getAllPosts() du modèle ou du service
 
@@ -145,11 +180,11 @@ public class ProfileController {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            try{
+                            try {
                                 System.out.println("debut affichage");
                                 loading.setVisible(false);
                                 loading.setManaged(false);
-                                //loading.setPrefHeight(0);
+                                // loading.setPrefHeight(0);
                                 System.out.println("milieu affichage");
                                 displayPosts(posts);
                                 System.out.println("fin affichage");
@@ -167,7 +202,6 @@ public class ProfileController {
         thread.start();
         System.out.println("page affiché");
     }
-
 
     private void displayPosts(List<Post> posts) {
         postsContainer.getChildren().clear();

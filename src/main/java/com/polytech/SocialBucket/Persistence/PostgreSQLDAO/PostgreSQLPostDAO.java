@@ -18,6 +18,7 @@ import com.polytech.SocialBucket.Logic.Post;
 import com.polytech.SocialBucket.Logic.Reaction;
 import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Persistence.PostDAO;
+import com.polytech.SocialBucket.Persistence.UserDAO;
 
 import javafx.scene.image.Image;
 
@@ -206,12 +207,13 @@ public class PostgreSQLPostDAO extends PostDAO {
     List<Advertising> advertisings = new ArrayList<>();
     List<Object> news = new ArrayList<>();
 
-    String sql = "SELECT * FROM public.\"post\" WHERE iduser IN (SELECT idfollowed FROM public.\"follow\" WHERE iduser = ?) ORDER BY idpost DESC";
+    String sql = "SELECT * FROM public.\"post\" WHERE iduser IN (SELECT idfollowed FROM public.\"follow\" WHERE iduser = ?) OR iduser = ? ORDER BY idpost DESC";
 
     try (Connection connection = PostgreSQLDAOFactory.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
       preparedStatement.setInt(1, user.getId());
+      preparedStatement.setInt(2, user.getId());
 
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
         while (resultSet.next()) {
@@ -222,8 +224,13 @@ public class PostgreSQLPostDAO extends PostDAO {
           byte[] fileBytes = resultSet.getBytes("file");
           int id = resultSet.getInt("idpost");
 
+          int idauthor = resultSet.getInt("iduser");
+
+          UserDAO userDAO = PostgreSQLUserDAO.getUserDAO();
+          User user2 = userDAO.getUserById(idauthor);
+
           // Create a new Post object and add it to the list
-          Post post = new Post(text, type, user, id);
+          Post post = new Post(text, type, user2, id);
 
           if (fileBytes != null) {
             post.setBytes(fileBytes);
