@@ -3,23 +3,15 @@ package com.polytech.SocialBucket.UI.OtherUsers;
 import java.io.IOException;
 import java.util.List;
 
-import java.lang.Thread;
-
 import com.polytech.SocialBucket.Logic.User;
-import com.polytech.SocialBucket.Logic.Post;
-import com.polytech.SocialBucket.Logic.Facade.PostFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
-import com.polytech.SocialBucket.UI.FXRouter;
-import com.polytech.SocialBucket.UI.OtherUsers.OtherUsersComponent;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
 
 public class SearchUsersController {

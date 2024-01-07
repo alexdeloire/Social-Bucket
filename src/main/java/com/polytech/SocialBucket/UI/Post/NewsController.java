@@ -9,7 +9,6 @@ import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Logic.Facade.PostFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 import com.polytech.SocialBucket.UI.Advertising.OtherUserAdComponent;
-import com.polytech.SocialBucket.UI.Advertising.UserAdComponent;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;

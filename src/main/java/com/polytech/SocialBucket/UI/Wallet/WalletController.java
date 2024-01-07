@@ -4,35 +4,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.lang.Thread;
-import java.sql.Date;
 import java.time.LocalDate;
 
 import com.polytech.SocialBucket.Logic.Card;
-import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 import com.polytech.SocialBucket.Logic.Facade.WalletFacade;
-import com.polytech.SocialBucket.UI.FXRouter;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 
@@ -148,9 +135,6 @@ public class WalletController {
         initializeParameters();
         initializeCards();
 
-        //openCardsPopup();
-        //handleOpenParametersPopup();
-
         qrcodeBox.setVisible(false);
         qrcodeBox.setManaged(false);
 
@@ -195,34 +179,6 @@ public class WalletController {
         closeButton.setManaged(open);
         if (open) {
             closeButton.toFront();
-        }
-    }
-
-    @FXML
-    private void handleOpenCardsPopup() {
-        openCardsPopup();
-    }
-
-    private void openCardsPopup() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polytech/SocialBucket/wallet/cardsPopUp.fxml"));
-            Parent root = loader.load();
-            cardsTab.getChildren().add(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Gestion de l'exception
-        }
-    }
-
-    private void handleOpenParametersPopup() {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/polytech/SocialBucket/wallet/parametersPopup.fxml"));
-            Parent root = loader.load();
-            parametersTab.getChildren().add(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Gestion de l'exception
         }
     }
 
