@@ -39,7 +39,9 @@ public class Controller extends Application {
         FXRouter.when("news", "/com/polytech/SocialBucket/post/news.fxml");
 
         FXRouter.when("wallet", "/com/polytech/SocialBucket/wallet/walletPage.fxml");
+
         FXRouter.when("userAdvertisings", "/com/polytech/SocialBucket/advertising/userAdvertisings.fxml");
+        FXRouter.when("addAdvertising", "/com/polytech/SocialBucket/advertising/addAdvertising.fxml");
 
         FXRouter.when("sidebarPage", "/com/polytech/SocialBucket/sidebarPage.fxml");
         FXRouter.when("clientConsole", "/com/polytech/SocialBucket/clientConsole.fxml");
