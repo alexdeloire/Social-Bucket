@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.image.Image; 
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 
@@ -35,9 +35,13 @@ public class Controller extends Application {
         FXRouter.when("searchUsers", "/com/polytech/SocialBucket/otherusers/searchUsers.fxml");
         FXRouter.when("otherUser", "/com/polytech/SocialBucket/otherusers/otherUsersProfile.fxml");
 
+        FXRouter.when("follow", "/com/polytech/SocialBucket/otherusers/follow.fxml");
+
         // Post
         FXRouter.when("addPost", "/com/polytech/SocialBucket/post/addPost.fxml");
         FXRouter.when("userPosts", "/com/polytech/SocialBucket/post/userPosts.fxml");
+
+        FXRouter.when("news", "/com/polytech/SocialBucket/post/news.fxml");
 
         FXRouter.when("wallet", "/com/polytech/SocialBucket/wallet/walletPage.fxml");
         FXRouter.when("userAdvertisings", "/com/polytech/SocialBucket/advertising/userAdvertisings.fxml");

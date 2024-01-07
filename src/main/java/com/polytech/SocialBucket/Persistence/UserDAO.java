@@ -41,4 +41,8 @@ public abstract class UserDAO {
     public abstract boolean updateUser(User user);
 
     public abstract boolean verifyPassword(int idUser, String password);
+
+    public abstract List<User> getFollowers(int idUser);
+
+    public abstract List<User> getFollowing(int idUser);
 }
