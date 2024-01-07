@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="80.0" prefWidth="500.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.OtherUsers.OtherUsersComponent">
+<VBox maxWidth="450.0" prefHeight="80.0" prefWidth="450.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polytech.SocialBucket.UI.Wallet.CardComponent">
    <children>
-      <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="55.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #f5f3f0; -fx-border-color: #d3d2ce; -fx-background-radius: 10; -fx-border-radius: 10;">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="55.0" prefWidth="450.0" spacing="10.0" style="-fx-background-color: #f5f3f0; -fx-border-color: #d3d2ce; -fx-background-radius: 10; -fx-border-radius: 10;">
          <children>
-            <Label fx:id="usernameLabel" prefHeight="70.0" prefWidth="120.0" text="username" wrapText="true">
+            <Label fx:id="holderLabel" prefHeight="70.0" prefWidth="120.0" text="holder" wrapText="true">
                <font>
                   <Font name="Arial Bold" size="16.0" />
                </font>
@@ -20,18 +20,13 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </Label>
-            <Label fx:id="followersLabel" prefHeight="60.0" prefWidth="110.0" text="0 followers" wrapText="true">
-               <font>
-                  <Font name="Arial" size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="followingLabel" prefHeight="60.0" prefWidth="110.0" text="0 following" wrapText="true">
+            <Label fx:id="cardNumberLabel" prefHeight="60.0" prefWidth="110.0" text="cardnumber" wrapText="true">
                <font>
                   <Font name="Arial" size="16.0" />
                </font>
             </Label>
             <Pane HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" onAction="#openProfile" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="Profile" textFill="WHITE">
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteCard" style="-fx-background-color: #850900; -fx-background-radius: 15;" text="Delete" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>

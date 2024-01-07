@@ -1,0 +1,35 @@
+/* tab.css */
+
+/* Styling for the tab pane */
+
+.tab {
+    -fx-background-color:  transparent;
+}
+    
+.tab-pane>*.tab-header-area>*.tab-header-background {
+  -fx-background-color: transparent;
+  -fx-background-insets: 0;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 25;
+}
+
+.tab {
+    -fx-border-width: 0px 0px 1px 0px;
+}
+
+.tab:selected {
+    -fx-background-color:   #ebeae7;
+    -fx-border-color:  #ebeae7;
+}
+.tab-label {
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+}
+    
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator  {
+    -fx-border-radius: 0px;
+    -fx-border-width: 0px 0px 0px 0px;
+    -fx-border-color: transparent;
+}
