@@ -5,8 +5,6 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -39,10 +37,10 @@
             </Pane>
          </children>
          <padding>
-            <Insets bottom="5.0" right="15.0" left="15.0" top="5.0" />
+            <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
          </padding>
       </HBox>
-      <VBox  minWidth="200.0" prefWidth="400.0" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+      <VBox minWidth="200.0" prefWidth="400.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
          <children>
             <VBox fx:id="confirmDeleteBox" prefWidth="400.0" HBox.hgrow="ALWAYS">
                <children>
@@ -140,15 +138,15 @@
             </VBox>
          </children>
       </VBox>
-      <HBox minHeight="-Infinity" prefWidth="200.0" style="-fx-background-color: #e3e2de; -fx-background-radius: 0 0 10 10;" VBox.vgrow="ALWAYS">
+      <HBox alignment="TOP_CENTER" minHeight="-Infinity" prefWidth="200.0" style="-fx-background-color: #e3e2de; -fx-background-radius: 0 0 10 10;" VBox.vgrow="ALWAYS">
          <children>
             <VBox HBox.hgrow="ALWAYS">
                <children>
                   <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0">
                      <children>
-                        <HBox minWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" spacing="5.0" style="-fx-background-color: transparent;">
+                        <HBox alignment="CENTER_LEFT" minWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" spacing="5.0" style="-fx-background-color: transparent;">
                            <children>
-                              <Button fx:id="plusInfoButton" mnemonicParsing="false" text="+Info" onAction="#handleAdBox" style="-fx-background-color: #0073e6; -fx-background-radius: 15;">
+                              <Button fx:id="plusInfoButton" mnemonicParsing="false" onAction="#handleAdBox" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="+Info">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
@@ -159,7 +157,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                               <Button fx:id="hideInfoButton" mnemonicParsing="false" text="-Info" onAction="#handleAdBox" style="-fx-background-color: #0073e6; -fx-background-radius: 15;">
+                               <Button fx:id="hideInfoButton" mnemonicParsing="false" onAction="#handleAdBox" style="-fx-background-color: #0073e6; -fx-background-radius: 15;" text="-Info">
                                  <HBox.margin>
                                     <Insets right="10.0" />
                                  </HBox.margin>
