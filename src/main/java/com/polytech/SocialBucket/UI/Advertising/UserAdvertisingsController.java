@@ -77,6 +77,15 @@ public class UserAdvertisingsController {
   }
 
   @FXML
+  private void goToAddAdvertising() {
+    try {
+      FXRouter.goTo("addAdvertising");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
   private void openNavbar() {
     try {
       // Charger la page du portefeuille depuis le fichier FXML

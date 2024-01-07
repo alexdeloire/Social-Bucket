@@ -2,6 +2,7 @@ package com.polytech.SocialBucket.UI.Advertising;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Observable;
 
 import com.polytech.SocialBucket.Logic.Advertising;
@@ -9,6 +10,7 @@ import com.polytech.SocialBucket.Logic.User;
 import com.polytech.SocialBucket.Logic.Facade.AdvertisingFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
 import com.polytech.SocialBucket.Logic.Facade.WalletFacade;
+import com.polytech.SocialBucket.UI.FXRouter;
 import com.polytech.SocialBucket.UI.SidebarController;
 
 import javafx.fxml.FXML;
@@ -17,10 +19,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -28,7 +34,20 @@ import javafx.stage.Stage;
 public class AddAdvertisingController {
 
  private File selectedFile;
+
  private Image selectedImage;
+
+ @FXML
+ private ScrollPane mainContent;
+
+ @FXML
+ private Pane navbar;
+
+ @FXML
+ private Button openButton;
+
+ @FXML
+ private Button closeButton;
 
  @FXML
  private GridPane gridPane;
@@ -37,58 +56,141 @@ public class AddAdvertisingController {
  private ImageView imageView;
 
  @FXML
+ private Pane imageBox;
+
+ @FXML
+ private Button imageButton;
+
+ @FXML
+ private Button removeButton;
+
+ @FXML
+ private Button createButton;
+
+ @FXML
  private TextField textField;
+
  @FXML
  private TextField linkField;
+
  @FXML
  private Label statusLabel;
 
  @FXML
  private ComboBox durationComboBox;
 
+ @FXML
+ private VBox mainBox;
+
+ @FXML
+ private VBox fieldsBox;
+
+ @FXML
+ private HBox orderBox;
+
+ @FXML
+ private HBox paymentBox;
+
+ @FXML
+ private Label date;
+
+ @FXML
+ private Label service;
+
+ @FXML
+ private Label price;
+
+ @FXML
+ private TextField creditCardField;
+
  private UserFacade userFacade = UserFacade.getInstance();
  private AdvertisingFacade advertisingFacade = AdvertisingFacade.getInstance();
  private WalletFacade walletFacade = WalletFacade.getInstance();
 
- private boolean advertisingCreated = false;
-
- private Runnable refreshAd;
-
  @FXML
  private void initialize() {
+  orderBox.setVisible(false);
+  orderBox.setPrefHeight(0);
+  paymentBox.setVisible(false);
+  paymentBox.setPrefHeight(0);
 
-  if (!advertisingCreated) {
-   Button createAdvertisingButton = new Button("Create Advertising");
+  openNavbar();
+  handleButton(false);
+ }
 
-   createAdvertisingButton.setOnAction(event -> {
-    try {
-     handleCreateAdvertising();
-    } catch (IOException e) {
-     // TODO Auto-generated catch block
-     e.printStackTrace();
-    }
-   });
-   gridPane.add(createAdvertisingButton, 3, 5);
+ @FXML
+ private void openNavbar() {
+  try {
+   FXMLLoader loader = new FXMLLoader(
+     getClass().getResource("/com/polytech/SocialBucket/sidebarPage.fxml"));
+   Pane navbarContent = loader.load();
 
+   navbar.setPrefWidth(140);
+   mainContent.setPrefWidth(705);
+
+   navbar.getChildren().add(navbarContent);
+
+   handleButtonNavbar(true);
+
+  } catch (IOException e) {
+   e.printStackTrace();
   }
-  Button createAdvertisingButton = new Button("Close");
-
-  createAdvertisingButton.setOnAction(event -> {
-   closeWindow();
-  });
-  gridPane.add(createAdvertisingButton, 3, 6);
 
  }
 
  @FXML
- public void setRefreshAd(Runnable refreshAD) {
-  this.refreshAd = refreshAd;
+ private void closeNavbar() {
+  navbar.setPrefWidth(0);
+  mainContent.setPrefWidth(900);
+
+  handleButtonNavbar(false);
+
+  navbar.getChildren().clear();
+ }
+
+ private void handleButtonNavbar(boolean open) {
+  openButton.setVisible(!open);
+  openButton.setManaged(!open);
+  closeButton.setVisible(open);
+  closeButton.setManaged(open);
+  if (open) {
+   closeButton.toFront();
+  }
  }
 
  @FXML
- private void closeWindow() {
-  Stage stage = (Stage) gridPane.getScene().getWindow();
-  stage.close();
+ private void goToProfile() {
+  try {
+   FXRouter.goTo("profile");
+  } catch (Exception e) {
+   e.printStackTrace();
+  }
+ }
+
+ @FXML
+ private void goToMyAdvertisings() {
+  try {
+   FXRouter.goTo("userAdvertisings");
+  } catch (Exception e) {
+   e.printStackTrace();
+  }
+ }
+
+ @FXML
+ private void removeImage() {
+  selectedImage = null;
+  imageView.setImage(null);
+  imageBox.setVisible(false);
+  imageBox.setPrefHeight(0);
+  handleButton(false);
+ }
+
+ private void handleButton(boolean hasFile) {
+  imageButton.setVisible(!hasFile);
+  imageButton.setManaged(!hasFile);
+  imageBox.setVisible(hasFile);
+  removeButton.setVisible(hasFile);
+  removeButton.setManaged(hasFile);
  }
 
  @FXML
@@ -102,6 +204,7 @@ public class AddAdvertisingController {
    selectedImage = new Image(selectedFile.toURI().toString());
    imageView.setImage(selectedImage);
   }
+  handleButton(true);
  }
 
  @FXML
@@ -136,11 +239,36 @@ public class AddAdvertisingController {
 
    // advertisingFacade.createAdvertising(text, linkField.getText(), selectedFile,
    // user, selectedDuration);
-   closeWindow();
-   openOrderPopup(text, linkField.getText(), selectedFile, user, selectedDuration);
+   // closeWindow();
 
-   // statusLabel.setText("Advertising created successfully !");
-   // this.advertisingCreated = true;
+   // fieldsBox.setVisible(false);
+   // fieldsBox.setPrefHeight(0);
+   mainBox.getChildren().remove(fieldsBox);
+
+   Advertising advertising = new Advertising();
+   advertising.setText(text);
+   advertising.setLink(linkField.getText());
+   byte[] fileBytes = Files.readAllBytes(selectedFile.toPath());
+   advertising.setImage(fileBytes);
+   advertising.setUser(user);
+
+   try {
+    FXMLLoader loader = new FXMLLoader(
+      getClass().getResource("/com/polytech/SocialBucket/advertising/otherUserAdComponent.fxml"));
+
+    VBox adContainer = loader.load();
+    OtherUserAdComponent controller = loader.getController();
+    controller.loadAdvertising(advertising, null);
+
+    mainBox.getChildren().add(0, adContainer);
+   } catch (IOException e) {
+    e.printStackTrace();
+   }
+
+   createButton.setVisible(false);
+   createButton.setManaged(false);
+
+   openOrderBox(selectedDuration);
 
   } else {
    // If failed, update the status label
@@ -150,99 +278,51 @@ public class AddAdvertisingController {
  }
 
  @FXML
- public void openOrderPopup(String text, String link, File file, User user, int duration) {
-  GridPane gridPane = new GridPane();
-  Label title = new Label("Order Details");
+ public void openOrderBox(int duration) {
+  orderBox.setVisible(true);
+  orderBox.setPrefHeight(200);
+
   String today = java.time.LocalDate.now().toString();
-  Label date = new Label("Date : " + today);
-  Label service = new Label("Service : Advertising");
-  Label price = new Label("Price : " + duration * 100 + " euros");
-
-  Button continueButton = new Button("Continue");
-  continueButton.setOnAction(event -> {
-   Stage stage = (Stage) continueButton.getScene().getWindow();
-   stage.close();
-   openPaymentPopup(text, link, file, user, duration);
-  });
-
-  Button cancelButton = new Button("Cancel");
-  cancelButton.setOnAction(event -> {
-   Stage stage = (Stage) cancelButton.getScene().getWindow();
-   stage.close();
-  });
-
-  gridPane.add(title, 0, 0);
-  gridPane.add(date, 0, 1);
-  gridPane.add(service, 0, 2);
-  gridPane.add(price, 1, 3);
-  gridPane.add(continueButton, 0, 4);
-  gridPane.add(cancelButton, 0, 5);
-
-  Scene newADScene = new Scene(gridPane);
-  Stage newADStage = new Stage();
-  newADStage.initModality(Modality.APPLICATION_MODAL);
-  newADStage.setScene(newADScene);
-  newADStage.show();
+  date.setText("Date : " + today);
+  service.setText("Service : Advertising");
+  price.setText("Price : " + duration * 100 + " euros");
  }
 
  @FXML
- public void openPaymentPopup(String text, String link, File file, User user, int duration) {
+ public void openPaymentBox() {
+  orderBox.setVisible(false);
+  orderBox.setPrefHeight(0);
+  paymentBox.setVisible(true);
+  paymentBox.setPrefHeight(200);
 
-  GridPane gridPane = new GridPane();
-  Label title = new Label("Payment");
-  Label textFieldLabel = new Label("Please enter your secret code :");
-  TextField creditCardField = new TextField();
-  Label checkCode = new Label();
-  Label checkbalance = new Label();
+ }
 
-  Button payButton = new Button("Pay");
-  payButton.setOnAction(event -> {
-   checkCode.setText("");
-   checkbalance.setText("");
-   if (walletFacade.checkSecretCode(user.getId(), Integer.parseInt(creditCardField.getText()))) {
-    if (walletFacade.pay(user.getId(), duration * 100)) {
-     try {
-      advertisingFacade.createAdvertising(text, link, file, user, duration);
-     } catch (IOException e) {
-      e.printStackTrace();
-     }
-     statusLabel.setText("Advertising created successfully !");
-     this.advertisingCreated = true;
+ @FXML
+ public void pay() {
+  int duration = Integer.parseInt(durationComboBox.getValue().toString());
+  User user = userFacade.getCurrentUser();
+  File file = selectedFile;
+  String link = linkField.getText();
+  String text = textField.getText();
 
-     // TODO
-     // refresh
-     // refreshAd.run();
-
-     Stage stage = (Stage) payButton.getScene().getWindow();
-     stage.close();
-    } else {
-     checkbalance.setText("Not enough money on your wallet");
+  statusLabel.setText("");
+  if (walletFacade.checkSecretCode(user.getId(), Integer.parseInt(creditCardField.getText()))) {
+   if (walletFacade.pay(user.getId(), duration * 100)) {
+    try {
+     advertisingFacade.createAdvertising(text, link, file, user, duration);
+    } catch (IOException e) {
+     e.printStackTrace();
     }
+    statusLabel.setText("Advertising created successfully !");
+    goToMyAdvertisings();
+
    } else {
-    checkCode.setText("Wrong secret code");
+    statusLabel.setText("Not enough money on your wallet");
    }
+  } else {
+   statusLabel.setText("Wrong secret code");
+  }
 
-  });
-
-  Button cancelButton = new Button("Cancel");
-  cancelButton.setOnAction(event -> {
-   Stage stage = (Stage) cancelButton.getScene().getWindow();
-   stage.close();
-  });
-
-  gridPane.add(title, 0, 0);
-  gridPane.add(textFieldLabel, 0, 1);
-  gridPane.add(creditCardField, 0, 2);
-  gridPane.add(checkCode, 0, 3);
-  gridPane.add(checkbalance, 0, 4);
-  gridPane.add(payButton, 0, 5);
-  gridPane.add(cancelButton, 0, 6);
-
-  Scene newADScene = new Scene(gridPane);
-  Stage newADStage = new Stage();
-  newADStage.initModality(Modality.APPLICATION_MODAL);
-  newADStage.setScene(newADScene);
-  newADStage.show();
  }
 
 }

@@ -14,6 +14,9 @@ public class Advertising {
  private String link;
  private byte[] image;
 
+ public Advertising() {
+ }
+
  public Advertising(User user, LocalDate begindate, LocalDate enddate, String text, String link, byte[] image) {
   this.user = user;
   this.begindate = begindate;
