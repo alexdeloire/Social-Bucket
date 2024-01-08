@@ -14,13 +14,13 @@ import com.polytech.SocialBucket.Logic.Reaction;
 // Singleton Design Pattern
 public abstract class PostDAO {
 
- protected static PostDAO userDAO;
+ protected static PostDAO postDAO;
 
  public static PostDAO getPostDAO() {
-  if (userDAO == null) {
-   userDAO = new PostgreSQLPostDAO();
+  if (postDAO == null) {
+   postDAO = new PostgreSQLPostDAO();
   }
-  return userDAO;
+  return postDAO;
  }
 
  public abstract Post createPost(String text, String type, File file, User user) throws IOException;
