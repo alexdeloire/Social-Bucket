@@ -34,7 +34,6 @@ public abstract class CommentDAO {
  public abstract void deleteReaction(Comment comment, User user);
 
  public abstract List<Reaction> getReactionsByComment(Comment comment);
- // AddRespondComment(content: String, user: User, post: Post, father: Comment) :
- // Comment
+ 
 
 }

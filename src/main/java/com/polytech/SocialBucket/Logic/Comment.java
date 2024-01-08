@@ -7,8 +7,6 @@ public class Comment {
     private int id;
     private String content;
     private User user;
-    private Comment father;
-    private List<Comment> replies;
     private List<Reaction> reactions= new ArrayList<>();
     private Post post;
 
@@ -23,16 +21,7 @@ public class Comment {
 
 
 
-    public Comment(int id, String content, User user, Comment father, List<Comment> replies, List<Reaction> reactions,
-            Post post) {
-        this.id = id;
-        this.content = content;
-        this.user = user;
-        this.father = father;
-        this.replies = replies;
-        this.reactions = reactions;
-        this.post = post;
-    }
+    
     
 
 
@@ -66,23 +55,9 @@ public class Comment {
         this.user = user;
     }
 
-    // father
+   
 
-    public Comment getFather() {
-        return father;
-    }
-    public void setFather(Comment father) {
-        this.father = father;
-    }
-
-    // replies
-
-    public List<Comment> getReplies() {
-        return replies;
-    }
-    public void setReplies(List<Comment> replies) {
-        this.replies = replies;
-    }
+    
 
 
     // reactions

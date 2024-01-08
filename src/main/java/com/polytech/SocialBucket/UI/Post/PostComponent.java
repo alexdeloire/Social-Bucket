@@ -314,7 +314,7 @@ public class PostComponent {
 
 
     @FXML
-    public void handleAddComment() {
+    private void handleAddComment() {
 
         String content = commentTextfield.getText();
         if (content.isEmpty()) {
