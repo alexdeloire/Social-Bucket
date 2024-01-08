@@ -2,9 +2,13 @@ package com.polytech.SocialBucket;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.time.LocalDate;
 import java.util.List;
+
+
 
 import org.junit.Test;
 
@@ -13,7 +17,13 @@ import com.polytech.SocialBucket.Persistence.PostgreSQLDAO.PostgreSQLDAOFactory;
 import com.polytech.SocialBucket.Persistence.AbstractDAOFactory;
 import com.polytech.SocialBucket.Persistence.UserDAO;
 import com.polytech.SocialBucket.Logic.User;
+import com.polytech.SocialBucket.Logic.Card;
+import com.polytech.SocialBucket.Logic.Comment;
+import com.polytech.SocialBucket.Logic.Post;
+import com.polytech.SocialBucket.Logic.Facade.CommentFacade;
+import com.polytech.SocialBucket.Logic.Facade.PostFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
+import com.polytech.SocialBucket.Logic.Facade.WalletFacade;
 
 /**
  * Unit test for simple App.
@@ -154,6 +164,162 @@ public class ProfileTest {
         // Check if User 1 has 1 following
         assertTrue(user1.getNbFollowing() == 1);
 
+    }
+
+    /**
+     * Add card test
+     */
+    @Test
+    public void testAddCard() {
+
+        
+
+        String username1 = "test1";
+        String password1 = "mdp1";
+
+        // Log in the user
+        UserFacade userFacade = UserFacade.getInstance();
+        User user1 = userFacade.login(username1, password1);
+        int iduser = user1.getId();
+
+        // Delete cards if they already exist
+        String sql = "DELETE FROM \"card\" WHERE iduser = ?";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setInt(1, iduser);
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        WalletFacade walletFacade = WalletFacade.getInstance();
+        List<Card> currentCardsBefore = walletFacade.getCurrentCards();
+
+        // Add a card to the user's wallet
+        LocalDate currentDate = LocalDate.now();
+        walletFacade.addCard("1234567890", "test1","213", currentDate);
+       
+        List<Card> currentCardsAfter = walletFacade.getCurrentCards();
+
+
+        assertTrue(currentCardsBefore.size() == 0);
+        assertTrue(currentCardsAfter.size() == 1);
+        assertTrue(currentCardsAfter.get(0).getCardNumber().equals("1234567890"));
+        assertTrue(currentCardsAfter.get(0).getCvc().equals("213"));
+        assertTrue(currentCardsAfter.get(0).getHolder().equals("test1"));
+        assertTrue(currentCardsAfter.get(0).getValidThru().equals(currentDate));        
+        assertTrue(currentCardsAfter.get(0).getUser().getId()==(user1.getId()));
+        
+       
+       
+    }
+
+    /**
+     * Add post test
+     * @throws IOException
+     */
+    @Test
+    public void testAddPost() throws IOException {
+
+               
+        String username1 = "test1";
+        String password1 = "mdp1";
+
+        // Log in the user
+        UserFacade userFacade = UserFacade.getInstance();
+        User user1 = userFacade.login(username1, password1);
+        int iduser = user1.getId();
+
+        // Delete cards if they already exist
+        String sql = "DELETE FROM \"post\" WHERE iduser =  ?";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                    preparedStatement.setInt(1, iduser);
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        PostFacade postFacade = PostFacade.getInstance();
+        List<Post> postsBefore = postFacade.getPostsByUser(user1);
+
+        // Add a post of a user
+        String text = "Mon premier post";
+        String type = "texte";
+
+        postFacade.createPost(text,type,null,user1);
+       
+        List<Post> postsAfter = postFacade.getPostsByUser(user1);
+
+        
+        assertTrue(postsBefore.size() == 0);
+        assertTrue(postsAfter.size() == 1);
+        assertTrue(postsAfter.get(0).getText().equals(text));
+        assertTrue(postsAfter.get(0).getType().equals(type));       
+        assertTrue(postsAfter.get(0).getUser().getId()==(user1.getId()));
+        
+       
+       
+    }
+    /**
+     * Add comment test
+     * @throws IOException
+     */
+    @Test
+    public void testAddComment() throws IOException{
+
+        String username1 = "test1";
+        String password1 = "mdp1";
+       
+        // Log in the user
+        UserFacade userFacade = UserFacade.getInstance();
+        User user1 = userFacade.login(username1, password1);
+        int iduser = user1.getId();
+
+        String sql = "DELETE FROM \"comment\" WHERE iduser = ? ";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, iduser);    
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        // Add a post of a user
+        String text = "Mon premier post";
+        String type = "texte";
+
+        PostFacade postFacade = PostFacade.getInstance();
+        CommentFacade commentFacade = CommentFacade.getInstance();
+
+        postFacade.createPost(text,type,null,user1);
+       
+        
+        // Get the post created earlier
+        Post newPost = postFacade.getPostsByUser(user1).get(0);
+        
+        // Get the comment for the post created just before
+        List<Comment> commentsBefore = commentFacade.getComments(newPost);
+
+
+        // Create a comment
+        String content = "Mon premier commentaire !";
+        commentFacade.addComment(content, newPost);
+        
+        List<Comment> commentsAfter = commentFacade.getComments(newPost);
+
+        
+        assertTrue(commentsBefore.size() == 0);
+        assertTrue(commentsAfter.size() == 1);
+        
+        
+       
+       
     }
 
 }
