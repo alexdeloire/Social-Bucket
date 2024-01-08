@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -62,7 +63,6 @@ public class ProfileTest {
         assertTrue(user2.getPassword().equals(password2));
     }
 
-
     /**
      * Follow/Unfollow test
      */
@@ -73,7 +73,6 @@ public class ProfileTest {
         String username1 = "test1";
         // User 2
         String username2 = "test2";
-
 
         UserFacade userFacade = UserFacade.getInstance();
 
@@ -100,5 +99,61 @@ public class ProfileTest {
 
     }
 
+    /**
+     * Search user test
+     */
+    @Test
+    public void testSearchUser() {
+
+        // Assuming your UserFacade has a searchUser method
+        UserFacade userFacade = UserFacade.getInstance();
+
+        // Search for users with the keyword "test"
+        List<User> searchResults = userFacade.searchUsers("test");
+
+        // Assert that the search results include users with usernames "test1" and
+        // "test2"
+        assertTrue(searchResults.stream().anyMatch(user -> user.getUsername().equals("test1")));
+        assertTrue(searchResults.stream().anyMatch(user -> user.getUsername().equals("test2")));
+    }
+
+    /**
+     *  Test the number of followers
+     */
+    @Test
+    public void testNumberOfFollowers() {
+
+        // User 1
+        String username1 = "test1";
+        // User 2
+        String username2 = "test2";
+
+        UserFacade userFacade = UserFacade.getInstance();
+
+        AbstractDAOFactory factory = AbstractDAOFactory.getFactory();
+        UserDAO userDAO = factory.getUserDAO();
+
+        User user1 = userDAO.getUserByUsername(username1);
+        User user2 = userDAO.getUserByUsername(username2);
+
+        // User 1 follows User 2
+        userFacade.followUser(user1.getId(), user2.getId());
+
+        // Check if User 1 is following User 2
+        assertTrue(userFacade.isFollowing(user1.getId(), user2.getId()));
+
+        user1 = userDAO.getUserByUsername(username1);
+        user2 = userDAO.getUserByUsername(username2);
+
+        // Check if User 2 has 1 follower
+        assertTrue(user2.getNbFollowers() == 1);
+
+        // Check if User 1 has 0 follower
+        assertTrue(user1.getNbFollowers() == 0);
+
+        // Check if User 1 has 1 following
+        assertTrue(user1.getNbFollowing() == 1);
+
+    }
 
 }
