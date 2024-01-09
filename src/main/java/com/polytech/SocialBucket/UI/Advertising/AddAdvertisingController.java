@@ -111,8 +111,10 @@ public class AddAdvertisingController {
  private void initialize() {
   orderBox.setVisible(false);
   orderBox.setPrefHeight(0);
+  orderBox.setManaged(false);
   paymentBox.setVisible(false);
   paymentBox.setPrefHeight(0);
+  paymentBox.setManaged(false);
 
   openNavbar();
   handleButton(false);
@@ -292,6 +294,7 @@ public class AddAdvertisingController {
  public void openOrderBox(int duration) {
   orderBox.setVisible(true);
   orderBox.setPrefHeight(200);
+  orderBox.setManaged(true);
 
   String today = java.time.LocalDate.now().toString();
   date.setText("Date : " + today);
@@ -303,8 +306,10 @@ public class AddAdvertisingController {
  public void openPaymentBox() {
   orderBox.setVisible(false);
   orderBox.setPrefHeight(0);
+  orderBox.setManaged(false);
   paymentBox.setVisible(true);
   paymentBox.setPrefHeight(200);
+  paymentBox.setManaged(true);
 
  }
 

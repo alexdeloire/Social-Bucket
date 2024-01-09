@@ -62,7 +62,7 @@
                               <Font name="Arial" size="27.0" />
                            </font>
                            <HBox.margin>
-                              <Insets top="15.0" />
+                              <Insets left="40.0" top="15.0" />
                            </HBox.margin>
                         </Label>
                         <Button fx:id="createButton" layoutX="220.0" layoutY="12.0" onAction="#handleCreateAdvertising" prefHeight="32.0" style="-fx-background-color: #098500; -fx-background-radius: 15;" text="Create" textFill="WHITE">
