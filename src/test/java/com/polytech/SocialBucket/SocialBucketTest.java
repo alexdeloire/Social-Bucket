@@ -31,7 +31,7 @@ import com.polytech.SocialBucket.Logic.Facade.WalletFacade;
 /**
  * Unit test for simple App.
  */
-public class ProfileTest {
+public class SocialBucketTest {
     /**
      * Register two test users
      */
