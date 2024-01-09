@@ -37,3 +37,7 @@ To generate the javadoc, run the following command in the root directory of the 
 ```bash
 mvn javadoc:javadoc
 ```
+
+## Chat Server
+
+Right now, the chat server runs itself, this is the development mode. In production, the chat server will be deployed on a separate server. If you want to run the server locally, you can do so by removing the "Just for development" lines of code and running the server yourself.
