@@ -2,6 +2,7 @@ package com.polytech.SocialBucket;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,9 +18,11 @@ import com.polytech.SocialBucket.Persistence.PostgreSQLDAO.PostgreSQLDAOFactory;
 import com.polytech.SocialBucket.Persistence.AbstractDAOFactory;
 import com.polytech.SocialBucket.Persistence.UserDAO;
 import com.polytech.SocialBucket.Logic.User;
+import com.polytech.SocialBucket.Logic.Advertising;
 import com.polytech.SocialBucket.Logic.Card;
 import com.polytech.SocialBucket.Logic.Comment;
 import com.polytech.SocialBucket.Logic.Post;
+import com.polytech.SocialBucket.Logic.Facade.AdvertisingFacade;
 import com.polytech.SocialBucket.Logic.Facade.CommentFacade;
 import com.polytech.SocialBucket.Logic.Facade.PostFacade;
 import com.polytech.SocialBucket.Logic.Facade.UserFacade;
@@ -320,6 +323,54 @@ public class ProfileTest {
         
        
        
+    }
+
+    @Test
+    public void testAddAdvertising() throws IOException {
+
+        String username1 = "test1";
+        String password1 = "mdp1";
+
+        // Log in the user
+        UserFacade userFacade = UserFacade.getInstance();
+        User user1 = userFacade.login(username1, password1);
+        int iduser = user1.getId();
+
+        String sql = "DELETE FROM \"advertising\" WHERE iduser = ? ";
+
+        try (Connection connection = PostgreSQLDAOFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, iduser);
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Add a advertising of a user
+        String text = "Mon premier post";
+        String link = "https://www.google.com/";
+        int duration = 10;
+
+        String imagePath = "com/polytech/SocialBucket/UI/Icones/avatar.png";
+        String absolutePath = new File("src/main/java", imagePath).getAbsolutePath();
+        File imageFile = new File(absolutePath);
+
+        AdvertisingFacade advertisingFacade = AdvertisingFacade.getInstance();
+
+        advertisingFacade.createAdvertising(text, link, imageFile, user1, duration);
+
+        // Get the advertising created earlier
+        List<Advertising> advertisings = advertisingFacade.getAdvertisingByUser(user1);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate endDate = currentDate.plusMonths(duration);
+
+        assertTrue(advertisings.size() == 1);
+        assertTrue(advertisings.get(0).getText().equals(text));
+        assertTrue(advertisings.get(0).getLink().equals(link));
+        assertTrue(advertisings.get(0).getBegindate().equals(currentDate));
+        assertTrue(advertisings.get(0).getEnddate().equals(endDate));
+        assertTrue(advertisings.get(0).getUser().getId() == (user1.getId()));
     }
 
 }
