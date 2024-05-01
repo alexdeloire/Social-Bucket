@@ -1,0 +1,17 @@
+com.polytech.SocialBucket
+com.polytech.SocialBucket.Chat
+com.polytech.SocialBucket.Chat.client
+com.polytech.SocialBucket.Chat.common
+com.polytech.SocialBucket.Chat.ocsf.client
+com.polytech.SocialBucket.Chat.ocsf.server
+com.polytech.SocialBucket.Logic
+com.polytech.SocialBucket.Logic.Facade
+com.polytech.SocialBucket.Persistence
+com.polytech.SocialBucket.Persistence.PostgreSQLDAO
+com.polytech.SocialBucket.UI
+com.polytech.SocialBucket.UI.Advertising
+com.polytech.SocialBucket.UI.Comment
+com.polytech.SocialBucket.UI.OtherUsers
+com.polytech.SocialBucket.UI.Post
+com.polytech.SocialBucket.UI.Profile
+com.polytech.SocialBucket.UI.Wallet
